@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block header %}
+<nav>
+    <div class="nav-wrapper">
+        <div class="row">
+            <div class="col s12">
+                <a href="#!" class="brand-logo">Nutz</a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock header %} 
+
+{% block main %}
+    {% block contenido %}
+        <div class="container col s4 l4">
+            <center>
+                <h5 class="indigo-text">Registro de Usuario</h5>
+                    {% for message in messages  %}
+                         <p class="red-text">{{message}}</p>
+                     {% endfor %}
+                <form class="col s4 l4" method="post">
+                    {% csrf_token %}
+                    {{form.as_table}}
+                    <div class='center-align'>
+                        <button type='submit' name='btn_login' class='col s4 l4 btn btn-large waves-effect indigo' align="center">Registrar</button>
+                    </div>
+                </form>
+            </center>
+        </div>
+    {% endblock contenido %}
+{% endblock main %} 

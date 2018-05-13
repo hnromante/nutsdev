@@ -1,0 +1,15 @@
+{% extends "nutricionista/base_nutricionista.html" %}
+
+{% block contenido %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 center-align">
+            <form method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Guardar" />
+            </form>
+        
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

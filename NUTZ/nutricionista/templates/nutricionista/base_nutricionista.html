@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block header %}
+<nav>
+    <div class="nav-wrapper">
+        <div class="row">
+            <div class="col s12">
+                <a href="#!" class="brand-logo">Nutz</a>
+                <a href="#!" data-target="mobile-nav" class="sidenav-trigger">
+                    <i class="material-icons">menu</i>
+                </a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{% url 'nutricionista-index' %}">Inicio</a></li>
+                    <li><a href="{% url 'nutricionista-dashboard' %}">Dashboard Pacientes</a></li>  
+                    <li><a href="{% url 'nutricionista-calculadora' %}">Calculadora</a></li>
+                    <li><a href="{% url 'alimentos' %}">Gestor de alimentos</a></li>
+                    <li><a href="{% url 'tipo-alimento' %}">Gestor tipo de alimentos</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<ul class="sidenav" id="mobile-nav">
+<li>
+    <a href="{% url 'nutricionista-index' %}">Inicio</a>
+</li>
+<li>
+    <a href="{% url 'nutricionista-dashboard' %}">Dashboard Pacientes</a>
+</li>
+<li>
+    <a href="{% url 'nutricionista-calculadora' %}">Calculadora</a>
+</li>
+<li><a href="{% url 'alimentos' %}">Gestor de alimentos</a></li>
+<li><a href="{% url 'tipo-alimento' %}">Gestor tipo de alimentos</a></li>
+</ul>
+
+
+{% endblock header %} 
+
+
+{% block main %} 
+    {% block contenido %} 
+
+    {% endblock contenido %}
+{% endblock main %}

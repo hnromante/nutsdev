@@ -1,0 +1,27 @@
+
+# #CACHAÑA
+
+    # def calcular_edad(fecha_nacimiento):
+    #     """
+    #     Devuelve la edad en entero del usuario segun su fecha de nacimiento
+    #     """
+    #     GRUPO_ETARIO = "Lactante"
+    #     return ((0,1,15),GRUPO_ETARIO)
+
+    # @property
+    # def edad(self):
+    #     GRUPO_ETARIOS = ("Lactante")
+    #     return ((0,1,15),GRUPO_ETARIO)
+
+    # EDAD = calcular_edad(nacimiento)
+    # GRUPO_ETARIO = calcular_etario(EDAD)
+
+ 
+    # def calcular_etario(fecha_nacimiento):
+    #     """
+    #     Devuelve el grupo etario basado en la cantidad de dias hasta la fecha 
+    #     """
+    #     pass
+
+    #Funciones de utilidad
+    

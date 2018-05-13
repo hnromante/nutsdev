@@ -1,0 +1,25 @@
+{% extends "nutricionista/base_nutricionista.html" %}
+
+{% block contenido %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 center-align">
+            <div class="card-panel blue">
+                <span class="white-text">Alimentos ingresados{{object_list|length}}</span>
+            </div>
+            <center>
+
+            <h1>Alimentos</h1>
+            <ul>
+            {% for alimento in object_list %}
+                <li>- {{alimento.nombre}} - {{alimento.tipo_alimento}}</li>
+            {% empty %}
+                <li>No hay alimentos ingresados</li>
+            {% endfor %}
+            </ul>
+            </center>
+        
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

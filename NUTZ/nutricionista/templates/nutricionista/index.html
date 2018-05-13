@@ -1,0 +1,22 @@
+{% extends "nutricionista/base_nutricionista.html" %}
+
+{% block contenido %}
+<div class="container">
+  <div class="row">
+    <div class="col s12 center-align">
+      {{request.user}}
+      {% for message in messages  %}
+      <p class='green-text'>{{message}}</p>
+      {% endfor %}
+      <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+          {{form.as_table}}
+          
+        </table>
+        <input type="submit" value="guardar" class="btn ">
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock contenido %}

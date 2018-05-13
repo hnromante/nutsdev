@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <title>Title of the document</title>
+    <!-- Material Icon CDN -->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize CSS -->
+      <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}">
+    <!-- Your custom styles -->
+     
+    <!-- Used as an example only to position the footer at the end of the page.
+    You can delete these styles or move it to your custom css file -->
+    <style>
+      body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        }
+      main {
+        flex: 1 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+        {% block header %}
+        
+        {% endblock header %}
+    </header>
+      <main>
+      {% block main %}
+      home
+      {% endblock main %}
+    </main>
+    {% block footer %}
+    
+    {% endblock footer %}
+    <!-- jQuery CDN -->
+      <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- Materialize JS -->
+      <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <script>
+      $(document).ready(function(){
+        $('select').formSelect();
+        $('.sidenav').sidenav();
+      });
+    </script>
+  </body>
+</html>
