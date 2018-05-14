@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'nutricionista',
     'paciente',
     'cuentas',
+    'superadmin',
 
 ]
 

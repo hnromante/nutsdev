@@ -17,13 +17,13 @@ class UserAdmin(BaseUserAdmin):
         ('Información personal', {'fields': ('rut', 'nombres','apellidos', 'nacimiento', 'genero')}),
         ('Paciente', {'fields': ('es_paciente',)}),
         ('Nutricionista', {'fields': ('es_nutri',)}),
-        ('Permisos', {'fields': ('admin','staff', 'active')}),
+        ('Permisos', {'fields': ('admin','staff', 'active','es_superadmin')}),
     )
 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('rut','email', 'password1', 'password2','es_paciente', 'es_nutri')}
+            'fields': ('rut','email', 'password1', 'password2','es_paciente', 'es_nutri', 'es_superadmin')}
         ),
     )
     search_fields = ('email', )

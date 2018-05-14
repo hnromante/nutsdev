@@ -11,6 +11,15 @@ from .forms import (
 
 
 # Create your views here.
+def soypaciente(request):
+
+    return render(request, template_name='cuentas/soypaciente.html')
+
+
+def soynutricionista(request):
+
+    return render(request, template_name='cuentas/soynutricionista.html')
+
 
 def login_nutri(request):
     if request.method == "POST":
@@ -24,14 +33,18 @@ def login_nutri(request):
             return HttpResponseRedirect("/nutricionista")
     return render(request, template_name='cuentas/login_nutri.html')
 
-def soypaciente(request):
 
-    return render(request, template_name='cuentas/soypaciente.html')
-
-
-def soynutricionista(request):
-
-    return render(request, template_name='cuentas/soynutricionista.html')
+def login_superadmin(request):
+    if request.method == "POST":
+        email = request.POST["email"]
+        password = request.POST["password"]
+        user = authenticate(email=email, password=password)
+        if user is None:
+            messages.add_message(request, messages.INFO, 'Email o contraseña incorrectos')
+        else:
+            django_login(request, user)
+            return HttpResponseRedirect("/superadmin")
+    return render(request, template_name='cuentas/login_superadmin.html')
 
 
 def login_paci(request):

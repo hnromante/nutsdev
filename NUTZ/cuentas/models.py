@@ -12,11 +12,27 @@ from django.contrib.auth.models import (
 
 #LOS SIGUIENTES METODOS ESTAN ESCRITOS EN INGLES PORQUE SOBREESCRIBEN FUNCIONALIDAD DE LA CLASE QUEHEREDAN
 class UserManager(BaseUserManager):
-    
+    def create(self, email, password):
+        if not email:
+            raise ValueError('Debes ingresar un email correcto.')
+        if not rut:
+            raise ValueError('Debes ingresar un rut') 
+        user = self.model(
+            email=self.normalize_email(email),
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superadmin(self, email, password):
+        user = self.create(email, password)
+
+        user.es_superadmin = True
+        user.save(using=self._db)
+        return user
+
     def create_user(self, rut, email, es_paciente, es_nutri, password=None):
-        """
-        Crea y guarda un usuario segun su email y contraseña
-        """
+
         if not email:
             raise ValueError('Debes ingresar un email correcto.')
         if not rut:
@@ -29,15 +45,6 @@ class UserManager(BaseUserManager):
             es_nutri = es_nutri
         )
 
-        if user.es_paciente:
-            print ("EL USUARIO ES PACIENTE BUM")
-            
-        else: 
-            print("EL USUARIO NO ES PACIENTE")
-
-        if user.es_nutri:
-            print("El usuario es nutri")
-
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -49,7 +56,6 @@ class UserManager(BaseUserManager):
         user = self.create_user(
             email,
             password=password,
-
         )
         user.staff = True
         user.save(using=self._db)
@@ -101,6 +107,7 @@ class User(AbstractBaseUser):
     staff = models.BooleanField(default=False)
     es_nutri = models.BooleanField(default=False)
     es_paciente = models.BooleanField(default=False)
+    es_superadmin = models.BooleanField(default=False)
     USERNAME_FIELD = ('email')
     REQUIRED_FIELDS = ['rut','es_paciente','es_nutri'] #'rut','nombres','apellidos','nacimiento'
     

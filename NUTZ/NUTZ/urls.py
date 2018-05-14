@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'', include('cuentas.urls')),
     url(r'^nutricionista/', include('nutricionista.urls')),
     url(r'^paciente/', include('paciente.urls')),
+    url(r'^superadmin/', include('superadmin.urls')),
     url(r'^$', views_cuentas.inicio, name='inicio' ),
 
 ]
