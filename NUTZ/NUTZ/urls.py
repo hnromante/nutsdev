@@ -16,16 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
-from calculadora import views as views_calculadora
-from cuentas import views
-
-
+from cuentas import views as views_cuentas
 urlpatterns = [
     path('admin/', admin.site.urls),
     #url(r'^$', views_calculadora.home , name='home'),
+    url(r'', include('cuentas.urls')),
     url(r'^nutricionista/', include('nutricionista.urls')),
-    url(r'^$', views.inicio, name='inicio' ),
-    url(r'^login/$', views.login, name='login'),
-    url(r'^registro$',views.registro, name='registro-usuario')
+    url(r'^paciente/', include('paciente.urls')),
+    url(r'^$', views_cuentas.inicio, name='inicio' ),
 
 ]

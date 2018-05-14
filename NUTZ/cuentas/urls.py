@@ -3,8 +3,10 @@ from cuentas import views
 
 
 urlpatterns = [
-    # url(r'^$', views.inicio_nutri, name='nutricionista-index'),
-    url(r'^login/$', views.login, name='login'),
+    url(r'^soypaciente$', views.soypaciente, name='soypaciente'),
+    url(r'^soynutricionista$', views.soynutricionista, name='soynutricionista'),
+    url(r'^login-nutricionista/$', views.login_nutri, name='login-nutricionista'),
+    url(r'^login-paciente/$', views.login_paci, name='login-paciente'),
+    url(r'^registro-nutricionista/$', views.registro_nutri, name='registro-nutricionista'),
     url(r'^logout/$', views.logout, name='logout'),
-    url(r'^registro/$', views.registro, name='registro-usuario')
 ]

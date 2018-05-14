@@ -1,5 +1,17 @@
 {% extends "base.html" %}
+{% block costumcss %}
+<style>
+    header, main, footer {
+        padding-left: 300px;
+    }
 
+    @media only screen and (max-width : 992px) {
+        header, main, footer {
+            padding-left: 0;
+        }
+    }
+</style>
+{% endblock costumcss %}
 {% block header %}
 <nav>
     <div class="nav-wrapper">
@@ -10,30 +22,18 @@
                     <i class="material-icons">menu</i>
                 </a>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{% url 'nutricionista-index' %}">Inicio</a></li>
-                    <li><a href="{% url 'nutricionista-dashboard' %}">Dashboard Pacientes</a></li>  
-                    <li><a href="{% url 'nutricionista-calculadora' %}">Calculadora</a></li>
-                    <li><a href="{% url 'alimentos' %}">Gestor de alimentos</a></li>
-                    <li><a href="{% url 'tipo-alimento' %}">Gestor tipo de alimentos</a></li>
+
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
                 </ul>
             </div>
         </div>
     </div>
 </nav>
-
-<ul class="sidenav" id="mobile-nav">
-<li>
-    <a href="{% url 'nutricionista-index' %}">Inicio</a>
-</li>
-<li>
-    <a href="{% url 'nutricionista-dashboard' %}">Dashboard Pacientes</a>
-</li>
-<li>
-    <a href="{% url 'nutricionista-calculadora' %}">Calculadora</a>
-</li>
-<li><a href="{% url 'alimentos' %}">Gestor de alimentos</a></li>
-<li><a href="{% url 'tipo-alimento' %}">Gestor tipo de alimentos</a></li>
-</ul>
+<ul class="sidenav sidenav-fixed">
+    <li><a href="{% url 'nutricionista' %}">Inicio</a></li>
+    <li><a href="{% url 'nutricionista--pacientes' %}">Mis Paciente</a></li>  
+    <li><a href="{% url 'nutricionista--calculadora' %}">Calculadora</a></li>
+</ul> 
 
 
 {% endblock header %} 

@@ -37,12 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'calculadora',
     'nutricionista',
     'paciente',
     'cuentas',
-    'faq',
-    'alimento'
 
 ]
 

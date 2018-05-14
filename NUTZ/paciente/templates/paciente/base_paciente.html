@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static%}
+
+{% block costumcss %}
+<style>
+    header, main, footer {
+        padding-left: 300px;
+    }
+
+    @media only screen and (max-width : 992px) {
+        header, main, footer {
+            padding-left: 0;
+        }
+    }
+</style>
+{% endblock costumcss %}
+
+{% block header %}
+<nav> 
+    <div class="nav-wrapper">
+        <div class="row">
+            <div class="col s12">
+
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<ul class="sidenav sidenav-fixed">
+    <li><a href="{% url 'paciente' %}">Inicio</a></li>
+</ul>    
+{% endblock header %} 
+
+
+{% block main %} 
+    {% block contenido %} 
+
+    {% endblock contenido %}
+{% endblock main %}
+
+{% block costumjs %}
+    <script type="text/javascript" src="{% static 'paciente/js/paciente.js' %}"></script>
+{% endblock costumjs %}
+
+
+<nav>
+        <div class="nav-wrapper">
+            <div class="row">
+                <div class="col s12">
+                    <a href="#!" class="brand-logo">Nutz</a>
+                    <a href="#!" data-target="mobile-nav" class="sidenav-trigger">
+                        <i class="material-icons">menu</i>
+                    </a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="{% url 'paciente' %}">Inicio</a></li>
+                        <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+    
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <ul class="sidenav" id="mobile-nav">
+    <li><a href="{% url 'paciente' %}">Inicio</a></li>
+    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+    
+    </ul>

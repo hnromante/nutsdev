@@ -7,14 +7,12 @@ class FormAddPaciente(forms.ModelForm):
 
     def clean_rut(self):
         rut = self.cleaned_data['rut']
-        print(User.objects.filter(rut=rut).exists())
         if User.objects.filter(rut=rut).exists():
             raise forms.ValidationError("El paciente con ese rut ya existe")
         else:
             return rut
     def clean_email(self):
         email = self.cleaned_data['email']
-        print(User.objects.filter(email=email).exists())
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("El paciente con ese mail ya existe")
         else:
@@ -22,6 +20,6 @@ class FormAddPaciente(forms.ModelForm):
             
     class Meta:
         model = Paciente
-        fields = ['rut','email','nacionalidad','observacion','ultima_atencion','peso','glicemia_mgdl']
+        fields = ['rut','email','nacionalidad','ocupacion','observacion','peso','glicemia_mgdl']
         # exclude = ['user', 'nutricionista']
 

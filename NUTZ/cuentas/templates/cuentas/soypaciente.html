@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+  <div class="row">
+    <div class="col s12 center-align">
+      <h1>Bienvenido a Nutz - Paciente</h1>
+      {% for message in messages  %}
+        <p>{{message}}</p>
+      {% endfor %}
+    </div>
+    <div class="col s6 center-align">
+        <a href="{% url 'login-paciente' %}">Iniciar Sesion</a>
+    </div>
+
+  </div>
+</div>
+{% endblock main %}
