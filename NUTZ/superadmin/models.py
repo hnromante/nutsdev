@@ -15,6 +15,9 @@ class GrupoAlimento(models.Model):
     lip_prom = models.IntegerField()
     azu_prom = models.IntegerField()
 
+    def __str__(self):
+        return self.nombre
+
 class Alimento(models.Model):
     nombre = models.CharField(max_length=50)
     cho = models.IntegerField()
@@ -22,4 +25,7 @@ class Alimento(models.Model):
     lip = models.IntegerField()
     azu = models.IntegerField()
     grupo_alimento = models.ForeignKey(GrupoAlimento, on_delete=models.CASCADE)
+    porcion = models.IntegerField(default=1)
 
+    def __str__(self):
+        return self.nombre
