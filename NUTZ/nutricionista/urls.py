@@ -4,7 +4,12 @@ from nutricionista import views
 
 urlpatterns = [
     url(r'^$', views.inicio_nutri, name='nutricionista'),
-    url(r'^mis-pacientes/$', views.mis_pacientes, name='nutricionista--pacientes'),
-    url(r'^calculadora/$', views.calculadora, name='nutricionista--calculadora'),
-    
+    url(r'^perfil/$', views.mi_perfil, name='perfil'),
+    url(r'^mis-pacientes/$', views.mis_pacientes, name='pacientes'),
+    url(r'^agregar-pacientes/$', views.agregar_paciente, name='pacientes-agregar'),
+    url(r'^calculadora/$', views.calculadora, name='calculadora'),
+    url(r'^mis-menus/$', views.mis_menus, name='mis-menus'),
+    url(r'^mis-menus/(?P<pk>\d+)/$', views.MenuDetalle.as_view(), name='menu-detalle'),
+    url(r'^mis-pautas/$', views.mis_pautas, name='mis-pautas'),
 ]
+

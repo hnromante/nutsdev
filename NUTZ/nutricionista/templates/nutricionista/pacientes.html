@@ -10,10 +10,8 @@
                 {% endfor %}
             {% endif %}
         </div>
-        <div class="col s12 m6">
-            <div class="card-panel teal">
-                <span class="white-text">Su listado de pacientes {{pacientes|length}}</span>
-            </div>
+        <div class="col s12">
+                <h1>Su listado de pacientes {{pacientes|length}}</h1>
             <center>
             <ul>
             {% for paciente in pacientes %}
@@ -23,17 +21,6 @@
             {% endfor %}
             </ul>
             </center>
-        
-        </div>
-        <div class="col s12 m6">
-            <div class="card-panel teal">
-                <span class="white-text">Agregar Paciente</span>
-            </div>
-            <form action="" method="POST">
-                {% csrf_token %}
-                {{form.as_table}}
-                <input type="submit" value="Agregar Paciente" class="btn">
-            </form>
         </div>
     </div>
 </div>

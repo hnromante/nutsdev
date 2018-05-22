@@ -156,12 +156,12 @@ class User(AbstractBaseUser):
         """
         return self.email
 
+    @property
     def get_nombre_completo(self):
         """
         Devuelve nombre y apellidos
         """
-
-        return self.nombres + self.apellidos if self.nombres + self.apellidos == "" else "SIN NOMBRE ESPECIFICADO"
+        return "{nombres} {apellidos}".format(nombres=self.nombres, apellidos=self.apellidos) if self.nombres + self.apellidos != "" else self.rut
     
     def __str__(self):
         """
@@ -169,4 +169,6 @@ class User(AbstractBaseUser):
         """
         string = "{} - {}".format(self.rut, self.email) 
         return string
+
+    
     objects = UserManager()

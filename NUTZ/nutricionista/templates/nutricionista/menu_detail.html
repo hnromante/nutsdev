@@ -1,0 +1,31 @@
+{% extends "nutricionista/base_nutricionista.html" %}
+{% block main %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <div class="card horizontal">
+              <div class="card-image">
+                <img src="https://www.brasseriebridge.be/wp-content/uploads/2017/12/menu.png">
+              </div>
+              <div class="card-stacked">
+                <div class="card-content">
+                  <p class="flow-text">{{object.nombre}}</p>
+                  {% for alimento in object.alimentos.all  %}
+                  <p>{{alimento}}</p>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+        </div>
+        <hr>
+        <did class="col s12">
+            <form method="post">{% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Actualizar menú" class="btn"/>
+            </form>
+        </did>
+    </div>
+</div>
+{% endblock main %}

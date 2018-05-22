@@ -1,6 +1,19 @@
 from django import forms
 from paciente.models import Paciente
 from cuentas.models import User
+from nutricionista.models import Menu, PautaAlimentaria
+from django.forms.widgets import CheckboxSelectMultiple
+from superadmin.models import Alimento
+
+class FormPerfil(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['rut'].widget.attrs.update({'disabled': 'disabled'})
+        self.fields['nacimiento'].widget.attrs.update({'class': 'datepicker'})
+    class Meta:
+        model = User
+        fields = ['rut', 'nombres', 'apellidos', 'nacimiento', 'genero']
+
 class FormAddPaciente(forms.ModelForm):
     rut = forms.CharField(max_length=50)
     email = forms.EmailField()
@@ -23,3 +36,20 @@ class FormAddPaciente(forms.ModelForm):
         fields = ['rut','email','nacionalidad','ocupacion','observacion','peso','glicemia_mgdl']
         # exclude = ['user', 'nutricionista']
 
+class FormMenu(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        
+        super(FormMenu, self).__init__(*args, **kwargs)
+        # self.fields["alimentos"].widget = CheckboxSelectMultiple()
+        # self.fields["alimentos"].queryset = Alimento.objects.all()
+
+    class Meta:
+        model = Menu
+        fields = ('nombre', 'alimentos', )
+
+class FormPautaAlimentaria(forms.ModelForm):
+    
+    class Meta:
+        model = PautaAlimentaria
+        fields = '__all__'

@@ -13,10 +13,10 @@ class Nutricionista(models.Model): #SETTINGS.get_auth_model
         return self.user.rut + " - " +self.user.email
 
 
-class Comida(models.Model):
+class Menu(models.Model):
     nombre = models.CharField(max_length=50)
-    alimentos = models.ManyToManyField(Alimento, related_name='comidas')
-    horario = models.TimeField()
+    nutricionista = models.ForeignKey(Nutricionista, on_delete=models.CASCADE)
+    alimentos = models.ManyToManyField(Alimento, related_name='menus')
 
     def __str__(self):
         return self.nombre
@@ -25,10 +25,12 @@ class Comida(models.Model):
 class PautaAlimentaria(models.Model):
     nombre = models.CharField(max_length=50)
     nutricionista = models.ForeignKey(Nutricionista, on_delete=models.CASCADE, related_name='pautas_alimentarias')
-    paciente = models.OneToOneField(Paciente, on_delete=models.CASCADE, related_name='pauta_alimentaria')
-    comidas = models.ManyToManyField(Comida)
-    recomendacion = models.CharField(max_length=2000, default='Comer sanito')
+    # paciente = models.OneToOneField(Paciente, on_delete=models.CASCADE, related_name='pauta_alimentaria')
+    menus = models.ManyToManyField(Menu)
+    recomendacion = models.CharField(max_length=2000, default='Comer sanito')  
 
+    # alimentos_menus = [menu.alimentos for menu in Menu.objects.filter(nutricionista=self.nutricionista)]
+    # print(alimentos_menus)
     def __str__(self):
         return self.nombre
 
