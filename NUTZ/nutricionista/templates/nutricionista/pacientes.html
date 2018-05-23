@@ -3,25 +3,31 @@
 {% block contenido %}
 <div class="container">
     <div class="row">
-        <div class="messages col s12 center-align ">
-            {% if messages %}
-                {% for message in messages %}
-                    <p class="green-text flow-text">{{message}}</p>
-                {% endfor %}
-            {% endif %}
-        </div>
-        <div class="col s12">
-                <h1>Su listado de pacientes {{pacientes|length}}</h1>
-            <center>
-            <ul>
-            {% for paciente in pacientes %}
-                <li>{{paciente}} - {{paciente.nacionalidad}} - {{paciente.observacion}}</li>
-            {% empty %}
-                <li>No hay pacientes para este nutricionista</li>
-            {% endfor %}
-            </ul>
-            </center>
-        </div>
+       <div class="col s12">
+           <table class="bordered">
+               <thead>
+                   <tr>
+                       <th data-field="nombre">Nombre</th>
+                       <th data-field="apellidos">Apellidos</th>
+                       <th data-field="rut">Rut</th>
+                       <th data-field="ultima_atención">Ultima atención</th>
+                       <th data-field="ver_ficha">ver_ficha</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   {% for paciente in pacientes  %}
+                   <tr>
+                        <td>{{paciente.user.nombres}}</td>
+                        <td>{{paciente.user.apellidos}}</td>
+                        <td>{{paciente.user.rut}}</td>
+                        <td>{{paciente.ultima_atencion}}</td>
+                        <td><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Ver detalle</a></td>
+                    </tr>
+                   {% endfor %}
+                   
+               </tbody>
+           </table>
+       </div>
     </div>
 </div>
 {% endblock contenido %}

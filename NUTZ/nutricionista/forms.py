@@ -5,6 +5,27 @@ from nutricionista.models import Menu, PautaAlimentaria
 from django.forms.widgets import CheckboxSelectMultiple
 from superadmin.models import Alimento
 
+class FormFichaGeneral(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['rut', 'nombres', 'apellidos', 'nacimiento', 'genero']
+
+
+class FormFichaNutricional(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['rut', 'nombres', 'apellidos', 'nacimiento', 'genero']
+
+
+class FormFichaBioquimica(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['rut', 'nombres', 'apellidos', 'nacimiento', 'genero']
+
+
+
+
+
 class FormPerfil(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

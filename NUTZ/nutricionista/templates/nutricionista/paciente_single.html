@@ -1,0 +1,72 @@
+{% extends "nutricionista/base_nutricionista.html" %}
+
+{% block main %}
+
+<nav>
+    <div class="nav-wrapper center blue">
+      <ul class="left hide-on-med-and-down"><li class="active"><a href="">Atendiendo al paciente:  {{paciente.user.rut}}</a></li></ul>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="{% url 'paciente-detalle-ficha' paciente.user.pk 'general' %}">Ficha general </a></li>
+        <li><a href="{% url 'paciente-detalle-ficha' paciente.user.pk 'nutricional' %}">Ficha nutricional </a></li>
+        <li><a href="{% url 'paciente-detalle-ficha' paciente.user.pk 'bioquimica' %}">Ficha Bioquímica</a></li>
+        <li ><a href="{% url 'paciente-detalle-ficha' paciente.user.pk 'Recomendaciones' %}">Recomendaciones</a></li>
+      </ul>
+    </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+        <div class="card horizontal">
+          <div class="card-image">
+            <!-- <img src="http://imagenglobal.org/wp-content/uploads/2018/01/Paciente.png"> -->
+            <img src="" alt="">
+          </div>
+          <div class="card-stacked">
+            <div class="card-content">
+              <p>Rut: {{paciente.user.rut}}</p>
+              <p>Nombres: {{paciente.user.nombres}}</p>
+              <p>Apellidos: {{paciente.user.apellidos}}</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Iniciar Ficha</a>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col s12">
+      <!-- Información usuario -->
+        <ul class="collection">
+            <p class="flow-text center">Información Usuario</p>
+            <li class="collection-item">Rut: {{paciente.user.rut}}</li>
+            <li class="collection-item">Nacimiento: {{paciente.user.nacimiento}}</li>
+            <li class="collection-item">Genero: {{paciente.user.genero}}</li>
+        </ul>      
+    </div>
+    <div class="col s12">
+        <!-- Información usuario -->
+          <ul class="collection">
+              <p class="flow-text center">Información General</p>
+              <li class="collection-item">Ocupación: {{paciente.ocupacion}}</li>
+              <li class="collection-item">Nacionalidad: {{paciente.nacionalidad}}</li>
+          </ul>      
+    </div>
+    <div class="col s12">
+        <!-- Información Nutricional -->
+          <ul class="collection">
+              <p class="flow-text center">Información Nutricional</p>
+              <li class="collection-item">Peso: {{paciente.peso}}</li>
+          </ul>      
+    </div>
+    <div class="col s12">
+        <!-- Información Nutricional -->
+          <ul class="collection">
+              <p class="flow-text center">Información Bioquímica</p>
+              <li class="collection-item">Glicemia mg/dl: {{paciente.glicemia_mgdl}}</li>
+          </ul>      
+    </div>
+  </div>
+</div>
+{% endblock main %}

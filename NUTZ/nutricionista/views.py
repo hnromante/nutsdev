@@ -7,7 +7,10 @@ from .forms import (
     FormAddPaciente,
     FormPerfil,
     FormMenu,
-    FormPautaAlimentaria
+    FormPautaAlimentaria,
+    FormFichaNutricional,
+    FormFichaBioquimica,
+    FormFichaGeneral
 )
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
@@ -43,9 +46,33 @@ def mis_pacientes(request):
         return HttpResponseRedirect('/login-nutricionista')
     context = dict()
     pacientes = Paciente.objects.filter(nutricionista=request.user.nutricionista)
-    context['pacientes'] = pacientes
-    return render(request, template_name='nutricionista/pacientes.html', context=context)
 
+    return render(request, 'nutricionista/pacientes.html', {'pacientes':pacientes})
+
+
+@login_required(login_url='/login-nutricionista/')
+def paciente_detalle(request, pk, ficha=''):
+    if not request.user.es_nutri:
+        messages.warning(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
+        return HttpResponseRedirect('/login-nutricionista')
+    if ficha == 'nutricional':
+        form = FormFichaNutricional()
+        return render(request, 'nutricionista/paciente_ficha_nutricional.html', {'form': form})
+    elif ficha == 'bioquimica':
+        form = FormFichaBioquimica
+        return render(request, 'nutricionista/paciente_ficha_bio.html', {'form': form})
+    elif ficha == 'general':
+        form = FormFichaGeneral
+        return render(request, 'nutricionista/paciente_ficha_general.html', {'form': form})
+    elif ficha == 'recomendaciones':
+
+        return render(request, 'nutricionista/paciente_recomendaciones.html')
+    else:
+        pass
+    
+    paciente = Paciente.objects.get(pk=pk)
+
+    return render(request, 'nutricionista/paciente_single.html', {'paciente':paciente})
 
 @login_required(login_url='/login-nutricionista/')
 def agregar_paciente(request):

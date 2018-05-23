@@ -88,8 +88,8 @@ class User(AbstractBaseUser):
         max_length=100,
         unique=True
     )
-    nombres = models.CharField(max_length=255)
-    apellidos = models.CharField(max_length=255)
+    nombres = models.CharField(max_length=255, default='sin nombres especificados')
+    apellidos = models.CharField(max_length=255, default='sin apellidos especificados')
     date = models.DateField(null=True, blank=True)
     nacimiento = models.DateField(null=True, blank=True)
 
