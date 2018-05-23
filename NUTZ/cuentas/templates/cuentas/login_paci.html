@@ -20,7 +20,7 @@
        
         <div class="section"></div>
   
-        <h5 class="indigo-text">Ingreso de nutricionista</h5>
+        <h5 class="indigo-text">Ingreso de Paciente</h5>
         {% for message in messages  %}
           <p class="red-text">{{message}}</p>
         {% endfor %}
@@ -51,9 +51,6 @@
                 <center>
                   <div class='row'>
                     <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Ingresar</button>
-                  </div>
-                  <div class='row'>
-                    <a href="{% url 'registro-nutricionista' %}">Registrate como nutricionista</a>
                   </div>
                 </center>
               </form>
