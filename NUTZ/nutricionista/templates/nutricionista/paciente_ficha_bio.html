@@ -17,11 +17,19 @@
 <div class="container">
     <div class="row">
         <div class="col">
-        {% if form %}
-            <h1>HAY FORM BIO</h1>
-            {{form}}
-        {% else %}
-        {% endif %}
+            <p class="flow-text">Información Bioquímica</p>
+            {% for message in messages  %}
+                {% if message.tags == 'success' %}
+                    <p class="green-text">{{message}}</p>
+                {% else %}
+                    <p>{{message}}</p>
+                {% endif %}
+            {% endfor %}
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form}}
+                <input type="submit" value="Actualizar" class="btn">  
+            </form>
         </div>
     </div>
 </div>

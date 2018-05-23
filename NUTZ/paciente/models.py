@@ -25,7 +25,7 @@ class Paciente(models.Model):
     #.
     #.
     #.
-    glicemia_mgdl = models.FloatField(null=True, blank=True)
+    glicemia_mgdl = models.FloatField(null=True, blank=True, default=0)
 
     def __str__(self):
         # return "hah"

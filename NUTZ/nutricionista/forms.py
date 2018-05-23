@@ -6,21 +6,33 @@ from django.forms.widgets import CheckboxSelectMultiple
 from superadmin.models import Alimento
 
 class FormFichaGeneral(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['ocupacion'].widget.attrs.update()
+        self.fields['nacionalidad'].widget.attrs.update()
+        self.fields['observacion'].widget.attrs.update()
     class Meta:
         model = Paciente
         fields = ['ocupacion', 'nacionalidad', 'observacion']
 
 
 class FormFichaNutricional(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['peso'].widget.attrs.update()
+
     class Meta:
-        model = User
-        fields = ['rut', 'nombres', 'apellidos', 'nacimiento', 'genero']
+        model = Paciente
+        fields = ['peso']
 
 
 class FormFichaBioquimica(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['glicemia_mgdl'].widget.attrs.update()
     class Meta:
-        model = User
-        fields = ['rut', 'nombres', 'apellidos', 'nacimiento', 'genero']
+        model = Paciente
+        fields = ['glicemia_mgdl', ]
 
 
 
@@ -29,7 +41,7 @@ class FormFichaBioquimica(forms.ModelForm):
 class FormPerfil(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['rut'].widget.attrs.update({'disabled': 'disabled'})
+        self.fields['rut'].widget.attrs.update({'class': 'disabled'})
         self.fields['nacimiento'].widget.attrs.update({'class': 'datepicker'})
     class Meta:
         model = User

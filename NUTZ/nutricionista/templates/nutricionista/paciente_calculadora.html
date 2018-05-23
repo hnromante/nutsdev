@@ -3,7 +3,7 @@
 {% block main %}
 <nav>
     <div class="nav-wrapper center blue">
-        <ul class="left hide-on-med-and-down"><li class="active"><a href="{% url 'paciente-detalle' paciente.pk %}">Atendiendo al paciente:  {{paciente.user.rut}}</a></li></ul>
+        <ul class="left hide-on-med-and-down"><li><a href="{% url 'paciente-detalle' paciente.pk %}">Atendiendo al paciente:  {{paciente.user.rut}}</a></li></ul>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha general </a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ficha nutricional </a></li>

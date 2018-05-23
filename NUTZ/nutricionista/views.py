@@ -56,17 +56,40 @@ def paciente_detalle(request, pk, ficha=''):
     if not request.user.es_nutri:
         messages.warning(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
+
     if ficha == 'nutricional':
-        form = FormFichaNutricional()
+        if request.method == 'POST':
+            form = FormFichaNutricional(request.POST, instance=paciente)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Información actualizada")
+        else:
+            form = FormFichaNutricional(instance=paciente)
         return render(request, 'nutricionista/paciente_ficha_nutricional.html', {'form': form, 'paciente':paciente})
+    
     elif ficha == 'bioquimica':
-        form = FormFichaBioquimica
+        if request.method == 'POST':
+            form = FormFichaBioquimica(request.POST, instance=paciente)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Información actualizada")
+        else:
+            form = FormFichaBioquimica(instance=paciente)
         return render(request, 'nutricionista/paciente_ficha_bio.html', {'form': form, 'paciente':paciente})
+    
     elif ficha == 'general':
-        form = FormFichaGeneral
+        if request.method == 'POST':
+            form = FormFichaGeneral(request.POST, instance=paciente)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Información actualizada")
+        else:
+            form = FormFichaGeneral(instance=paciente)
         return render(request, 'nutricionista/paciente_ficha_general.html', {'form': form, 'paciente':paciente})
+
     elif ficha == 'recomendaciones':
         return render(request, 'nutricionista/paciente_recomendaciones.html', {'paciente':paciente})
+
     elif ficha == 'calculadora':
         return render(request, 'nutricionista/paciente_calculadora.html', {'paciente':paciente})
     else:
@@ -77,7 +100,7 @@ def paciente_detalle(request, pk, ficha=''):
 @login_required(login_url='/login-nutricionista/')
 def agregar_paciente(request):
     if not request.user.es_nutri:
-        messages.add_message(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
+        messages.success(request, 'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
     if request.method == "POST":
         form = FormAddPaciente(request.POST)
@@ -106,10 +129,11 @@ def mi_perfil(request):
         messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
     if request.method == "POST":
-        form = FormPerfil(request.POST)
+        form = FormPerfil(request.POST, instance=request.user)
         if form.is_valid():
-            pass
+            user = form.save()
     else:
+        print("not valid")
         form = FormPerfil(instance=request.user)
     return render(request, 'nutricionista/perfil.html', {'form':form})
 
