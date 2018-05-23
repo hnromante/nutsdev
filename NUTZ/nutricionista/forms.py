@@ -7,8 +7,8 @@ from superadmin.models import Alimento
 
 class FormFichaGeneral(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['rut', 'nombres', 'apellidos', 'nacimiento', 'genero']
+        model = Paciente
+        fields = ['ocupacion', 'nacionalidad', 'observacion']
 
 
 class FormFichaNutricional(forms.ModelForm):

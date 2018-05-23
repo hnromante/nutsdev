@@ -52,26 +52,26 @@ def mis_pacientes(request):
 
 @login_required(login_url='/login-nutricionista/')
 def paciente_detalle(request, pk, ficha=''):
+    paciente = Paciente.objects.get(pk=pk)
     if not request.user.es_nutri:
         messages.warning(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
     if ficha == 'nutricional':
         form = FormFichaNutricional()
-        return render(request, 'nutricionista/paciente_ficha_nutricional.html', {'form': form})
+        return render(request, 'nutricionista/paciente_ficha_nutricional.html', {'form': form, 'paciente':paciente})
     elif ficha == 'bioquimica':
         form = FormFichaBioquimica
-        return render(request, 'nutricionista/paciente_ficha_bio.html', {'form': form})
+        return render(request, 'nutricionista/paciente_ficha_bio.html', {'form': form, 'paciente':paciente})
     elif ficha == 'general':
         form = FormFichaGeneral
-        return render(request, 'nutricionista/paciente_ficha_general.html', {'form': form})
+        return render(request, 'nutricionista/paciente_ficha_general.html', {'form': form, 'paciente':paciente})
     elif ficha == 'recomendaciones':
-
-        return render(request, 'nutricionista/paciente_recomendaciones.html')
+        return render(request, 'nutricionista/paciente_recomendaciones.html', {'paciente':paciente})
+    elif ficha == 'calculadora':
+        return render(request, 'nutricionista/paciente_calculadora.html', {'paciente':paciente})
     else:
         pass
     
-    paciente = Paciente.objects.get(pk=pk)
-
     return render(request, 'nutricionista/paciente_single.html', {'paciente':paciente})
 
 @login_required(login_url='/login-nutricionista/')
