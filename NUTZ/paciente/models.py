@@ -22,10 +22,43 @@ class Paciente(models.Model):
     #.
     peso = models.IntegerField(default=0, blank=True)
     #información bioquímica
+    colesterol_mgdl = models.FloatField(null=True)
+    ldl_mgdl = models.FloatField(null=True)
+    tg = models.FloatField(null=True)
+    hdl = models.FloatField(null=True)
     #.
-    #.
+    hemoglobina_gdll = models.FloatField(null=True)
+    leucocitos = models.FloatField(null=True)
+    plaquetas = models.FloatField(null=True)
+    v_c_m = models.FloatField(null=True) #volumen corpuscular medio
+    h_c_m = models.FloatField(null=True) # contenido corpuscular media
+    c_h_c_m = models.FloatField(null=True) # concentracion de hemoglobina cospuscular media
     #.
     glicemia_mgdl = models.FloatField(null=True, blank=True, default=0)
+
+    g_o_t = models.FloatField(null=True) # transaminaza glutamicooxalacetico
+    g_p_t = models.FloatField(null=True) # transaminaza glutamicopiruvica
+    f_alc = models.FloatField(null=True) # fosfataza alcalina
+    g_g_t = models.FloatField(null=True) # gamma glutamil transpeptidaza
+    bt = models.FloatField(null=True) # bilirubina total
+    bd = models.FloatField(null=True) #bilirubina directa
+    e_l_p = models.FloatField(null=True) #electroliticos plasmaticos
+    sodio = models.FloatField(null=True) 
+    potasio = models.FloatField(null=True)
+    cloro = models.FloatField(null=True)
+    creatinina = models.FloatField(null=True)
+    v_f_g = models.FloatField(null=True) #volumen de filtrado glomerular
+    r_a_c = models.FloatField(null=True) #relacion albumina-creatininuria
+    #tiroide
+    tsh = models.FloatField(null=True) # hormona estimulante tiroides
+    t3 = models.FloatField(null=True)
+    t4 = models.FloatField(null=True)
+
+    #opcional
+    t_t_g_o = models.FloatField(null=True) #opcional y es la tolerancia a la glucosa
+    glicemia_60 = models.FloatField(null=True) #minutos
+    glicemia_120 = models.FloatField(null=True) #minutos
+
 
     def __str__(self):
         # return "hah"
