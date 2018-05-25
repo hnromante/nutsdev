@@ -16,7 +16,6 @@ class GrupoAlimento(models.Model):
     lip_prom = models.FloatField()
     azu_prom = models.FloatField()
    
-
     def __str__(self):
         return self.nombre
 
