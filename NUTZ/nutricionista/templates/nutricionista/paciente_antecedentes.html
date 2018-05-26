@@ -4,10 +4,10 @@
 <nav>
     <div class="nav-wrapper center blue">
         <ul>
-        <li class="active"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha general </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Antecedentes Alimentarios </a></li>
+        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha general </a></li>
+        <li class="active"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Antecedentes Alimentarios </a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ficha nutricional </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ficha Bioquímica</a></li>
+        <li class="active"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ficha Bioquímica</a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">Calculadora piramidal</a></li>
         <li ><a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Recomendaciones</a></li>
         </ul>
@@ -17,7 +17,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <p class="flow-text">Información general</p>
+            <p class="flow-text">Antecedentes Alimentarios</p>
             {% for message in messages  %}
                 {% if message.tags == 'success' %}
                     <p class="green-text">{{message}}</p>

@@ -9,33 +9,38 @@ class Paciente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='paciente') #REF: user.paciente -> Llama al único paciente del usuario
     nutricionista = models.ForeignKey('nutricionista.Nutricionista', on_delete=models.CASCADE, null=True, blank=True, related_name='pacientes') #REF: user.pacientes -> Llama a todos los pacientes del nutricionista
     #Información personal - a llenar despues
-    ocupacion = models.CharField(max_length=255)
-    nacionalidad = models.CharField(max_length=100)
-    observacion = models.TextField(max_length=5000)
+    ocupacion = models.CharField(max_length=255, blank=True, default="")
+    nacionalidad = models.CharField(max_length=100, blank=True, default="")
+    observacion = models.TextField(max_length=500, blank=True, default="")
     #.
     #.
     #.
     ultima_atencion = models.DateTimeField(null=True, blank=True)
     #informacion nutricional
-    #.
-    #.
-    #.
-    peso = models.IntegerField(default=0, blank=True)
+    peso = models.FloatField(null=True, blank=True, default=0)
+    talla = models.FloatField(null=True, blank=True, default=0)
+    imc = models.FloatField(null=True, blank=True, default=0)
+    cintura = models.FloatField(null=True, blank=True, default=0)
+    presion_arterial = models.FloatField(null=True, blank=True, default=0)
+    h_g_t = models.FloatField(null=True, blank=True, default=0)
+    p_bicipital = models.FloatField(null=True, blank=True, default=0)
+    p_tripicital = models.FloatField(null=True, blank=True, default=0)
+    p_sub_escapular = models.FloatField(null=True, blank=True, default=0)
+    p_sub_iliaco = models.FloatField(null=True, blank=True, default=0)
+    c_braquial = models.FloatField(null=True, blank=True, default=0)
+    
     #información bioquímica
-    colesterol_mgdl = models.FloatField(null=True)
-    ldl_mgdl = models.FloatField(null=True)
-    tg = models.FloatField(null=True)
-    hdl = models.FloatField(null=True)
-    #.
-    hemoglobina_gdll = models.FloatField(null=True)
-    leucocitos = models.FloatField(null=True)
-    plaquetas = models.FloatField(null=True)
-    v_c_m = models.FloatField(null=True) #volumen corpuscular medio
-    h_c_m = models.FloatField(null=True) # contenido corpuscular media
-    c_h_c_m = models.FloatField(null=True) # concentracion de hemoglobina cospuscular media
-    #.
+    colesterol_mgdl = models.FloatField(null=True, blank=True, default=0)
+    ldl_mgdl = models.FloatField(null=True, blank=True, default=0)
+    tg = models.FloatField(null=True, blank=True, default=0)
+    hdl = models.FloatField(null=True, blank=True, default=0)
+    hemoglobina_gdll = models.FloatField(null=True, blank=True, default=0)
+    leucocitos = models.FloatField(null=True, blank=True, default=0)
+    plaquetas = models.FloatField(null=True, blank=True, default=0)
+    v_c_m = models.FloatField(null=True, blank=True, default=0) #volumen corpuscular medio
+    h_c_m = models.FloatField(null=True, blank=True, default=0) # contenido corpuscular media
+    c_h_c_m = models.FloatField(null=True, blank=True, default=0) # concentracion de hemoglobina cospuscular media
     glicemia_mgdl = models.FloatField(null=True, blank=True, default=0)
-
     g_o_t = models.FloatField(null=True, blank=True, default=0) # transaminaza glutamicooxalacetico
     g_p_t = models.FloatField(null=True, blank=True, default=0) # transaminaza glutamicopiruvica
     f_alc = models.FloatField(null=True, blank=True, default=0) # fosfataza alcalina

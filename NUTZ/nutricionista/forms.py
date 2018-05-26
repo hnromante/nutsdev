@@ -20,19 +20,64 @@ class FormFichaNutricional(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['peso'].widget.attrs.update()
+        self.fields['talla'].widget.attrs.update()
+        self.fields['imc'].widget.attrs.update()
+        self.fields['cintura'].widget.attrs.update()
+        self.fields['presion_arterial'].widget.attrs.update()
+        self.fields['h_g_t'].widget.attrs.update()
+        self.fields['p_bicipital'].widget.attrs.update()
+        self.fields['p_tripicital'].widget.attrs.update()
+        self.fields['p_sub_escapular'].widget.attrs.update()
+        self.fields['p_sub_iliaco'].widget.attrs.update()
+        self.fields['c_braquial'].widget.attrs.update()
 
     class Meta:
         model = Paciente
-        fields = ['peso']
+        fields = ['peso', 'talla', 'imc', 'cintura', 'presion_arterial', 'h_g_t', 'p_bicipital', 'p_tripicital', 'p_sub_escapular', 'p_sub_iliaco', 'c_braquial']
 
 
 class FormFichaBioquimica(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['colesterol_mgdl'].widget.attrs.update()
+        self.fields['ldl_mgdl'].widget.attrs.update()
+        self.fields['tg'].widget.attrs.update()
+        self.fields['hdl'].widget.attrs.update()
+        self.fields['hemoglobina_gdll'].widget.attrs.update()
+        self.fields['leucocitos'].widget.attrs.update()
+        self.fields['plaquetas'].widget.attrs.update()
+        self.fields['v_c_m'].widget.attrs.update()
+        self.fields['h_c_m'].widget.attrs.update()
+        self.fields['c_h_c_m'].widget.attrs.update()
         self.fields['glicemia_mgdl'].widget.attrs.update()
+        self.fields['g_o_t'].widget.attrs.update()
+        self.fields['g_p_t'].widget.attrs.update()
+        self.fields['f_alc'].widget.attrs.update()
+        self.fields['g_g_t'].widget.attrs.update()
+        self.fields['bt'].widget.attrs.update()
+        self.fields['bd'].widget.attrs.update()
+        self.fields['e_l_p'].widget.attrs.update()
+        self.fields['sodio'].widget.attrs.update()
+        self.fields['potasio'].widget.attrs.update()
+        self.fields['cloro'].widget.attrs.update()
+        self.fields['creatinina'].widget.attrs.update()
+        self.fields['v_f_g'].widget.attrs.update()
+        self.fields['r_a_c'].widget.attrs.update()
+        self.fields['tsh'].widget.attrs.update()
+        self.fields['t3'].widget.attrs.update()
+        self.fields['t4'].widget.attrs.update()
+        self.fields['t_t_g_o'].widget.attrs.update()
+        self.fields['glicemia_60'].widget.attrs.update()
+        self.fields['glicemia_120'].widget.attrs.update()
     class Meta:
         model = Paciente
-        fields = ['glicemia_mgdl', ]
+        fields = ['colesterol_mgdl', 'ldl_mgdl', 'tg', 'hdl',
+        'hemoglobina_gdll', 'leucocitos', 'plaquetas', 'v_c_m',
+        'h_c_m', 'c_h_c_m', 'glicemia_mgdl', 'g_o_t', 'g_p_t',
+        'f_alc', 'g_g_t', 'bt', 'bd', 'e_l_p', 'sodio', 'potasio',
+        'cloro', 'creatinina', 'v_f_g', 'r_a_c', 'tsh', 't3', 't4',
+        't_t_g_o', 'glicemia_60', 'glicemia_120'        
+                ]
 
 
 class FormPerfil(forms.ModelForm):
@@ -63,7 +108,7 @@ class FormAddPaciente(forms.ModelForm):
             
     class Meta:
         model = Paciente
-        fields = ['rut','email','nacionalidad','ocupacion','observacion','peso','glicemia_mgdl']
+        fields = ['rut','email']
         # exclude = ['user', 'nutricionista']
 
 class FormMenu(forms.ModelForm):
