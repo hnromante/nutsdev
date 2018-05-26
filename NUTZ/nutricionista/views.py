@@ -88,6 +88,9 @@ def paciente_detalle(request, pk, ficha=''):
     elif ficha == 'recomendaciones':
         return render(request, 'nutricionista/paciente_recomendaciones.html', {'paciente':paciente})
 
+    elif ficha == 'antecedentes':
+        return render(request, 'nutricionista/paciente_antecedentes.html', {'paciente':paciente})
+
     elif ficha == 'calculadora':
         return render(request, 'nutricionista/paciente_calculadora.html', {'paciente':paciente})
     else:
@@ -110,11 +113,7 @@ def agregar_paciente(request):
                                                 es_paciente=True,
                                                 es_nutri=False)
             Paciente.objects.create(user=user, nutricionista=nutricionista,
-                                    ocupacion=form.cleaned_data['ocupacion'],
-                                    nacionalidad=form.cleaned_data['nacionalidad'],
-                                    observacion=form.cleaned_data['observacion'],
-                                    peso=form.cleaned_data['peso'],
-                                    glicemia_mgdl=form.cleaned_data['glicemia_mgdl'])
+                                  )
             messages.success(request, 'Paciente creado correctamente.')
     else:
         form = FormAddPaciente()
