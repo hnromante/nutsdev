@@ -14,193 +14,79 @@
         </ul>
     </div>
 </nav>
-<div class="container">
 
-    <div class="row valign-wrapper" >
-        <div class="col s12 m4 l4 ">
-            <div>
-                <table class="bordered">
-                    <thead>
-                        <tr ><td colspan="6" ><h3 class="center-align">VCT %</h3></td></tr>
-                        <tr class="blue lighten-2 white-text">
-                            <td>Kcal requeridas</td>
-                            <td>1500</td>
-                            <td>VCT %</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <th>Grupo</th>
-                            <th>KCAL</th>
-                            <th>GR</th>
-                            <th>%</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>H.de Carbono</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Proteínas</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Lípidos</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-
-    
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col s12 m8 l8 center-align">
-            
-            <table class="bordered striped centered" style="border:1px;">
-                <tdead>
-                    <tr><td colspan="6" ><h3>CALCULADORA PIRAMIDAL</h3></td></tr>
-                    <th>Grupo</th>
-                    <th>Porciones</th>
-                    <th>Kcal</th>
-                    <th>H.de carbonos</th>
-                    <th>Proteinas</th>
-                    <th>Lípidos</th>
-                </tdead>
+<!--CALCULADORA PIRAMIDAL-->
+<div class="row" >
+    <div class="col s12 center-align">
+        
+        <table class="bordered striped center calculadora">
+            <thead>
+                <tr><td colspan="6" class="left-align" ><h3>CALCULADORA PIRAMIDAL</h3></td></tr>
+                <th width="30%">Grupo</th>
+                <th>Porciones</th>
+                <th>Kcal</th>
+                <th>CHO(g)</th>
+                <th>Proteinas(g)</th>
+                <th>Lípidos(g)</th>
+            </thead>
+            <tbody class="calculadora-body">
+               
+            </tbody>
+            <tr class="blue lighten-3 grey-text calculadora-subtotal">
+                <th colspan="2" class="white-text">Subtotal </th>
+                <td class="sub-porcion"></td>
+                <td class="sub-kcal"></td>
+                <td class="sub-cho"></td>
+                <td class="sub-pro"></td>
+                <td class="sub-lip"></td>
+            </tr>
+        </table>
+        <div class="right-align"><button class="btn green right-align">Calcular</button></div>
+    </div>
+</div>
+<!-- VCT-->
+<div class="row">
+    <div class="col s12">
+        <div>
+            <table class="bordered">
+                <thead>
+                    <tr ><td colspan="6" ><h3 class="center-align">VCT %</h3></td></tr>
+                    <tr class="blue lighten-2 white-text">
+                        <td>Kcal requeridas</td>
+                        <td>1500</td>
+                        <td>VCT %</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <th>Grupo</th>
+                        <th>KCAL</th>
+                        <th>GR</th>
+                        <th>%</th>
+                    </tr>
+                </thead>
                 <tbody>
-                    <tr>                    
-                        <td>Cerales</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
+                    <tr>
+                        <td>H.de Carbono</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                    <tr>                    
-                        <td>Verduras general</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
+                    <tr>
+                        <td>Proteínas</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                    <tr>                    
-                        <td>Verduras libre cosnumo</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
+                    <tr>
+                        <td>Lípidos</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                    <tr>                    
-                        <td>Frutas</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>                    
-                        <td>Carnes altas en grasas y huevos</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>                    
-                        <td>Carnes bajas en grasas</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>                    
-                        <td>Lacteos altos en grasas</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>                    
-                        <td>Lacteos medios en grasas</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>                    
-                        <td>Lacteos bajos en grasas</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>                    
-                        <td>Leguminosas secas</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>                    
-                        <td>Aceites y grasas</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>                    
-                        <td>Alimentos ricos en lípidos</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>                    
-                        <td>Azucares</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                    </tr>
+
+
                 </tbody>
-                <tr class="blue lighten-3 grey-text">
-                    <th colspan="2" class="white-text">Subtotal gramos</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr class="blue lighten-2 grey-text">
-                        <th colspan="2" class="white-text">Subtotal KCAL</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                </tr>
-                <tr class="blue lighten-2 grey-text">
-                    <th colspan="2" class="white-text">Porcentaje de adecuación</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
             </table>
-            <div class="right-align"><button class="btn green right-align">Calcular</button></div>
         </div>
     </div>
 </div>
@@ -209,24 +95,78 @@
 {% endblock main %}
 {% block costumjs %}
 <script type="text/javascript">
-    let lista_grupo_alimentos = []
+    /**
+    *!Funcion para capturar la data de grupo de alimento
+    */
     $.getJSON("{% url 'grupo-alimentos-json' %}", function(data){
-
+        let lista_grupo_alimentos = []
         lista_grupo_alimentos = JSON.parse(data)
-        console.log(data)
-        console.log(lista_grupo_alimentos)
+        lista_grupo_alimentos.forEach(function(element){
+            $(".calculadora-body").append(`
+            <tr class="grey-text center" 
+            data-nombre="${element.nombre}" 
+            data-kcal="${element.kcal_prom}"
+            data-cho="${element.cho_prom}"
+            data-pro="${element.pro_prom}"
+            data-lip="${element.lip_prom}">
+                <td >${element.nombre}</td>
+                <td class="porcion" style="width:100px;"><input type="text" value=0 min=0 max=10></td>
+                <td class="kcal">0</td>
+                <td class="cho">0</td>
+                <td class="pro">0</td>
+                <td class="lip">0</td>
+            </tr>`)
+        })
     })
-
-    $(document).ready(function(){
-        $('input.autocomplete').autocomplete({
-          data: {
-            "Nombre": null,
-            "Microsoft": null,
-            "Google": 'https://placehold.it/250x250'
-          },
+    /**
+    *!Función para calcular el valor lateral de los campos
+    */
+    let multiplicarAtributos = (porcion, arrayAtributos) => {
+        return arrayAtributos.map(e => e*porcion);
+    }
+    let sumarSubtotal = (array) => {
+        return array.reduce((sum, val) => {
+            sum + val
         });
-    });
+    }
+    /**
+    *!Función JQuery que captura la porcion y los atributos
+    */
+    $(document).ready(function(){
+        $("input").on("keyup", ()=>{
+            $(".calculadora-body").children('tr').each((i, e) => { 
+                const porcion = $(e).find("input").val()
+                const kcal = $(e).data("kcal")
+                const cho = $(e).data("cho")
+                const pro = $(e).data("pro")
+                const lip = $(e).data("lip")
+                atributos = [kcal, cho, pro, lip]
+                a_x_p = multiplicarAtributos(porcion, atributos)
+                //a_x_p = Atributos kcal,cho,pro,lip POR porcion.
+                $(e).find(".kcal").html(a_x_p[0])
+                $(e).find(".cho").html(a_x_p[1])
+                $(e).find(".pro").html(a_x_p[2])
+                $(e).find(".lip").html(a_x_p[3])    
+  
+            })
+            //Asignar subtotal
+            porciones = []
+            $(".porcion").each((e)=> {
+                porciones.push($(e).find("input").val())
+            })
+            
+            const sub_porcion = sumarSubtotal(porciones)
+            const sub_kcal = sumarSubtotal(kcals)
+            const sub_cho = sumarSubtotal(chos)
+            const sub_pro = sumarSubtotal(pros)
+            const sub_lip = sumarSubtotal(lips)
 
-
+            $(".sub-porcion").html(sub_porcion)
+            $(".sub-kcal").html(sub_kcal)
+            $(".sub-cho").html(sub_cho)
+            $(".sub-pro").html(sub_pro)
+            $(".sub-lip").html(sub_lip)
+        })
+    })
 </script>
 {% endblock costumjs %}
