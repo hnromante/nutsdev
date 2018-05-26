@@ -23,9 +23,7 @@ from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core import serializers
 from cuentas.models import User
-
-
-
+from django.http import JsonResponse
 
 def calculadora(request):
     return render(request,template_name='nutricionista/calculadora.html')
@@ -177,4 +175,6 @@ class MenuDetalle(UpdateView):
     model = Menu
     fields = '__all__'
     template_name = 'nutricionista/menu_detail.html'
+    redirect_url = ''
         
+

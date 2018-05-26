@@ -15,6 +15,7 @@
     </div>
 </nav>
 <div class="container">
+
     <div class="row valign-wrapper" >
         <div class="col s12 m4 l4 ">
             <div>
@@ -203,4 +204,29 @@
         </div>
     </div>
 </div>
+
+
 {% endblock main %}
+{% block costumjs %}
+<script type="text/javascript">
+    let lista_grupo_alimentos = []
+    $.getJSON("{% url 'grupo-alimentos-json' %}", function(data){
+
+        lista_grupo_alimentos = JSON.parse(data)
+        console.log(data)
+        console.log(lista_grupo_alimentos)
+    })
+
+    $(document).ready(function(){
+        $('input.autocomplete').autocomplete({
+          data: {
+            "Nombre": null,
+            "Microsoft": null,
+            "Google": 'https://placehold.it/250x250'
+          },
+        });
+    });
+
+
+</script>
+{% endblock costumjs %}

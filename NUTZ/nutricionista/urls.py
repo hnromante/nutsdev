@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^mis-menus/$', views.mis_menus, name='mis-menus'),
     url(r'^mis-menus/(?P<pk>\d+)/$', views.MenuDetalle.as_view(), name='menu-detalle'),
     url(r'^mis-pautas/$', views.mis_pautas, name='mis-pautas'),
+    
 ]
 
