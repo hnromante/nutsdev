@@ -20,6 +20,7 @@ class Paciente(models.Model):
     peso = models.FloatField(null=True, blank=True, default=0)
     talla = models.FloatField(null=True, blank=True, default=0)
     imc = models.FloatField(null=True, blank=True, default=0)
+    diagnostico_peso = models.CharField (null=True, blank=True, default="",max_length=15)
     cintura = models.FloatField(null=True, blank=True, default=0)
     presion_arterial = models.FloatField(null=True, blank=True, default=0)
     h_g_t = models.FloatField(null=True, blank=True, default=0)
@@ -63,6 +64,26 @@ class Paciente(models.Model):
     t_t_g_o = models.FloatField(null=True, blank=True, default=0) #opcional y es la tolerancia a la glucosa
     glicemia_60 = models.FloatField(null=True, blank=True, default=0) #minutos
     glicemia_120 = models.FloatField(null=True, blank=True, default=0) #minutos
+
+    #Antecedentes Alimentarios
+    perdida_peso = models.FloatField(null=True, blank=True, default=0)
+    ganancia_peso = models.FloatField(null=True, blank=True, default=0)
+    dif_deglucion = models.CharField(null=True, blank=True, default="", max_length=20)
+    OPCIONES_APETITOS= (
+        ('BA', 'Baja'),
+        ('ME', 'Media'),
+        ('AL', 'Alta'),
+        )
+    apetito = models.CharField(
+        max_length=2,
+        choices=OPCIONES_APETITOS,
+        default='Baja',
+        )
+    vomito = models.BooleanField(default=False)
+    nauseas = models.BooleanField(default=False)
+    diuresis = models.BooleanField(default=False)
+    intolerancia_alimentaria = models.BooleanField(default=False)
+    dietas = models.CharField(null=True, blank=True, default="", max_length=30)
 
 
     def __str__(self):

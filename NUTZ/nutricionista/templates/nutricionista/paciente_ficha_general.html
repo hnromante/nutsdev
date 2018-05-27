@@ -16,7 +16,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col s6">
             <p class="flow-text">Información general</p>
             {% for message in messages  %}
                 {% if message.tags == 'success' %}
@@ -25,12 +25,27 @@
                     <p>{{message}}</p>
                 {% endif %}
             {% endfor %}
-            <form action="" method="post">
+            <form name="form_usuario" action="" method="post">
                 {% csrf_token %}
-                {{form}}
+                {{form_usuario}}
                 <input type="submit" value="Actualizar" class="btn">  
             </form>
         </div>
+        <div class="col s6">
+                <p class="flow-text">Información general</p>
+                {% for message in messages  %}
+                    {% if message.tags == 'success' %}
+                        <p class="green-text">{{message}}</p>
+                    {% else %}
+                        <p>{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+                <form name="form_paciente" action="" method="post">
+                    {% csrf_token %}
+                    {{form_paciente}}
+                    <input type="submit" value="Actualizar" class="btn">  
+                </form>
+            </div>
     </div>
 </div>
 {% endblock main %}

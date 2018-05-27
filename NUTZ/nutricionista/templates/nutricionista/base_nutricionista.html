@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load static %}
 {% block costumcss %}
 <style>
     header, main, footer {
-        padding-left: 300px;
+        padding-left: 0px;
     }
 
     @media only screen and (max-width : 992px) {
@@ -29,15 +30,23 @@
         </div>
     </div>
 </nav>
-<ul class="sidenav sidenav-fixed">
-    <li><a href="{% url 'nutricionista' %}">Inicio</a></li>
-    <li><a href="{% url 'pacientes-agregar' %}">Agregar Paciente</a></li> 
-    <li><a href="{% url 'pacientes' %}">Mis Pacientes</a></li>  
-    <li><a href="{% url 'mis-menus' %}">Mis Menús</a></li>
-    <li><a href="{% url 'mis-pautas' %}">Mis Pautas alimentarias</a></li>
-    <li><a href="{% url 'perfil' %}">Mi Perfil</a></li>
-    <li><a href="{% url 'logout' %}">Cerrar Sesión</a></li>
-</ul> 
+
+
+<ul id="slide-out" class="sidenav">
+        <li><div class="user-view">
+          <a href="#user"><img src="{% static 'img/nuts_logo.png' %}" width="200px" height="150px"></a>
+          <a href="#name"><span class="black-text name">{{request.user.get_nombre_completo}}</span></a>
+          <a href="#email"><span class="black-text email">{{request.user.get_nombre}}</span></a>
+        </div></li>
+        <li><a href="{% url 'pacientes-agregar' %}"><i class="material-icons">add</i>Agregar Paciente</a></li> 
+        <li><a href="{% url 'pacientes' %}"><i class="material-icons">assignment_ind</i>Mis Pacientes</a></li>  
+        <li><a href="{% url 'mis-menus' %}"><i class="material-icons">restaurant</i> Menús</a></li>
+        <li><a href="{% url 'perfil' %}"><i class="material-icons">person</i>Mi Perfil</a></li>
+        <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li
+        <li><div class="divider"></div></li>
+      </ul>
+      <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
 
 
 {% endblock header %} 

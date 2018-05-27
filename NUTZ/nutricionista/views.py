@@ -10,7 +10,9 @@ from .forms import (
     FormPautaAlimentaria,
     FormFichaNutricional,
     FormFichaBioquimica,
-    FormFichaGeneral
+    FormFichaGeneral,
+    FormAntecedentesAlimentarios,
+    FormUsuario
 )
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
@@ -77,19 +79,31 @@ def paciente_detalle(request, pk, ficha=''):
     
     elif ficha == 'general':
         if request.method == 'POST':
-            form = FormFichaGeneral(request.POST, instance=paciente)
-            if form.is_valid():
-                form.save()
+            form_paciente = FormFichaGeneral(request.POST, instance=paciente)
+            form_usuario = FormUsuario(request.POST, instance=request.user)
+            if form_paciente.is_valid():
+                form_paciente.save()
+                messages.success(request, "Información actualizada")
+            elif form_usuario.is_valid():
+                form_usuario.save()
                 messages.success(request, "Información actualizada")
         else:
-            form = FormFichaGeneral(instance=paciente)
-        return render(request, 'nutricionista/paciente_ficha_general.html', {'form': form, 'paciente':paciente})
+            form_paciente = FormFichaGeneral(instance=paciente)
+            form_usuario = FormUsuario(instance=request.user) 
+        return render(request, 'nutricionista/paciente_ficha_general.html', {'form_paciente': form_paciente, 'form_usuario': form_usuario, 'paciente':paciente})
 
     elif ficha == 'recomendaciones':
         return render(request, 'nutricionista/paciente_recomendaciones.html', {'paciente':paciente})
 
     elif ficha == 'antecedentes':
-        return render(request, 'nutricionista/paciente_antecedentes.html', {'paciente':paciente})
+        if request.method == 'POST':
+            form = FormAntecedentesAlimentarios(request.POST, instance=paciente)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Información actualizada")
+        else:
+            form = FormAntecedentesAlimentarios(instance=paciente)
+        return render(request, 'nutricionista/paciente_antecedentes.html', {'form': form, 'paciente':paciente})
 
     elif ficha == 'calculadora':
         return render(request, 'nutricionista/paciente_calculadora.html', {'paciente':paciente})

@@ -7,7 +7,7 @@
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha general </a></li>
         <li class="active"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Antecedentes Alimentarios </a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ficha nutricional </a></li>
-        <li class="active"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ficha Bioquímica</a></li>
+        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ficha Bioquímica</a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">Calculadora piramidal</a></li>
         <li ><a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Recomendaciones</a></li>
         </ul>
@@ -16,7 +16,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col s12">
             <p class="flow-text">Antecedentes Alimentarios</p>
             {% for message in messages  %}
                 {% if message.tags == 'success' %}
@@ -25,12 +25,81 @@
                     <p>{{message}}</p>
                 {% endif %}
             {% endfor %}
+         
+        </div>
+    </div>
+    <div class="row">
             <form action="" method="post">
                 {% csrf_token %}
-                {{form}}
-                <input type="submit" value="Actualizar" class="btn">  
-            </form>
-        </div>
+                    <div class="col s12">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td><label for="id_perdida_peso">Perdida Peso</label>{{form.perdida_peso}}</td>
+                                        <td><label for="id_ganancia_peso">Ganancia Peso</label>{{form.ganancia_peso}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><label for="id_dif_deglucion">Dificultad de deglucion</label>{{form.dif_deglucion}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><label for="id_apetito">Apetito</label>{{form.apetito}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>Vomito</label>
+                                            <div class="switch">
+                                                <label>
+                                                    Si
+                                                    {{form.vomito}}
+                                                    <span class="lever"></span>
+                                                    No
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                                <label>Nauseas</label>
+                                                <div class="switch">
+                                                    <label>
+                                                        Si
+                                                        {{form.nauseas}}
+                                                        <span class="lever"></span>
+                                                        No
+                                                    </label>
+                                                </div>
+                                        </td>
+                                    </tr>    
+                                    <tr>    
+                                        <td>
+                                            <label>Diuresis</label>
+                                            <div class="switch">
+                                                <label>
+                                                    Si
+                                                    {{form.diuresis}}
+                                                    <span class="lever"></span>
+                                                    No
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <label>Intolerancia Alimentaria</label>
+                                            <div class="switch">
+                                                <label>
+                                                    Si
+                                                    {{form.intolerancia_alimentaria}}
+                                                    <span class="lever"></span>
+                                                    No
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                    <div class="row center">
+                        <input type="submit" value="Actualizar" class="btn"> 
+                    </div>   
+                     
+                </form>
     </div>
 </div>
 {% endblock main %}

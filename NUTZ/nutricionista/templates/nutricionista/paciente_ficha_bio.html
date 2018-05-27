@@ -27,8 +27,57 @@
             {% endfor %}
             <form action="" method="post">
                 {% csrf_token %}
-                {{form}}
-                <input type="submit" value="Actualizar" class="btn">  
+                <div class="row">
+                        <div class="col">
+                            <table class="bordered">
+                                <tbody>
+                                    <tr>
+                                        <td><label for="id_colesterol_mgdl">Colesterol</label>{{form.colesterol_mgdl}}</td>
+                                        <td><label for="id_ldl_mgdl">LDL</label>{{form.ldl_mgdl}}</td>
+                                        <td><label for="id_tg">TG</label>{{form.tg}}</td>
+                                        <td><label for="id_hdl">HDL</label>{{form.hdl}}</td>
+                                        <td><label for="id_hemoglobina">Hemoglobina</label>{{form.hemoglobina_gdll}}</td>
+                                        <td><label for="id_leucocitos">Leucocitos</label>{{form.leucocitos}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="id_plaquetas">Plaquetas</label>{{form.plaquetas}}</td>
+                                        <td><label for="id_v_c_m">VCM</label>{{form.v_c_m}}</td>
+                                        <td><label for="id_h_c_m">HCM</label>{{form.h_c_m}}</td>
+                                        <td><label for="id_hdl">CHCM</label>{{form.c_h_c_m}}</td>
+                                        <td><label for="id_glicemia_mgdl">Glicemia</label>{{form.glicemia_mgdl}}</td>
+                                        <td><label for="id_g_o_t">GOT</label>{{form.g_o_t}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="id_g_p_t">GPT</label>{{form.g_p_t}}</td>
+                                        <td><label for="id_f_alc">F. Alcalina</label>{{form.f_alc}}</td>
+                                        <td><label for="id_g_g_t">GGT</label>{{form.g_g_t}}</td>
+                                        <td><label for="id_bt">BT</label>{{form.bt}}</td>
+                                        <td><label for="id_bd">BD</label>{{form.bd}}</td>
+                                        <td><label for="id_e_l_p">ELP</label>{{form.e_l_p}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="id_sodio">Sodio</label>{{form.sodio}}</td>
+                                        <td><label for="id_potasio">Potasio</label>{{form.potasio}}</td>
+                                        <td><label for="id_cloro">Cloro</label>{{form.cloro}}</td>
+                                        <td><label for="id_creatinina">Creatinina</label>{{form.creatinina}}</td>
+                                        <td><label for="id_v_f_g">VFG</label>{{form.v_f_g}}</td>
+                                        <td><label for="id_r_a_c">RAC</label>{{form.r_a_c}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="id_tsh">TSH</label>{{form.tsh}}</td>
+                                        <td><label for="id_t3">T3</label>{{form.t3}}</td>
+                                        <td><label for="id_t4">T4</label>{{form.t4}}</td>
+                                        <td><label for="id_t_t_g_o">TTGO</label>{{form.t_t_g_o}}</td>
+                                        <td><label for="id_glicemia_60">Glicemia 60</label>{{form.glicemia_60}}</td>
+                                        <td><label for="id_glicemia_120">Glicemia 120</label>{{form.glicemia_120}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row center">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Actualizar</button>
+                    </div>  
             </form>
         </div>
     </div>

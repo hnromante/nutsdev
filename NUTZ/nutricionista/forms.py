@@ -5,6 +5,17 @@ from nutricionista.models import Menu, PautaAlimentaria
 from django.forms.widgets import CheckboxSelectMultiple
 from superadmin.models import Alimento
 
+class FormUsuario(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombres'].widget.attrs.update()
+        self.fields['apellidos'].widget.attrs.update()
+        self.fields['nacimiento'].widget.attrs.update()
+        self.fields['genero'].widget.attrs.update()
+    class Meta:
+        model = User
+        fields = ['nombres', 'apellidos', 'nacimiento', 'genero']
+
 class FormFichaGeneral(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -21,7 +32,8 @@ class FormFichaNutricional(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['peso'].widget.attrs.update()
         self.fields['talla'].widget.attrs.update()
-        self.fields['imc'].widget.attrs.update()
+        self.fields['imc'].widget.attrs.update({'readonly':'readonly'})
+        self.fields['diagnostico_peso'].widget.attrs.update({'readonly':'readonly'})
         self.fields['cintura'].widget.attrs.update()
         self.fields['presion_arterial'].widget.attrs.update()
         self.fields['h_g_t'].widget.attrs.update()
@@ -33,7 +45,24 @@ class FormFichaNutricional(forms.ModelForm):
 
     class Meta:
         model = Paciente
-        fields = ['peso', 'talla', 'imc', 'cintura', 'presion_arterial', 'h_g_t', 'p_bicipital', 'p_tripicital', 'p_sub_escapular', 'p_sub_iliaco', 'c_braquial']
+        fields = ['peso', 'talla', 'imc', 'diagnostico_peso', 'cintura', 'presion_arterial', 'h_g_t', 'p_bicipital', 'p_tripicital', 'p_sub_escapular', 'p_sub_iliaco', 'c_braquial']
+
+class FormAntecedentesAlimentarios(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['perdida_peso'].widget.attrs.update()
+        self.fields['ganancia_peso'].widget.attrs.update()
+        self.fields['dif_deglucion'].widget.attrs.update()
+        self.fields['apetito'].widget.attrs.update()
+        self.fields['vomito'].widget.attrs.update()
+        self.fields['nauseas'].widget.attrs.update()
+        self.fields['diuresis'].widget.attrs.update()
+        self.fields['intolerancia_alimentaria'].widget.attrs.update()
+        self.fields['dietas'].widget.attrs.update()
+
+    class Meta:
+        model = Paciente
+        fields = ['perdida_peso', 'ganancia_peso', 'dif_deglucion', 'apetito', 'vomito', 'nauseas', 'diuresis', 'intolerancia_alimentaria', 'dietas']
 
 
 class FormFichaBioquimica(forms.ModelForm):
