@@ -53,15 +53,15 @@ $(document).ready(function(){
         kcals_num = kcals.map(e => Number(e))
 
         const chos = []
-        $(".kcal").each((i,e) => { chos.push($(e).html()) })
+        $(".cho").each((i,e) => { chos.push($(e).html()) })
         chos_num = chos.map(e => Number(e))
 
         const prots = []
-        $(".kcal").each((i,e) => { prots.push($(e).html()) })
+        $(".pro").each((i,e) => { prots.push($(e).html()) })
         prots_num = prots.map(e => Number(e))
 
         const lips = []
-        $(".kcal").each((i,e) => { lips.push($(e).html()) })
+        $(".lip").each((i,e) => { lips.push($(e).html()) })
         lips_num = lips.map(e => Number(e))
 
         sub_porciones = porciones_num.reduce((suma, val) => suma + val)
@@ -75,6 +75,7 @@ $(document).ready(function(){
         $(".sub-cho").html(sub_cho)
         $(".sub-pro").html(sub_pro)
         $(".sub-lip").html(sub_lip)
+        actualizarAdecuacion()
         
     })
     total_kcal = $(".total-kcal").html()
@@ -105,6 +106,7 @@ $(".kcal-fis").each((i,e) => {
         let peso = $("#peso-a-utilizar").val()
         let kcal = Number($("#kcal-a-utilizar").html())
         $(".total-kcal").html(peso*kcal)
+        actualizarAdecuacion()
     })
 })  
 $("#peso-a-utilizar").on("keyup", (e) => {
