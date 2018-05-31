@@ -1,0 +1,124 @@
+[
+    {
+        "model": "superadmin.grupoalimento",
+        "pk": 3,
+        "fields": {
+            "nombre": "Verduras generales",
+            "kcal_prom": 30.0,
+            "cho_prom": 2.5,
+            "pro_prom": 0.0,
+            "lip_prom": 0.0,
+            "azu_prom": 0.0
+        }
+    }, {
+        "model": "superadmin.grupoalimento",
+        "pk": 4,
+        "fields": {
+            "nombre": "Frutas",
+            "kcal_prom": 65.0,
+            "cho_prom": 15.0,
+            "pro_prom": 0.0,
+            "lip_prom": 0.0,
+            "azu_prom": 0.0
+        }
+    }, {
+        "model": "superadmin.grupoalimento",
+        "pk": 5,
+        "fields": {
+            "nombre": "Carnes altas en grasa",
+            "kcal_prom": 120.0,
+            "cho_prom": 1.0,
+            "pro_prom": 11.0,
+            "lip_prom": 8.0,
+            "azu_prom": 0.0
+        }
+    }, {
+        "model": "superadmin.grupoalimento",
+        "pk": 6,
+        "fields": {
+            "nombre": "Carnes bajas en grasas",
+            "kcal_prom": 65.0,
+            "cho_prom": 1.0,
+            "pro_prom": 11.0,
+            "lip_prom": 2.0,
+            "azu_prom": 0.0
+        }
+    }, {
+        "model": "superadmin.grupoalimento",
+        "pk": 7,
+        "fields": {
+            "nombre": "Lacteos altos en grasas",
+            "kcal_prom": 110.0,
+            "cho_prom": 9.0,
+            "pro_prom": 5.0,
+            "lip_prom": 6.0,
+            "azu_prom": 0.0
+        }
+    }, {
+        "model": "superadmin.grupoalimento",
+        "pk": 8,
+        "fields": {
+            "nombre": "Lacteos medios en grasas",
+            "kcal_prom": 85.0,
+            "cho_prom": 9.0,
+            "pro_prom": 5.0,
+            "lip_prom": 3.0,
+            "azu_prom": 0.0
+        }
+    }, {
+        "model": "superadmin.grupoalimento",
+        "pk": 9,
+        "fields": {
+            "nombre": "Lacteos bajos en grasa",
+            "kcal_prom": 70.0,
+            "cho_prom": 10.0,
+            "pro_prom": 7.0,
+            "lip_prom": 0.0,
+            "azu_prom": 0.0
+        }
+    }, {
+        "model": "superadmin.grupoalimento",
+        "pk": 10,
+        "fields": {
+            "nombre": "Leguminosas secas",
+            "kcal_prom": 170.0,
+            "cho_prom": 30.0,
+            "pro_prom": 11.0,
+            "lip_prom": 1.0,
+            "azu_prom": 0.0
+        }
+    }, {
+        "model": "superadmin.grupoalimento",
+        "pk": 11,
+        "fields": {
+            "nombre": "Grasas y aceites",
+            "kcal_prom": 180.0,
+            "cho_prom": 0.0,
+            "pro_prom": 0.0,
+            "lip_prom": 20.0,
+            "azu_prom": 0.0
+        }
+    }, {
+        "model": "superadmin.grupoalimento",
+        "pk": 12,
+        "fields": {
+            "nombre": "Alimentos ricos en lipidos",
+            "kcal_prom": 175.0,
+            "cho_prom": 5.0,
+            "pro_prom": 5.0,
+            "lip_prom": 15.0,
+            "azu_prom": 0.0
+        }
+    }, {
+        "model": "superadmin.grupoalimento",
+        "pk": 13,
+        "fields": {
+            "nombre": "Azucares",
+            "kcal_prom": 20.0,
+            "cho_prom": 5.0,
+            "pro_prom": 0.0,
+            "lip_prom": 0.0,
+            "azu_prom": 0.0
+        }
+    }
+]

@@ -77,7 +77,7 @@ class Paciente(models.Model):
     apetito = models.CharField(
         max_length=2,
         choices=OPCIONES_APETITOS,
-        default='Baja',
+        default='BA',
         )
     vomito = models.BooleanField(default=False)
     nauseas = models.BooleanField(default=False)
