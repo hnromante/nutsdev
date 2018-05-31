@@ -9,6 +9,7 @@ pylint = "*"
 whitenoise = "*"
 gunicorn = "*"
 dj-database-url = "*"
+"psycopg2" = "*"
 
 [dev-packages]
 pylint = "*"
