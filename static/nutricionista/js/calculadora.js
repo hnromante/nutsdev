@@ -122,3 +122,58 @@ $("#peso-a-utilizar").on("keyup", (e) => {
 let multiplicarAtributos = (porcion, arrayAtributos) => {
     return arrayAtributos.map(e => e*porcion);
 }
+
+$("#total-kcal").bind("DOMSubtreeModified",function(){
+    actualizarVCT()
+});
+
+$(".porc-cho, .porc-pro, .porc-lip").on("keyup change", (e) => {
+    actualizarVCT()
+    actualizarAdecuacion()
+})
+
+let actualizarVCT = () => {
+    let total_kcal = $("#total-kcal").html()
+
+    let kcal_cho = (total_kcal * $(".porc-cho").val()) / 100
+    $(".kcal-cho").html(kcal_cho)
+    $(".gr-cho").html((kcal_cho/4).toFixed(2))
+
+    let kcal_pro = (total_kcal * $(".porc-pro").val()) / 100
+    $(".kcal-pro").html(kcal_pro)
+    $(".gr-pro").html((kcal_pro/4).toFixed(2))
+
+    let kcal_lip = (total_kcal * $(".porc-lip").val()) / 100
+    $(".kcal-lip").html(kcal_lip)
+    $(".gr-lip").html((kcal_lip/9).toFixed(2))
+
+    $("#vct-porc").html(Number($(".porc-cho").val()) + Number($(".porc-pro").val()) + Number($(".porc-lip").val()))
+    vct_porc = Number($("#vct-porc").html())
+    if (vct_porc>100){
+        $("#vct-porc").addClass("red-text")
+        alert("VCT no puede ser mayor a 100%")
+    }else{
+        $("#vct-porc").removeClass("red-text")
+    }
+}
+let actualizarAdecuacion = () => {
+    total_kcal = Number($("#total-kcal").html())
+    sub_kcal = Number($(".sub-kcal").html())
+    porc_ade = ((sub_kcal*100)/total_kcal).toFixed(2)
+    $(".porc_ade_kcal").html(`${porc_ade} % adecuación`)
+
+    total_cho = Number($(".kcal-cho").html())
+    sub_cho = Number($(".sub-cho").html())
+    porc_ade = ((sub_cho*100)/total_cho).toFixed(2)
+    $(".porc_ade_cho").html(`${porc_ade} % adecuación`)
+
+    total_pro = Number($(".kcal-pro").html())
+    sub_pro = Number($(".sub-pro").html())
+    porc_ade = ((sub_pro*100)/total_pro).toFixed(2)
+    $(".porc_ade_pro").html(`${porc_ade} % adecuación`)
+
+    total_lip = Number($(".kcal-lip").html())
+    sub_lip = Number($(".sub-lip").html())
+    porc_ade = ((sub_lip*100)/total_lip).toFixed(2)
+    $(".porc_ade_lip").html(`${porc_ade} % adecuación`)
+}
