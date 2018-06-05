@@ -27,7 +27,8 @@ $.getJSON(url_alimentos_json, function(data){
 *!Función JQuery que captura la porcion y los atributos
 */
 $(document).ready(function(){ 
-    $(".calculadora-body tr input").on("keyup change", ()=>{
+    $(".calculadora-body tr input").on("keyup change", function(){
+        console.log("KEY UP CHANGE")
         $(".calculadora-body").children('tr').each((i, e) => { 
             const porcion = $(e).find("input").val()
             const kcal = $(e).data("kcal")
