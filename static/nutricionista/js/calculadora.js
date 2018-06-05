@@ -13,7 +13,7 @@ $.getJSON(url_alimentos_json, function(data){
         data-cho="${element.cho_prom}"
         data-pro="${element.pro_prom}"
         data-lip="${element.lip_prom}">
-            <td >${element.nombre}</td>
+            <td >${element.nombre} - (Kcal: ${element.kcal_prom}, Cho: ${element.cho_prom},   Proteínas: ${element.pro_prom}, Lipidos: ${element.lip_prom}) </td>
             <td class="porcion" style="width:100px;"><input type="number" value=0 min=0 max=10></td>
             <td class="kcal">0</td>
             <td class="cho">0</td>
@@ -27,7 +27,7 @@ $.getJSON(url_alimentos_json, function(data){
 *!Función JQuery que captura la porcion y los atributos
 */
 $(document).ready(function(){ 
-    $("input").on("keyup change", ()=>{
+    $(".calculadora-body tr input").on("keyup change", ()=>{
         $(".calculadora-body").children('tr').each((i, e) => { 
             const porcion = $(e).find("input").val()
             const kcal = $(e).data("kcal")
@@ -91,7 +91,6 @@ $(document).ready(function(){
     
 })
 
-
 /**
 * ! Captura cuando se ahc click en un 'kcal-fis'. Para asignarselo al 'Kcal según actividad fisica'
 **/
@@ -113,6 +112,8 @@ $("#peso-a-utilizar").on("keyup", (e) => {
     let peso = e.target.value
     let kcal = Number($("#kcal-a-utilizar").html())
     $(".total-kcal").html(peso*kcal)
+    actualizarAdecuacion()
+    actualizarVCT()
 })
 
 
