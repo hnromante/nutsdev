@@ -94,6 +94,7 @@ def paciente_detalle(request, pk, ficha=''):
             form_usuario = FormUsuario(request.POST, instance=paciente.user)
             if form_usuario.is_valid():
                 form_usuario.save()
+                print("dddd")
                 messages.success(request, "Información actualizada")
         else:
             form_usuario = FormUsuario(instance=paciente.user) 
