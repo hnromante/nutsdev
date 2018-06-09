@@ -26,7 +26,7 @@ $.getJSON(url_alimentos_json, function(data){
 /**
 *!Función JQuery que captura la porcion y los atributos
 */
-$(document).on("keyup change", "input", function(){
+$(document).on("keyup change", "calculadora-body input", function(){
     console.log("KEY UP CHANGE")
     $(".calculadora-body").children('tr').each((i, e) => { 
         const porcion = $(e).find("input").val()

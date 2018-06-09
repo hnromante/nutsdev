@@ -2,17 +2,7 @@
 {% load static%}
 
 {% block costumcss %}
-<style>
-    header, main, footer {
-        padding-left: 300px;
-    }
 
-    @media only screen and (max-width : 992px) {
-        header, main, footer {
-            padding-left: 0;
-        }
-    }
-</style>
 {% endblock costumcss %}
 
 {% block header %}
@@ -23,7 +13,6 @@
 
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
-
                 </ul>
             </div>
         </div>
@@ -32,6 +21,8 @@
 
 <ul class="sidenav sidenav-fixed">
     <li><a href="{% url 'superadmin' %}">Inicio</a></li>
+    <li><a href="{% url 'gestor-grupo-alimentos' %}">Gestor grupo alimentos</a></li>
+    <li><a href="{% url 'gestor-alimentos' %}">Gestor alimentos</a></li>
 </ul>    
 {% endblock header %} 
 
