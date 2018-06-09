@@ -24,13 +24,14 @@
         <a href="#email"><span class="black-text email">{{request.user.get_nombre}}</span></a>
     </div></li>
     <li><a href="{% url 'pacientes-agregar' %}"><i class="material-icons">add</i>Agregar Paciente</a></li> 
-    <li><a href="{% url 'pacientes' %}"><i class="material-icons">assignment_ind</i>Mis Pacientes</a></li>
+    <li><a href="{% url 'pacientes' %}"><i class="material-icons">assignment_ind</i>Mis Pacientes</a></li>  
     <li><a href="{% url 'perfil' %}"><i class="material-icons">person</i>Mi Perfil</a></li>
     <li><div class="divider"></div></li>
     <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li
-
+    
 </ul>
 
+{% comment %} <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a> {% endcomment %}
 
 {% endblock header %} 
 
