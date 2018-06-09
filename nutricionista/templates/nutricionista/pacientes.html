@@ -10,7 +10,6 @@
                        <th data-field="nombre">Nombre</th>
                        <th data-field="apellidos">Apellidos</th>
                        <th data-field="rut">Rut</th>
-                       <th data-field="ultima_atención">Ultima atención</th>
                        <th data-field="ver_ficha">ver_ficha</th>
                    </tr>
                </thead>
@@ -20,7 +19,6 @@
                         <td>{{paciente.user.nombres}}</td>
                         <td>{{paciente.user.apellidos}}</td>
                         <td>{{paciente.user.rut}}</td>
-                        <td>{{paciente.ultima_atencion}}</td>
                         <td><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Ver detalle</a></td>
                     </tr>
                    {% endfor %}
