@@ -36,7 +36,7 @@ def inicio_nutri(request):
         messages.add_message(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
 
-    return render(request,'nutricionista/index.html')
+    return render(request,'nutricionista/base_nutricionista_2.html')
 
 
 @login_required(login_url='/login-nutricionista/')

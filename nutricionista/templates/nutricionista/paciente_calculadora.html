@@ -6,11 +6,7 @@
         color:white;
         background-color: lightskyblue;
     }
-    .module-calculadora{
-        margin:0px 0px 0px 0px;
-        padding:0px 0px 0px 0px;
 
-    }
     .estado-nutricional th{
         color:white;
         background-color: lightskyblue;
@@ -44,174 +40,205 @@
 </nav>
 
 <div class="row">
-
-
-</div>
-
-
-
-<div class="module-calculadora">
-
-    <div class="row">
-        <div class="col s4">
-                <table class="bordered estado-nutricional">
-                    <thead>
-                        <tr>
-                            <th rowspan="2">Estado Nutricional</th>
-                            <th colspan="3">Calorías según actividad física</th>
-                        </tr>
-                        <tr>
-                            <th>Ligera</th>
-                            <th>Moderada</th>
-                            <th>Intensa</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>BAJO PESO</td>
-                            <td class="kcal-fis">35</td>
-                            <td class="kcal-fis">40</td>
-                            <td class="kcal-fis">48</td>
-                        </tr>
-                        <tr>
-                            <td>PESO NORMAL</td>
-                            <td class="kcal-fis">30</td>
-                            <td class="kcal-fis">35</td>
-                            <td class="kcal-fis">40</td>
-                        </tr>
-                        <tr>
-                            <td>SOBREPESO</td>
-                            <td class="kcal-fis">28</td>
-                            <td class="kcal-fis">33</td>
-                            <td class="kcal-fis">38</td>
-                        </tr>
-                        <tr>
-                            <td>OBESO</td>
-                            <td class="kcal-fis">23</td>
-                            <td class="kcal-fis">30</td>
-                            <td class="kcal-fis">35</td>
-                        </tr>
-                    </tbody>
-                </table>
-        </div>
-        <div class="col s4">
-                <table class="bordered calculo-kcal">
-                    <thead>
-                        <tr>
-                            <th colspan="3">Cálculo Kcal</th>
-                        </tr>
-                        <tr>
-                            <th>Peso a utilizar</th>
-                            <th>Kcal según actividad física</th>
-                            <th>TOTAL KCAL</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><input id="peso-a-utilizar" type="number" min=1 max=300 value=1></td>
-                            <td id="kcal-a-utilizar" class="green">1</td>
-                            <td id="total-kcal" class="total-kcal purple white-text">1</td>
-                        </tr>
-                    </tbody>
-                </table>
-        </div>
-        <div class="col s4">
-            <!-- VCT-->
-            <table class="bordered table-vct">
-                <thead >
-                    <tr ><th colspan="6" >VCT %</th></tr>
-                    <tr>
-                        <th>Kcal requeridas</th>
-                        <th class="total-kcal purple white-text">1</th>
-                        <th>VCT %</th>
-                        <th id="vct-porc">100</th>
-                    </tr>
-                    <tr>
-                        <th>Grupo</th>
-                        <th>KCAL</th>
-                        <th>GR</th>
-                        <th>%</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>H.de Carbono (CHO)</td>
-                        <td class="kcal-cho"></td>
-                        <td class="gr-cho"></td>
-                        <td width="50px"><input class="porc-cho" type="number" min=0 value=34></td>
-                    </tr>
-                    <tr>
-                        <td>Proteínas</td>
-                        <td class="kcal-pro"></td>
-                        <td class="gr-pro"></td>
-                        <td width="50px"><input class="porc-pro" type="number" min=0 value=33></td>
-                    </tr>
-                    <tr>
-                        <td>Lípidos</td>
-                        <td class="kcal-lip"></td>
-                        <td class="gr-lip"></td>
-                        <td width="50px"><input class="porc-lip" type="number" min=0 value=33></td>
-                    </tr>
-
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- Estado nutricional-->
-
-        <!--CALCULADORA PIRAMIDAL-->
-        <div class="col s12">
-                <table class="calculadora" >
+    <!--TABLAS CALCULO NUTRICIONAL, KCAL, VCT-->
+    <div class="col s12 m3">
+        <div class="row" >
+            <!-- Estado nutricional-->
+            <div class="col s12 module__calculo_nutricional ">
+                    <table class="bordered estado-nutricional">
                         <thead>
-                            <tr><th colspan="6" class="left-align" >Calculadora Piramidal</th></tr>
                             <tr>
-                                <th rowspan="3" class="purple">Total KCAL</th>
-                                <th rowspan="3" class="total-kcal  purple white-text" >1</th>
-                                <th class="red">VCT Kcal  </th>
-                                <th class="green">VCT CHO </th>
-                                <th class="yellow">VCT pro </th>
-                                <th class="blue">VCT lip </th>
+                                <th rowspan="2">Estado Nutricional</th>
+                                <th colspan="3">Calorías según actividad física</th>
                             </tr>
                             <tr>
-                                <th class="red total-kcal"></th>
-                                <th class="green kcal-cho"></th>
-                                <th class="yellow kcal-pro"></th>
-                                <th class="blue kcal-lip"></th>
+                                <th>Ligera</th>
+                                <th>Moderada</th>
+                                <th>Intensa</th>
                             </tr>
-                            <tr>
-                                <th class="red porc_ade_kcal">0 % adecuación</th>
-                                <th class="green porc_ade_cho">0 % adecuación</th>
-                                <th class="yellow porc_ade_pro">0 % adecuación</th>
-                                <th class="blue porc_ade_lip">0 % adecuación</th>
-                            </tr>
-                            <th width="30%">Grupo</th>
-                            <th>Porciones</th>
-                            <th>Kcal</th>
-                            <th>CHO(g)</th>
-                            <th>Proteinas(g)</th>
-                            <th>Lípidos(g)</th>
                         </thead>
-                        <tbody class="calculadora-body">
-                            <tr class="blue lighten-3 grey-text calculadora-subtotal">
-                                <td class="white-text">Subtotal </th>
-                                <td class="sub-porcion"></td>
-                                <td class="sub-kcal"></td>
-                                <td class="sub-cho"></td>
-                                <td class="sub-pro"></td>
-                                <td class="sub-lip"></td>
+                        <tbody>
+                            <tr>
+                                <td>BAJO PESO</td>
+                                <td class="kcal-fis">35</td>
+                                <td class="kcal-fis">40</td>
+                                <td class="kcal-fis">48</td>
+                            </tr>
+                            <tr>
+                                <td>PESO NORMAL</td>
+                                <td class="kcal-fis">30</td>
+                                <td class="kcal-fis">35</td>
+                                <td class="kcal-fis">40</td>
+                            </tr>
+                            <tr>
+                                <td>SOBREPESO</td>
+                                <td class="kcal-fis">28</td>
+                                <td class="kcal-fis">33</td>
+                                <td class="kcal-fis">38</td>
+                            </tr>
+                            <tr>
+                                <td>OBESO</td>
+                                <td class="kcal-fis">23</td>
+                                <td class="kcal-fis">30</td>
+                                <td class="kcal-fis">35</td>
                             </tr>
                         </tbody>
+                    </table>
+            </div>
+            <!-- Cálculo KCAL-->
+            <div class="col s12 module__calculo_kcal">
+                    <table class="bordered calculo-kcal">
+                        <thead>
+                            <tr>
+                                <th colspan="3">Cálculo Kcal</th>
+                            </tr>
+                            <tr>
+                                <th>Peso a utilizar</th>
+                                <th>Kcal según actividad física</th>
+                                <th>TOTAL KCAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input id="peso-a-utilizar" type="number" min=1 max=300 value=1></td>
+                                <td id="kcal-a-utilizar" class="green">1</td>
+                                <td id="total-kcal" class="total-kcal purple white-text">1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+            <!-- VCT -->
+            <div class="col s12 module__calculo_vct">
+                <table class="bordered table-vct">
+                    <thead >
+                        <tr ><th colspan="6" >VCT %</th></tr>
+                        <tr>
+                            <th>Kcal requeridas</th>
+                            <th class="total-kcal purple white-text">1</th>
+                            <th>VCT %</th>
+                            <th id="vct-porc">100</th>
+                        </tr>
+                        <tr>
+                            <th>Grupo</th>
+                            <th>KCAL</th>
+                            <th>GR</th>
+                            <th>%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>H.de Carbono (CHO)</td>
+                            <td class="kcal-cho"></td>
+                            <td class="gr-cho"></td>
+                            <td width="50px"><input class="porc-cho" type="number" min=0 value=0></td>
+                        </tr>
+                        <tr>
+                            <td>Proteínas</td>
+                            <td class="kcal-pro"></td>
+                            <td class="gr-pro"></td>
+                            <td width="50px"><input class="porc-pro" type="number" min=0 value=0></td>
+                        </tr>
+                        <tr>
+                            <td>Lípidos</td>
+                            <td class="kcal-lip"></td>
+                            <td class="gr-lip"></td>
+                            <td width="50px"><input class="porc-lip" type="number" min=0 value=0></td>
+                        </tr>
+        
+        
+                    </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+    <!--CALCULADORA PIRAMIDAL-->
+    <div class="col s12 m9">
+        <div class="row">
+            <!--CALCULADORA PIRAMIDAL-->
+            <div class="col s12 module__calculadora">
+                    <table class="calculadora" >
+                        <thead>
+                            <tr><th colspan="6" class="left-align" >Calculadora Piramidal</th></tr>
+                        </thead>
+                            <tbody class="calculadora-body">
+                                <tr>
+                                    <th width="30%">Grupo</th>
+                                    <th>Porciones</th>
+                                    <th>Kcal</th>
+                                    <th>CHO(g)</th>
+                                    <th>Proteinas(g)</th>
+                                    <th>Lípidos(g)</th>
+                                </tr>
+                                <tr class="blue lighten-3 grey-text calculadora-subtotal">
+                                    <td class="white-text">Subtotal </th>
+                                    <td class="sub-porcion"></td>
+                                    <td class="sub-kcal"></td>
+                                    <td class="sub-cho"></td>
+                                    <td class="sub-pro"></td>
+                                    <td class="sub-lip"></td>
+                                </tr>
+                            </tbody>
+                            <thead>
+                                <tr class="blue lighten-3 grey-text calculadora-subtotal">
+                                    <td class="white-text">Subtotal </th>
+                                    <td class="sub-porcion"></td>
+                                    <td class="sub-kcal"></td>
+                                    <td class="sub-cho"></td>
+                                    <td class="sub-pro"></td>
+                                    <td class="sub-lip"></td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="3" class="purple">Total KCAL</th>
+                                    <th rowspan="3" class="total-kcal  purple white-text" >1</th>
+                                    <th class="red">VCT Kcal  </th>
+                                    <th class="green">VCT CHO </th>
+                                    <th class="yellow">VCT pro </th>
+                                    <th class="blue">VCT lip </th>
+                                </tr>
+                                <tr>
+                                    <th class="red total-kcal"></th>
+                                    <th class="green kcal-cho"></th>
+                                    <th class="yellow kcal-pro"></th>
+                                    <th class="blue kcal-lip"></th>
+                                </tr>
+                                <tr>
+                                    <th class="red porc_ade_kcal">0 % adecuación</th>
+                                    <th class="green porc_ade_cho">0 % adecuación</th>
+                                    <th class="yellow porc_ade_pro">0 % adecuación</th>
+                                    <th class="blue porc_ade_lip">0 % adecuación</th>
+                                </tr>
+                            </thead>
+                    </table>
+            </div>
         </div>
     </div>
 </div>
+
+
+
 
 {% endblock main %}
 {% block costumjs %}
 <script> let url_alimentos_json = `{% url "grupo-alimentos-json" %}`</script>
 <script type="text/javascript" src="{% static 'nutricionista/js/calculadora.js' %}"></script>
+<script>
+    let get_estado_nutricional = () => Number($('#kcal-a-utilizar').html())
+    let get_total_kcal = () => Number($("#total-kcal").html())
 
+    let get_vct = () => {
+        
+    }
+    let get_grupos_porciones= () => {
+        let grupos_porciones = []
+        $(".calculadora-body").children('tr').each((i, e) => { 
+            const porcion = $(e).find("input").val()
+            if (porcion > 0){
+                obj = {'grupo': $(e).data('pk'), 'porcion': porcion}
+                grupos_porciones.push(obj)
+            }
+        })
+
+        return grupos_porciones
+    }
+</script>
 {% endblock costumjs %}

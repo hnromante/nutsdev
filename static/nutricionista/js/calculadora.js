@@ -7,7 +7,8 @@ $.getJSON(url_alimentos_json, function(data){
     lista_grupo_alimentos = JSON.parse(data)
     lista_grupo_alimentos.forEach(function(element){
         $(".calculadora-body").append(`
-        <tr class="grey-text center" 
+        <tr class="grey-text center"
+        data-pk="${element.pk}" 
         data-nombre="${element.nombre}" 
         data-kcal="${element.kcal_prom}"
         data-cho="${element.cho_prom}"
@@ -28,7 +29,6 @@ $.getJSON(url_alimentos_json, function(data){
 */
 $(document).on("keyup change", ".calculadora-body input", function(){
     $(".calculadora-body").children('tr').each((i, e) => { 
-        console.log(this)
         const porcion = $(e).find("input").val()
         const kcal = $(e).data("kcal")
         const cho = $(e).data("cho")
@@ -153,7 +153,6 @@ let actualizarVCT = () => {
     vct_porc = Number($("#vct-porc").html())
     if (vct_porc>100){
         $("#vct-porc").addClass("red-text")
-        alert("VCT no puede ser mayor a 100%")
     }else{
         $("#vct-porc").removeClass("red-text")
     }
