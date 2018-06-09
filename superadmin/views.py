@@ -20,7 +20,7 @@ def inicio_superadmin(request):
 def grupoAlimentosJson(request):
     # grupo_alimentos = GrupoAlimento.objects.all()
     # return JsonResponse(serializers.serialize('json', list(grupo_alimentos)), safe=False, fields=('nombre','kcal_prom'))
-    queryset = GrupoAlimento.objects.all().values('nombre','kcal_prom', 'cho_prom', 'pro_prom', 'lip_prom')
+    queryset = GrupoAlimento.objects.all().values('pk', 'nombre', 'kcal_prom', 'cho_prom', 'pro_prom', 'lip_prom')
     serialized_q = json.dumps(list(queryset), cls=DjangoJSONEncoder)
     return JsonResponse(serialized_q, safe=False)
 

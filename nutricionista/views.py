@@ -80,25 +80,18 @@ def paciente_detalle(request, pk, ficha=''):
     elif ficha == 'general':
         if request.method == 'POST':
             form_paciente = FormFichaGeneral(request.POST, instance=paciente)
-
+            form_usuario = FormUsuario(request.POST, instance=request.user)
             if form_paciente.is_valid():
                 form_paciente.save()
                 messages.success(request, "Información actualizada")
-
-        else:
-            form_paciente = FormFichaGeneral(instance=paciente)
-        return render(request, 'nutricionista/paciente_ficha_general.html', {'form_paciente': form_paciente, 'paciente':paciente})
-
-    elif ficha == 'usuario':
-        if request.method == 'POST':
-            form_usuario = FormUsuario(request.POST, instance=paciente.user)
-            if form_usuario.is_valid():
+            elif form_usuario.is_valid():
                 form_usuario.save()
                 print("dddd")
                 messages.success(request, "Información actualizada")
         else:
-            form_usuario = FormUsuario(instance=paciente.user) 
-        return render(request, 'nutricionista/paciente_ficha_usuario.html', {'form_usuario': form_usuario, 'paciente':paciente})
+            form_paciente = FormFichaGeneral(instance=paciente)
+            form_usuario = FormUsuario(instance=request.user) 
+        return render(request, 'nutricionista/paciente_ficha_general.html', {'form_paciente': form_paciente, 'form_usuario': form_usuario, 'paciente':paciente})
 
     elif ficha == 'recomendaciones':
         return render(request, 'nutricionista/paciente_recomendaciones.html', {'paciente':paciente})

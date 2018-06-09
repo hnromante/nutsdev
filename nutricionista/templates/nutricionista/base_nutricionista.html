@@ -5,11 +5,9 @@
     header, main, footer {
         padding-left: 250px;
     }
-
     .sidenav {
         width: 250px;
     }
-
     @media only screen and (max-width : 992px) {
         header, main, footer {
             padding-left: 250px;
@@ -18,24 +16,6 @@
 </style>
 {% endblock basecss %}
 {% block header %}
-<nav>
-    <div class="nav-wrapper purple lighten-1">
-        <div class="row">
-            <div class="col s12">
-                <a href="#!" class="brand-logo"><img src="{% static 'img/nuts_logo.png' %}" width="100px" height="70px"></a>
-                
-                <a href="#!" data-target="mobile-nav" class="sidenav-trigger">
-                    <i class="material-icons">menu</i>
-                </a>
-                <ul class="right hide-on-med-and-down">
-                    <li>Bienvenido {{request.user.get_nombre_completo}}</li>
-                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</nav>
-
 
 <ul id="slide-out" class="sidenav sidenav-fixed">
     <li><div class="user-view">
@@ -44,14 +24,13 @@
         <a href="#email"><span class="black-text email">{{request.user.get_nombre}}</span></a>
     </div></li>
     <li><a href="{% url 'pacientes-agregar' %}"><i class="material-icons">add</i>Agregar Paciente</a></li> 
-    <li><a href="{% url 'pacientes' %}"><i class="material-icons">assignment_ind</i>Mis Pacientes</a></li>  
-    <li><a href="{% url 'mis-menus' %}"><i class="material-icons">restaurant</i> Menús</a></li>
+    <li><a href="{% url 'pacientes' %}"><i class="material-icons">assignment_ind</i>Mis Pacientes</a></li>
     <li><a href="{% url 'perfil' %}"><i class="material-icons">person</i>Mi Perfil</a></li>
-    <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li
     <li><div class="divider"></div></li>
+    <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li
+
 </ul>
 
-<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
 {% endblock header %} 
 
