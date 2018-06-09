@@ -3,12 +3,16 @@
 {% block basecss %}
 <style>
     header, main, footer {
-        padding-left: 2px;
+        padding-left: 250px;
+    }
+
+    .sidenav {
+        width: 250px;
     }
 
     @media only screen and (max-width : 992px) {
         header, main, footer {
-            padding-left: 0;
+            padding-left: 250px;
         }
     }
 </style>
@@ -33,7 +37,7 @@
 </nav>
 
 
-<ul id="slide-out" class="sidenav">
+<ul id="slide-out" class="sidenav sidenav-fixed">
     <li><div class="user-view">
         <a href="#user"><img src="{% static 'img/nuts_logo.png' %}" width="200px" height="150px"></a>
         <a href="#name"><span class="black-text name">{{request.user.get_nombre_completo}}</span></a>
