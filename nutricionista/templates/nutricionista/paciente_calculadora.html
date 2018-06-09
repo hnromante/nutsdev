@@ -28,7 +28,9 @@
 <nav>
     <div class="nav-wrapper center blue">
         <ul>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha general </a></li>
+        <li class="active purple darken-2">Atendiendo a {{paciente.user.get_nombre_completo}}</li>
+        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ficha Usuario </a></li>
+        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha General </a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Antecedentes Alimentarios </a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ficha nutricional </a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ficha Bioquímica</a></li>
