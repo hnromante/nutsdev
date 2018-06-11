@@ -86,7 +86,6 @@
 {% endblock main %}
 {% block costumjs %}
 <script>
-    $("")
     let calcular_imc = () => {
         const peso = $("#id_peso").val()
         const talla = $("#id_talla").val()
@@ -116,7 +115,6 @@
             $(".mensajes").html("")
             $(".mensajes").append("<p class='red-text'>Peso y talla deben ser mayor a cero.</p>")
         }
-
     }
 </script>
 {% endblock%}
