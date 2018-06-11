@@ -5,6 +5,20 @@
     <div class="row center">
         <p><h2>Lista de Pacientes</h2></p>
     </div>
+    <div class="row center">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="col l12">
+                <div class="input-field col s12">
+                    <input id="busqueda" name="busqueda" type="text" class="validate">
+                    <label for="busqueda">Rut</label>
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Buscar</button>
+                    <a href="{%url 'pacientes' %}">Ver todos</a>
+                </div>     
+            </div>
+        </form>
+
+    </div>
     <div class="row">
        <div class="col s12">
            <table class="highlight">
@@ -17,14 +31,21 @@
                    </tr>
                </thead>
                <tbody>
-                   {% for paciente in pacientes  %}
-                   <tr>
-                        <td>{{paciente.user.nombres}}</td>
-                        <td>{{paciente.user.apellidos}}</td>
-                        <td>{{paciente.user.rut}}</td>
-                        <td><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Ver detalle</a></td>
-                    </tr>
-                   {% endfor %}
+                   {% if pacientes %}
+                        {% for paciente in pacientes  %}
+                        <tr>
+                                <td>{{paciente.user.nombres}}</td>
+                                <td>{{paciente.user.apellidos}}</td>
+                                <td>{{paciente.user.rut}}</td>
+                                <td><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Ver detalle</a></td>
+                            </tr>
+                        {% endfor %}
+                   {% else %}
+                        <tr>
+                            <td>No hay pacientes con ese Rut</td>
+                        </tr>
+                   {% endif %}
+                   
                    
                </tbody>
            </table>

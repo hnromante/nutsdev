@@ -42,6 +42,12 @@ def inicio_nutri(request):
 
 @login_required(login_url='/login-nutricionista/')
 def mis_pacientes(request):
+    if request.method == 'POST':
+        rut = request.POST['busqueda']
+        pacientes = Paciente.objects.filter(nutricionista=request.user.nutricionista, user__rut = rut)
+        print(pacientes)
+        return render(request, 'nutricionista/pacientes.html', {'pacientes':pacientes})
+
     if not request.user.es_nutri:
         messages.warning(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
