@@ -1,74 +1,143 @@
-{% extends "nutricionista/base_nutricionista.html" %}
-
-{% block main %}
+{% extends "nutricionista/base_nutricionista.html" %} {% block main %}
 
 <nav>
-    <div class="nav-wrapper center blue">
-      <ul>
-        <li class="active purple darken-2">Atendiendo a {{paciente.user.get_nombre_completo}}</li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ficha Usuario </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha General </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ficha nutricional </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ficha Bioquímica</a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">Calculadora piramidal</a></li>
-        <li ><a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Recomendaciones</a></li>
-      </ul>
-    </div>
+  <div class="nav-wrapper center blue">
+    <ul>
+        <li class="active purple darken-2"><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Atendiendo a {{paciente.user.get_nombre_completo}}</a></li>
+      <li>
+        <a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ficha Usuario </a>
+      </li>
+      <li>
+        <a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha General </a>
+      </li>
+      <li>
+        <a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ficha nutricional </a>
+      </li>
+      <li>
+        <a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ficha Bioquímica</a>
+      </li>
+      <li>
+        <a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">Calculadora piramidal</a>
+      </li>
+      <li>
+        <a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Recomendaciones</a>
+      </li>
+    </ul>
+  </div>
 </nav>
+<div class="row center">
+  <h3>Resumen de Paciente</h3>
+</div>
 <div class="container">
-  <div class="row">
-    <div class="col s12">
-        <div class="card horizontal">
-          <div class="card-image">
-            <!-- <img src="http://imagenglobal.org/wp-content/uploads/2018/01/Paciente.png"> -->
-            <img src="" alt="">
-          </div>
-          <div class="card-stacked">
-            <div class="card-content">
-              <p>Rut: {{paciente.user.rut}}</p>
-              <p>Nombres: {{paciente.user.nombres}}</p>
-              <p>Apellidos: {{paciente.user.apellidos}}</p>
+    <div class="row">
+        <div class="col l6">
+          <div class="card blue darken-3">
+            <div class="card-content white-text">
+              <span class="card-title">Informacion de la cuenta</span>
+                    <p>Rut: {{paciente.user.rut}}</p>
+                    <p>Nombres: {{paciente.user.nombres}}</p>
             </div>
-            <div class="card-action">
-              <a href="#">Iniciar Ficha</a>
+            <div class="card-action center">
+              <a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ver Detalle</a>
+            </div>
+          </div>
+        </div>
+        <div class="col l6">
+          <div class="card blue darken-3">
+            <div class="card-content white-text">
+              <span class="card-title">Detalles Generales</span>
+              <p>Ocupacion: {{paciente.ocupacion}}</p>
+              <p>Nacionalidad: {{paciente.nacionalidad}}</p>
+            </div>
+            <div class="card-action center">
+              <a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ver Detalle</a>
             </div>
           </div>
         </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col s12">
-      <!-- Información usuario -->
-        <ul class="collection">
-            <p class="flow-text center">Información Usuario</p>
-            <li class="collection-item">Rut: {{paciente.user.rut}}</li>
-            <li class="collection-item">Nacimiento: {{paciente.user.nacimiento}}</li>
-            <li class="collection-item">Genero: {{paciente.user.genero}}</li>
-        </ul>      
+    <div class="row">
+      <div class="col l6">
+        <div class="card blue darken-3">
+          <div class="card-content white-text">
+            <span class="card-title">Antecedentes Alimentarios</span>
+            <p>Perdida de peso: {{paciente.perdida_peso}}</p>
+            <p>Perdida de peso: {{paciente.ganancia_peso}}</p>
+          </div>
+          <div class="card-action center">
+            <a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Ver Detalle</a>
+          </div>
+        </div>
+      </div>
+      <div class="col l6">
+          <div class="card blue darken-3">
+            <div class="card-content white-text">
+              <span class="card-title">Ficha Nutricional</span>
+              <p>Peso: {{paciente.peso}}</p>
+              <p>Diagnostico: {{paciente.diagnostico_peso}}</p>
+            </div>
+            <div class="card-action center">
+              <a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ver Detalle</a>
+            </div>
+          </div>
+        </div>
     </div>
-    <div class="col s12">
-        <!-- Información usuario -->
-          <ul class="collection">
-              <p class="flow-text center">Información General</p>
-              <li class="collection-item">Ocupación: {{paciente.ocupacion}}</li>
-              <li class="collection-item">Nacionalidad: {{paciente.nacionalidad}}</li>
-          </ul>      
+    <div class="row">
+      <div class="col l6">
+        <div class="card blue darken-3">
+          <div class="card-content white-text">
+            <span class="card-title">Ficha Bioquimica</span>
+            <div class="row">
+              <div class="col">
+                <p>Colesterol: {{paciente.colesterol_mgdl}}</p>
+                <p>Glicemia: {{paciente.glicemia_mgdl}}</p>
+              </div>
+              <div class="col">
+                <p>Trigliceridos: {{paciente.tg}}</p>
+                <p>Hemoglobina: {{paciente.hemoglobina_gdll}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-action center">
+            <a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ver Detalle</a>
+          </div>
+        </div>
+      </div>
+      <div class="col l6">
+          <div class="card blue darken-3">
+            <div class="card-content white-text">
+              <span class="card-title">Calculadora Piramidal</span>
+                <div class="row">
+                  <div class="col">
+                    <p>Dato</p>
+                    <p>Dato</p>
+                  </div>
+                  <div class="col">
+                    <p>Dato</p>
+                    <p>Dato</p>
+                  </div>
+                </div>
+              </div>
+            <div class="card-action center">
+              <a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">Ver Detalle</a>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col l12">
+          <div class="card blue darken-3">
+            <div class="card-content white-text">
+              <span class="card-title">Recomendacion</span>
+              <p>Recomendacion</p>
+            </div>
+            <div class="card-action center">
+              <a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Ver Detalle</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col s12">
-        <!-- Información Nutricional -->
-          <ul class="collection">
-              <p class="flow-text center">Información Nutricional</p>
-              <li class="collection-item">Peso: {{paciente.peso}}</li>
-          </ul>      
-    </div>
-    <div class="col s12">
-        <!-- Información Nutricional -->
-          <ul class="collection">
-              <p class="flow-text center">Información Bioquímica</p>
-              <li class="collection-item">Glicemia mg/dl: {{paciente.glicemia_mgdl}}</li>
-          </ul>      
-    </div>
-  </div>
+    
 </div>
+
+
 {% endblock main %}
