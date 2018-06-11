@@ -4,7 +4,7 @@
 <nav>
     <div class="nav-wrapper center blue">
         <ul>
-        <li class="active purple darken-2">Atendiendo a {{paciente.user.get_nombre_completo}}</li>
+        <li class="active purple darken-2"><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Atendiendo a {{paciente.user.get_nombre_completo}}</a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ficha Usuario </a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha General </a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Antecedentes Alimentarios </a></li>

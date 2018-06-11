@@ -73,6 +73,7 @@ class FormFichaBioquimica(forms.ModelForm):
         self.fields['tg'].widget.attrs.update()
         self.fields['hdl'].widget.attrs.update()
         self.fields['hemoglobina_gdll'].widget.attrs.update()
+        self.fields['hematocrito_gdll'].widget.attrs.update()
         self.fields['leucocitos'].widget.attrs.update()
         self.fields['plaquetas'].widget.attrs.update()
         self.fields['v_c_m'].widget.attrs.update()
@@ -101,7 +102,7 @@ class FormFichaBioquimica(forms.ModelForm):
     class Meta:
         model = Paciente
         fields = ['colesterol_mgdl', 'ldl_mgdl', 'tg', 'hdl',
-        'hemoglobina_gdll', 'leucocitos', 'plaquetas', 'v_c_m',
+        'hemoglobina_gdll', 'hematocrito_gdll', 'leucocitos', 'plaquetas', 'v_c_m',
         'h_c_m', 'c_h_c_m', 'glicemia_mgdl', 'g_o_t', 'g_p_t',
         'f_alc', 'g_g_t', 'bt', 'bd', 'e_l_p', 'sodio', 'potasio',
         'cloro', 'creatinina', 'v_f_g', 'r_a_c', 'tsh', 't3', 't4',

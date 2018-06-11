@@ -36,6 +36,7 @@ class Paciente(models.Model):
     tg = models.FloatField(null=True, blank=True, default=0)
     hdl = models.FloatField(null=True, blank=True, default=0)
     hemoglobina_gdll = models.FloatField(null=True, blank=True, default=0)
+    hematocrito_gdll = models.FloatField(null=True, blank=True, default=0)
     leucocitos = models.FloatField(null=True, blank=True, default=0)
     plaquetas = models.FloatField(null=True, blank=True, default=0)
     v_c_m = models.FloatField(null=True, blank=True, default=0) #volumen corpuscular medio

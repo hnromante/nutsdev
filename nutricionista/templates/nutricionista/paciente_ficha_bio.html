@@ -5,7 +5,7 @@
 <nav>
     <div class="nav-wrapper center blue">
         <ul>
-        <li class="active purple darken-2">Atendiendo a {{paciente.user.get_nombre_completo}}</li>
+        <li class="active purple darken-2"><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Atendiendo a {{paciente.user.get_nombre_completo}}</a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ficha Usuario </a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha General </a></li>
         <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Antecedentes Alimentarios </a></li>
@@ -31,53 +31,124 @@
             <form action="" method="post">
                 {% csrf_token %}
                 <div class="row">
-                        <div class="col">
+                    <div class="col l6">
+                        <table class="bordered">
+                            <thead>
+                                <tr>
+                                    <th colspan="3">Perfil Lipidico</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><label for="id_colesterol_mgdl">Colesterol</label>{{form.colesterol_mgdl}}</td>
+                                    <td><label for="id_hdl">Colesterol HDL</label>{{form.hdl}}</td>
+                                    <td><label for="id_ldl_mgdl">Colesterol LDL</label>{{form.ldl_mgdl}}</td>
+                                    <td><label for="id_tg">Trigliceridos</label>{{form.tg}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="bordered">
+                            <thead>
+                                <tr>
+                                    <th colspan="3">Perfil Hepatico</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><label for="id_f_alc">F. Alcalina</label>{{form.f_alc}}</td>
+                                    <td><label for="id_g_g_t">GGT</label>{{form.g_g_t}}</td>
+                                    <td><label for="id_g_p_t">GPT</label>{{form.g_p_t}}</td>
+                                </tr>
+                                <tr>
+                                    <td><label for="id_g_o_t">GOT</label>{{form.g_o_t}}</td>
+                                    <td><label for="id_bd">Bilirrubina Directa</label>{{form.bd}}</td>
+                                    <td><label for="id_bt">Bilirrubina Indirecta</label>{{form.bt}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col l6">
+                        <table class="bordered">
+                            <thead>
+                                <tr>
+                                    <th colspan="3">Electrocidos Plasmaticos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><label for="id_sodio">Sodio</label>{{form.sodio}}</td>
+                                    <td><label for="id_potasio">Potasio</label>{{form.potasio}}</td>
+                                    <td><label for="id_cloro">Cloro</label>{{form.cloro}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="bordered">
+                            <thead>
+                                <tr>
+                                    <th colspan="3">Tiroides</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><label for="id_tsh">TSH</label>{{form.tsh}}</td>
+                                    <td><label for="id_t3">T3</label>{{form.t3}}</td>
+                                    <td><label for="id_t4">T4</label>{{form.t4}}</td>
+                                </tr>
+                                <tr>
+                                    <td><label for="id_v_f_g">VFG</label>{{form.v_f_g}}</td>
+                                    <td><label for="id_r_a_c">RAC</label>{{form.r_a_c}}</td>
+                                    <td><label for="id_creatinina">Creatinina</label>{{form.creatinina}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col l6">
                             <table class="bordered">
+                                <thead>
+                                    <tr>
+                                        <th colspan="4">Hemograma</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <tr>
-                                        <td><label for="id_colesterol_mgdl">Colesterol</label>{{form.colesterol_mgdl}}</td>
-                                        <td><label for="id_ldl_mgdl">LDL</label>{{form.ldl_mgdl}}</td>
-                                        <td><label for="id_tg">TG</label>{{form.tg}}</td>
-                                        <td><label for="id_hdl">HDL</label>{{form.hdl}}</td>
-                                        <td><label for="id_hemoglobina">Hemoglobina</label>{{form.hemoglobina_gdll}}</td>
                                         <td><label for="id_leucocitos">Leucocitos</label>{{form.leucocitos}}</td>
+                                        <td><label for="id_e_l_p">Eritrocitos</label>{{form.e_l_p}}</td>
+                                        <td><label for="hematocrito_gdll">Hematocritos</label>{{form.hematocrito_gdll}}</td>
+                                        <td><label for="hemoglobina_gdll">Hemoglobina</label>{{form.hemoglobina_gdll}}</td>
                                     </tr>
                                     <tr>
-                                        <td><label for="id_plaquetas">Plaquetas</label>{{form.plaquetas}}</td>
                                         <td><label for="id_v_c_m">VCM</label>{{form.v_c_m}}</td>
                                         <td><label for="id_h_c_m">HCM</label>{{form.h_c_m}}</td>
                                         <td><label for="id_hdl">CHCM</label>{{form.c_h_c_m}}</td>
-                                        <td><label for="id_glicemia_mgdl">Glicemia</label>{{form.glicemia_mgdl}}</td>
-                                        <td><label for="id_g_o_t">GOT</label>{{form.g_o_t}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="id_g_p_t">GPT</label>{{form.g_p_t}}</td>
-                                        <td><label for="id_f_alc">F. Alcalina</label>{{form.f_alc}}</td>
-                                        <td><label for="id_g_g_t">GGT</label>{{form.g_g_t}}</td>
-                                        <td><label for="id_bt">BT</label>{{form.bt}}</td>
-                                        <td><label for="id_bd">BD</label>{{form.bd}}</td>
-                                        <td><label for="id_e_l_p">ELP</label>{{form.e_l_p}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="id_sodio">Sodio</label>{{form.sodio}}</td>
-                                        <td><label for="id_potasio">Potasio</label>{{form.potasio}}</td>
-                                        <td><label for="id_cloro">Cloro</label>{{form.cloro}}</td>
-                                        <td><label for="id_creatinina">Creatinina</label>{{form.creatinina}}</td>
-                                        <td><label for="id_v_f_g">VFG</label>{{form.v_f_g}}</td>
-                                        <td><label for="id_r_a_c">RAC</label>{{form.r_a_c}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="id_tsh">TSH</label>{{form.tsh}}</td>
-                                        <td><label for="id_t3">T3</label>{{form.t3}}</td>
-                                        <td><label for="id_t4">T4</label>{{form.t4}}</td>
-                                        <td><label for="id_t_t_g_o">TTGO</label>{{form.t_t_g_o}}</td>
-                                        <td><label for="id_glicemia_60">Glicemia 60</label>{{form.glicemia_60}}</td>
-                                        <td><label for="id_glicemia_120">Glicemia 120</label>{{form.glicemia_120}}</td>
+                                        <td><label for="id_plaquetas">Plaquetas</label>{{form.plaquetas}}</td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div>    
+                            <div class="col l6">
+                                <table class="bordered">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">Glicemia</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><label for="id_glicemia_mgdl">Glicemia</label>{{form.glicemia_mgdl}}</td>
+                                            <td><label for="id_t_t_g_o">TTGO</label>{{form.t_t_g_o}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label for="id_glicemia_60">Glicemia 60</label>{{form.glicemia_60}}</td>
+                                            <td><label for="id_glicemia_120">Glicemia 120</label>{{form.glicemia_120}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        
                     </div>
+                </div>
                     <div class="row center">
                             <button class="btn waves-effect waves-light" type="submit" name="action">Actualizar</button>
                     </div>  
