@@ -1,20 +1,13 @@
 {% extends "nutricionista/base_nutricionista.html" %}
-
+{% block activeFichaNutricional %} active {% endblock %}
 {% block main %}
-<nav>
-    <div class="nav-wrapper center blue">
-        <ul>
-        <li class="active purple darken-2"><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Atendiendo a {{paciente.user.get_nombre_completo}}</a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ficha Usuario </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha General </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Antecedentes Alimentarios </a></li>
-        <li class="active"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ficha nutricional </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ficha Bioquímica</a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">Calculadora piramidal</a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Recomendaciones</a></li>
-        </ul>
+<div class="row">
+    <div class="col s12">
+        <div class="container">
+            <h3 class="header left purple-text">Ficha Información nutricional</h3>
+        </div>       
     </div>
-</nav>
+</div>
 <div class="container">
     <div class="row">
         <div class="col">

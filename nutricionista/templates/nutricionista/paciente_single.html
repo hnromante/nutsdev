@@ -1,20 +1,13 @@
 {% extends "nutricionista/base_nutricionista.html" %}
 
-{% block main %}
-
-<nav>
-    <div class="nav-wrapper center blue">
-      <ul>
-        <li class="active purple darken-2">Atendiendo a {{paciente.user.get_nombre_completo}}</li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ficha Usuario </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha General </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ficha nutricional </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ficha Bioquímica</a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">Calculadora piramidal</a></li>
-        <li ><a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Recomendaciones</a></li>
-      </ul>
+{% block main %} 
+<div class="row">
+    <div class="col s12">
+        <div class="container">
+            <h3 class="header left purple-text">Resumen del paciente</h3>
+        </div>       
     </div>
-</nav>
+</div>
 <div class="container">
   <div class="row">
     <div class="col s12">

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from nutricionista.models import Nutricionista, Menu, PautaAlimentaria
 from django.views.generic.list import ListView
-from paciente.models import Paciente
+from paciente.models import Paciente, CalculadoraPiramidal
 from django.apps import apps
 from .forms import (
     FormAddPaciente,
@@ -26,7 +26,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core import serializers
 from cuentas.models import User
 from django.http import JsonResponse
-
+import json
+from django.utils import timezone
 def calculadora(request):
     return render(request,template_name='nutricionista/calculadora.html')
 
@@ -94,7 +95,6 @@ def paciente_detalle(request, pk, ficha=''):
             form_usuario = FormUsuario(request.POST, instance=paciente.user)
             if form_usuario.is_valid():
                 form_usuario.save()
-                print("dddd")
                 messages.success(request, "Información actualizada")
         else:
             form_usuario = FormUsuario(instance=paciente.user) 
@@ -114,7 +114,28 @@ def paciente_detalle(request, pk, ficha=''):
         return render(request, 'nutricionista/paciente_antecedentes.html', {'form': form, 'paciente':paciente})
 
     elif ficha == 'calculadora':
-        return render(request, 'nutricionista/paciente_calculadora.html', {'paciente':paciente})
+        calculadora = CalculadoraPiramidal.objects.get(paciente=paciente) if CalculadoraPiramidal.objects.filter(paciente=paciente).exists() else None
+            
+        if request.method == 'POST':
+            datos_calculadora = json.loads(request.POST['datos_calculadora'])
+            if calculadora:
+                cal = CalculadoraPiramidal.objects.get(paciente=paciente)
+                cal.peso_a_utilizar = datos_calculadora['peso_a_utilizar']
+                cal.kcal_estado_nutricional = datos_calculadora['kcal_estado_nutricional']
+                cal.total_kcal = datos_calculadora['total_kcal']
+                cal.vct = datos_calculadora['vct']
+                cal.grupos_porciones = datos_calculadora['grupos_porciones']
+                cal.ultima_actualizacion = timezone.now()
+                cal.save()
+            else:
+                cal = CalculadoraPiramidal.objects.create(paciente=paciente)
+                cal.kcal_estado_nutricional = datos_calculadora['kcal_estado_nutricional']
+                cal.peso_a_utilizar = datos_calculadora['peso_a_utilizar']  
+                cal.total_kcal = datos_calculadora['total_kcal']
+                cal.vct = datos_calculadora['vct']
+                cal.grupos_porciones = datos_calculadora['grupos_porciones']
+                cal.save()
+        return render(request, 'nutricionista/paciente_calculadora.html', {'paciente':paciente, 'calculadora':calculadora})
     else:
         pass
     
@@ -152,7 +173,6 @@ def mi_perfil(request):
         if form.is_valid():
             user = form.save()
     else:
-        print("not valid")
         form = FormPerfil(instance=request.user)
     return render(request, 'nutricionista/perfil.html', {'form':form})
 
@@ -171,9 +191,6 @@ def mis_menus(request):
     else:
         form = FormMenu()
     menus = Menu.objects.filter(nutricionista=request.user.nutricionista)
-    print("****menus****")
-    print(menus)
-    print(len(menus))
     return render(request, 'nutricionista/mis_menus.html',{'form':form,
                                                             'menus':menus})
 
@@ -199,3 +216,8 @@ class MenuDetalle(UpdateView):
     redirect_url = ''
         
 
+# def calculadora_piramidal(request, pk):
+#     paciente = 
+#     if request.method == 'POST':
+#         calculadora = CalculadoraPiramidal.objects.create(paciente=paciente)
+    

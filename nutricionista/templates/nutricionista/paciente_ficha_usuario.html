@@ -1,25 +1,16 @@
 {% extends "nutricionista/base_nutricionista.html" %}
-
+{% block activeFichaUsuario %} active {% endblock %}
 {% block main %}
-<nav>
-    <div class="nav-wrapper center blue">
-        <ul>
-        <li class="active purple darken-2"><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Atendiendo a {{paciente.user.get_nombre_completo}}</a></li>
-        <li class="active"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ficha Usuario </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha general </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Antecedentes Alimentarios </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ficha nutricional </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ficha Bioquímica</a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">Calculadora piramidal</a></li>
-        <li ><a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Recomendaciones</a></li>
-        </ul>
+<div class="row">
+    <div class="col s12">
+        <div class="container">
+            <h3 class="header left purple-text">Cuenta de usuario</h3>
+        </div>       
     </div>
-</nav>
-
+</div>
 <div class="container">
     <div class="row">
         <div class="col s12">
-            <p class="flow-text">Cuenta Usuario</p>
             {% for message in messages  %}
                 {% if message.tags == 'success' %}
                     <p class="green-text">{{message}}</p>

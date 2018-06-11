@@ -97,11 +97,13 @@ $(document).ready(function(){
 **/
 $(".kcal-fis").each((i,e) => {
     $(e).on("click", function(){
-        $(".kcal-fis").removeClass("green")
-        $(e).addClass("green")
+        $(".kcal-fis").removeClass("purple")
+        $(".kcal-fis").removeClass("white-text")
+        $(e).addClass("purple")
         let val = $(e).html()
         $("#kcal-a-utilizar").html(val)
-        $("#kcal-a-utilizar").addClass("green")
+        $("#kcal-a-utilizar").addClass("purple")
+        $("#kcal-a-utilizar").addClass("white-text")
 
         let peso = $("#peso-a-utilizar").val()
         let kcal = Number($("#kcal-a-utilizar").html())

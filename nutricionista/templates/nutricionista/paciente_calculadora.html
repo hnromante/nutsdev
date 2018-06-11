@@ -1,5 +1,6 @@
 {% extends "nutricionista/base_nutricionista.html" %}
 {% load static %}
+{% block activeCalculadoraPiramidal %} active {% endblock %}
 {% block costumcss %}
   <style>
     .calculadora th{
@@ -12,7 +13,7 @@
         background-color: lightskyblue;
     }
     .estado-nutricional td:hover{
-        background-color:green;
+        background-color:purple;
     }
     .calculo-kcal th{
         color:white;
@@ -22,25 +23,63 @@
         color:white;
         background-color: lightskyblue;
     }
+    .module__calculo_nutricional th{
+        background-color: blue;
+    }   
+    .module__calculo_kcal th{
+        background-color: blue;
+    }   
+    .module__calculo_nutricional th{
+        background-color: blue;
+    }   
+    .module__calculo_vct th{
+        background-color: blue;
+    }
+    .header{
+        font-family:  Helvetica, sans-serif, Arial;
+    }
+    .calculadora-body th{
+        background-color:blue;
+    }
   </style>
 {% endblock costumcss %}
 {% block main %}
-<nav>
-    <div class="nav-wrapper center blue">
-        <ul>
-        <li class="active purple darken-2"><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Atendiendo a {{paciente.user.get_nombre_completo}}</a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ficha Usuario </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ficha General </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Antecedentes Alimentarios </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ficha nutricional </a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ficha Bioquímica</a></li>
-        <li class="active"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">Calculadora piramidal</a></li>
-        <li><a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Recomendaciones</a></li>
-        
-        </ul>
+<div class="row">
+    <div class="col s12">
+        <h3 class="header left purple-text">Calculadora Piramidal</h3>
     </div>
-</nav>
+</div>
+{% if calculadora %}
+    <div class="row">
+        <div class="col s4">
+            <p class="blue-text"><b>Ultima actualización el: </b>{{calculadora.ultima_actualizacion}}</p>
+            <p><b class="blue-text">Peso a utilizar: </b>{{calculadora.peso_a_utilizar}}</p>
+            <p><b class="blue-text">KCAL según actividad física: </b>{{calculadora.kcal_estado_nutricional}}</p>
+            <p><b class="blue-text">KCAL total: </b>{{calculadora.total_kcal}}</p>
+        </div>
+        <div class="col s4">
+            <p><b class="blue-text"> Índices VCT:</b></p>
+            <p>% cho:  {{calculadora.vct.porc_cho}}</p>
+            <p>% proteínas:  {{calculadora.vct.porc_pro}}</p>
+            <p>% lípidos:  {{calculadora.vct.porc_lip}}</p>
 
+        </div>
+        <div class="col s4">
+            <p><b class="blue-text">Porciones de alimentos: </b></p>
+            <ul>
+                {% for alimento in calculadora.grupos_porciones  %}
+                    <li>{{alimento.nombre}} - {{alimento.porción}} </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% else %}
+    <div class="row">
+        <div class="col">
+            <p class="blue-text">Aún no guarda datos de la calculadora</p>
+        </div>
+    </div>
+{% endif %}
 <div class="row">
     <!--TABLAS CALCULO NUTRICIONAL, KCAL, VCT-->
     <div class="col s12 m3">
@@ -103,8 +142,8 @@
                         <tbody>
                             <tr>
                                 <td><input id="peso-a-utilizar" type="number" min=1 max=300 value=1></td>
-                                <td id="kcal-a-utilizar" class="green">1</td>
-                                <td id="total-kcal" class="total-kcal purple white-text">1</td>
+                                <td id="kcal-a-utilizar" class="purple">1</td>
+                                <td id="total-kcal" class="total-kcal">1</td>
                             </tr>
                         </tbody>
                     </table>
@@ -116,7 +155,7 @@
                         <tr ><th colspan="6" >VCT %</th></tr>
                         <tr>
                             <th>Kcal requeridas</th>
-                            <th class="total-kcal purple white-text">1</th>
+                            <th class="total-kcal  white-text">1</th>
                             <th>VCT %</th>
                             <th id="vct-porc">100</th>
                         </tr>
@@ -132,22 +171,20 @@
                             <td>H.de Carbono (CHO)</td>
                             <td class="kcal-cho"></td>
                             <td class="gr-cho"></td>
-                            <td width="50px"><input class="porc-cho" type="number" min=0 value=0></td>
+                            <td width="50px"><input class="porc-cho" id="porc-cho" type="number" min=0 value=1></td>
                         </tr>
                         <tr>
                             <td>Proteínas</td>
                             <td class="kcal-pro"></td>
                             <td class="gr-pro"></td>
-                            <td width="50px"><input class="porc-pro" type="number" min=0 value=0></td>
+                            <td width="50px"><input class="porc-pro" id="porc-pro" type="number" min=0 value=1></td>
                         </tr>
                         <tr>
                             <td>Lípidos</td>
                             <td class="kcal-lip"></td>
                             <td class="gr-lip"></td>
-                            <td width="50px"><input class="porc-lip" type="number" min=0 value=0></td>
+                            <td width="50px"><input class="porc-lip" id="porc-lip" type="number" min=0 value=1></td>
                         </tr>
-        
-        
                     </tbody>
                 </table>
             </div>
@@ -160,7 +197,7 @@
             <div class="col s12 module__calculadora">
                     <table class="calculadora" >
                         <thead>
-                            <tr><th colspan="6" class="left-align" >Calculadora Piramidal</th></tr>
+
                         </thead>
                             <tbody class="calculadora-body">
                                 <tr>
@@ -190,24 +227,29 @@
                                     <td class="sub-lip"></td>
                                 </tr>
                                 <tr>
-                                    <th rowspan="3" class="purple">Total KCAL</th>
-                                    <th rowspan="3" class="total-kcal  purple white-text" >1</th>
-                                    <th class="red">VCT Kcal  </th>
-                                    <th class="green">VCT CHO </th>
-                                    <th class="yellow">VCT pro </th>
-                                    <th class="blue">VCT lip </th>
+                                    <th rowspan="3" class="flow-text">Total KCAL</th>
+                                    <th rowspan="3" class="total-kcal flow-text">1</th>
+                                    <th>VCT Kcal  </th>
+                                    <th>VCT CHO </th>
+                                    <th>VCT pro </th>
+                                    <th>VCT lip </th>
                                 </tr>
                                 <tr>
-                                    <th class="red total-kcal"></th>
-                                    <th class="green kcal-cho"></th>
-                                    <th class="yellow kcal-pro"></th>
-                                    <th class="blue kcal-lip"></th>
+                                    <th class="total-kcal"></th>
+                                    <th class="kcal-cho"></th>
+                                    <th class="kcal-pro"></th>
+                                    <th class="kcal-lip"></th>
                                 </tr>
                                 <tr>
-                                    <th class="red porc_ade_kcal">0 % adecuación</th>
-                                    <th class="green porc_ade_cho">0 % adecuación</th>
-                                    <th class="yellow porc_ade_pro">0 % adecuación</th>
-                                    <th class="blue porc_ade_lip">0 % adecuación</th>
+                                    <th class="porc_ade_kcal">0 % adecuación</th>
+                                    <th class="porc_ade_cho">0 % adecuación</th>
+                                    <th class="porc_ade_pro">0 % adecuación</th>
+                                    <th class="porc_ade_lip">0 % adecuación</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="6" class="blue darken-2">
+                                        <a class="waves-effect waves-light btn modal-trigger right purple" href="#modal_confirmar_calcualdora" onclick="get_datos_calculadora(`{{paciente.pk}}`, `modal_confirmar_calcualdora`)">Guardar datos del paciente</a>
+                                    </th>
                                 </tr>
                             </thead>
                     </table>
@@ -217,30 +259,142 @@
 </div>
 
 
+<!-- Modal Trigger -->
 
+
+<!-- Modal Structure -->
+<div id="modal_confirmar_calcualdora" class="modal">
+  <div class="modal-content">
+    <h4>Confirmar los datos de la calculadora - {{paciente.user.get_nombre_completo}}</h4>
+    <div class="row" >
+        <div class="col s2" id="modal__kcal_estado_nutricional" >
+            <p class="blue white-text">Kcal según estado</p>
+            <span></span>
+        </div>
+        <div class="col s2" id="modal__total_kcal" >
+            <p class="blue white-text">Kcal totales</p>
+            <span></span>
+        </div>
+        <div class="col s4" id="modal__vct" >
+            <p class="blue white-text">Porcentajes VCT</p>
+            <span></span>
+        </div>
+        <div class="col s4" id="modal__grupos_prociones" >
+            <p class="blue white-text">Grupos de alimentos y porciones</p>
+            <span></span>
+        </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+      <form action="" id="form_guardar_calculadora">
+        <input type="submit" value="Guardar" class="btn green">
+        <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+      </form>
+    
+  </div>
+</div>
 
 {% endblock main %}
 {% block costumjs %}
-<script> let url_alimentos_json = `{% url "grupo-alimentos-json" %}`</script>
-<script type="text/javascript" src="{% static 'nutricionista/js/calculadora.js' %}"></script>
-<script>
-    let get_estado_nutricional = () => Number($('#kcal-a-utilizar').html())
-    let get_total_kcal = () => Number($("#total-kcal").html())
 
-    let get_vct = () => {
-        
-    }
+<script> 
+    const id_paciente = `{{paciente.pk}}`
+    const url_alimentos_json = `{% url "grupo-alimentos-json" %}`
+    const url_calculadora_piramidal = `{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}`
+</script>
+<script type="text/javascript" src="{% static 'nutricionista/js/calculadora.js' %}"></script>
+
+<script>
+    let get_kcal_estado_nutricional = () => Number($('#kcal-a-utilizar').html())
+    let get_total_kcal = () => Number($("#total-kcal").html())
+    let get_peso_a_utilizar = () => Number($("#peso-a-utilizar").val())
+    let get_vct = () =>{
+        porc_cho = Number($('#porc-cho').val())
+        porc_pro = Number($('#porc-pro').val())
+        porc_lip = Number($('#porc-lip').val())
+        return  {'porc_cho': porc_cho, 'porc_pro': porc_pro, 'porc_lip': porc_lip}
+    } 
     let get_grupos_porciones= () => {
         let grupos_porciones = []
         $(".calculadora-body").children('tr').each((i, e) => { 
             const porcion = $(e).find("input").val()
             if (porcion > 0){
-                obj = {'grupo': $(e).data('pk'), 'porcion': porcion}
+                obj = {'pk': $(e).data('pk'), 'nombre': $(e).data('nombre'), 'porción': porcion}
                 grupos_porciones.push(obj)
             }
         })
 
         return grupos_porciones
     }
+
+    let get_datos_calculadora = (paciente, modal_id) => {
+        kcal_estado_nutricional = get_kcal_estado_nutricional()
+        total_kcal = get_total_kcal()
+        vct = get_vct()
+        grupos_porciones = get_grupos_porciones()
+        peso_a_utilizar = get_peso_a_utilizar()
+        console.log(peso_a_utilizar)
+        datos_calculadora = {
+            'paciente': paciente,
+            'peso_a_utilizar': peso_a_utilizar,
+            'kcal_estado_nutricional': kcal_estado_nutricional,
+            'total_kcal': total_kcal,
+            'vct': vct,
+            'grupos_porciones': grupos_porciones
+        }
+       
+        if (modal_id){
+            $('#modal__kcal_estado_nutricional').children(`span`).html(`${kcal_estado_nutricional}`)
+            $('#modal__total_kcal').children(`span`).html(`${total_kcal}`)
+            $('#modal__vct').children(`span`).html(`
+                <ul>
+                    <li>% <b>cho:</b> ${vct.porc_cho}</li>
+                    <li>% <b>proteínas:</b> ${vct.porc_pro}</li>
+                    <li>% <b>lípidos:</b> ${vct.porc_lip}</li>
+                </ul>
+            `)
+            lista_grupos_porciones = ``
+            for (var key in grupos_porciones) {
+                if (grupos_porciones.hasOwnProperty(key)) {
+                    lista_grupos_porciones += `<li><b>${grupos_porciones[key].nombre}</b>, porción: ${grupos_porciones[key].porción} </li>`
+                }
+            }
+            $('#modal__grupos_prociones').children(`span`).html(`
+                <ul>
+                    ${lista_grupos_porciones}
+                </ul>
+            `)
+        }
+        console.log(datos_calculadora)
+        return datos_calculadora
+
+    }
+    $("#form_guardar_calculadora").on('submit', function(e){
+        var data = new FormData();
+        data.append('datos_calculadora', JSON.stringify(get_datos_calculadora(id_paciente)))
+        data.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+        $.ajax({
+            url: url_calculadora_piramidal,
+            method: 'POST',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
+
+            },
+            success: function (data) {
+                location.reload();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log('ERROR AJAX' + thrownError)
+                alert("Error guardando los datos")
+    
+            }
+        })
+    })
+
+    
 </script>
 {% endblock costumjs %}

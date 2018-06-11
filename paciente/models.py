@@ -1,9 +1,9 @@
 from django.db import models
 from cuentas.models import User
-
+from django.contrib.postgres.fields import JSONField
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
-
+from django.utils import timezone
 
 class Paciente(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='paciente') #REF: user.paciente -> Llama al único paciente del usuario
@@ -92,9 +92,15 @@ class Paciente(models.Model):
         # return  "Nutri: " + str(self.nutricionista)
         return self.user.rut + " - " +self.user.email
 
-        
+class CalculadoraPiramidal(models.Model):
+    paciente = models.OneToOneField(Paciente, on_delete=models.CASCADE)
+    peso_a_utilizar = models.FloatField(default=0, blank=True, null=True)
+    kcal_estado_nutricional = models.IntegerField(default = 0)
+    total_kcal = models.FloatField(default=0, blank=True, null=True)
+    vct = JSONField(blank=True, null=True)
+    grupos_porciones = JSONField(blank=True, null=True)
+    ultima_actualizacion = models.DateTimeField(default=timezone.now)
 
-
-        
-
-
+    def __str__(self):
+        return 'Calculadora de: {}'.format(self.paciente)
+    

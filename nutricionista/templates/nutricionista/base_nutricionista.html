@@ -3,14 +3,14 @@
 {% block basecss %}
 <style>
     header, main, footer {
-        padding-left: 250px;
+        padding-left: 300px;
     }
     .sidenav {
-        width: 250px;
+        width: 300px;
     }
     @media only screen and (max-width : 992px) {
         header, main, footer {
-            padding-left: 250px;
+            padding-left: 300px;
         }
     }
 </style>
@@ -21,13 +21,27 @@
     <li><div class="user-view">
         <a href="#user"><img src="{% static 'img/nuts_logo.png' %}" width="200px" height="150px"></a>
         <a href="#name"><span class="black-text name">{{request.user.get_nombre_completo}}</span></a>
-        <a href="#email"><span class="black-text email">{{request.user.get_nombre}}</span></a>
+        <a href="#email"><span class="black-text email">{{request.user.email}}</span></a>
     </div></li>
+
     <li><a href="{% url 'pacientes-agregar' %}"><i class="material-icons">add</i>Agregar Paciente</a></li> 
     <li><a href="{% url 'pacientes' %}"><i class="material-icons">assignment_ind</i>Mis Pacientes</a></li>  
-    <li><a href="{% url 'perfil' %}"><i class="material-icons">person</i>Mi Perfil</a></li>
+    {% if paciente %}
+        <li class="active purple white-text"><a href="{% url 'paciente-detalle' pk=paciente.pk%}" class="white-text"><i class="material-icons white-text">person</i>Atendiendo a {{paciente.user.rut}}</a></li>
+            <ul>
+                <li class="{% block activeFichaUsuario %} {% endblock %}"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">1.- Ficha Usuario </a></li>
+                <li class="{% block activeFichageneral %} {% endblock %}"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">2.- Ficha General </a></li>
+                <li class="{% block activeFichaAntecedentes %} {% endblock %}"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">3.- Antecedentes Alimentarios </a></li>
+                <li class="{% block activeFichaNutricional %} {% endblock %}"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">4.- Ficha nutricional </a></li>
+                <li class="{% block activeFichaBioquimica %} {% endblock %}"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">5.- Ficha Bioquímica</a></li>
+                <li class="{% block activeCalculadoraPiramidal %} {% endblock %}"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">6.- Calculadora piramidal</a></li>
+                <li class="{% block activeRecomendaciones %} {% endblock %}"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">7.- Recomendaciones</a></li>
+            </ul>
+    {% else %}
+    {% endif %}
     <li><div class="divider"></div></li>
-    <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li
+    <li><a href="{% url 'perfil' %}"><i class="material-icons">person</i>Mi Perfil</a></li>
+    <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
     
 </ul>
 
