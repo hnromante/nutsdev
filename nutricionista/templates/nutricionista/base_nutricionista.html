@@ -19,7 +19,7 @@
 
 <ul id="slide-out" class="sidenav sidenav-fixed">
     <li><div class="user-view">
-        <a href="#user"><img src="{% static 'img/nuts_logo.png' %}" width="200px" height="150px"></a>
+        <a href="{% url 'nutricionista' %}"><img src="{% static 'img/nuts_logo.png' %}" width="200px" height="150px"></a>
         <a href="#name"><span class="black-text name">{{request.user.get_nombre_completo}}</span></a>
         <a href="#email"><span class="black-text email">{{request.user.email}}</span></a>
     </div></li>
