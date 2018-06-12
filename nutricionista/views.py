@@ -36,8 +36,17 @@ def inicio_nutri(request):
     if not request.user.es_nutri:
         messages.add_message(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
-
-    return render(request,'nutricionista/index.html')
+    numero_pacientes = len(Paciente.objects.filter(nutricionista=request.user.nutricionista))
+    pacientes_normal = len(Paciente.objects.filter(nutricionista=request.user.nutricionista, diagnostico_peso='Peso normal'))
+    pacientes_bajo = len(Paciente.objects.filter(nutricionista=request.user.nutricionista, diagnostico_peso='Bajo peso'))
+    pacientes_sobrepeso = len(Paciente.objects.filter(nutricionista=request.user.nutricionista, diagnostico_peso='Sobrepeso'))
+    pacientes_obesidad1 = len(Paciente.objects.filter(nutricionista=request.user.nutricionista, diagnostico_peso='Obesidad grado 1'))
+    pacientes_obesidad2 = len(Paciente.objects.filter(nutricionista=request.user.nutricionista, diagnostico_peso='Obesidad grado 2'))
+    pacientes_obesidad_morbida = len(Paciente.objects.filter(nutricionista=request.user.nutricionista, diagnostico_peso='Obesidad mórbida'))
+    print(pacientes_obesidad1)
+    return render(request,'nutricionista/index.html', {'numero_pacientes':numero_pacientes, 'pacientes_normal':pacientes_normal, 'pacientes_bajo':pacientes_bajo,
+                                                        'pacientes_sobrepeso':pacientes_sobrepeso, 'pacientes_obesidad1':pacientes_obesidad1, 'pacientes_obesidad2':pacientes_obesidad2,
+                                                        'pacientes_obesidad_morbida':pacientes_obesidad_morbida})
 
 
 @login_required(login_url='/login-nutricionista/')

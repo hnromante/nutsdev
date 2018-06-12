@@ -40,18 +40,29 @@
         <div class="card blue-grey darken-1">
             <div class="card-content white-text">
                 <span class="card-title">Cantidad de Pacientes</span>
-                <p>Numero</p>
+                <h3>{{numero_pacientes}}</h3>
+            </div>
+            <div class="card-action center">
+                <a href="{% url 'pacientes' %}">Ver mis Pacientes</a>
             </div>
         </div>
     </div>
     <div class="col l6">
-        <div class="card blue-grey darken-1">
+        <div class="card green darken-2">
             <div class="card-content white-text">
                 <span class="card-title">Distribucion de Pacientes</span>
-                <p>Peso Normal:</p>
-                <p>Peso Obeso:</p>
-                <p>Peso Sobrepeso:</p>
-                <p>Peso Obesidad Morbida:</p>
+                    <div class="row">
+                        <div class="col l6">
+                            <p>Bajo peso:  {{pacientes_bajo}}</p>
+                            <p>Peso Normal:  {{pacientes_normal}}</p>
+                            <p>Sobrepeso:  {{pacientes_sobrepeso}}</p>
+                        </div>
+                        <div class="col l6">
+                            <p>Obesidad Grado I:  {{pacientes_obesidad1}}</p>
+                            <p>Obesidad Grado II:  {{pacientes_obesidad2}}</p>
+                            <p>Obesidad Morbida:  {{pacientes_obesidad_morbida}}</p>
+                        </div>
+                    </div>
             </div>
             <div class="card-action center">
                 <a href="{% url 'pacientes' %}">Ver mis Pacientes</a>
