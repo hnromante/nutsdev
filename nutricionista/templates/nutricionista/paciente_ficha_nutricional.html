@@ -80,26 +80,30 @@
 {% block costumjs %}
 <script>
     let calcular_imc = () => {
-        const peso = $("#id_peso").val()
-        const talla = $("#id_talla").val()
+        let peso = parseFloat($("#id_peso").val())
+        let talla = parseFloat($("#id_talla").val())
+        console.log(peso)
+        console.log(talla)
         let diagnostico;
-        if (peso > 0 && talla > 0){
-            const imc = (Number(peso)/Number(talla**2)).toFixed(2)
+        if (peso > 0.0 && talla > 0.0){
+            let imc = ((peso)/talla**2).toFixed(2)
             if (imc < 18.5){
                 diagnostico = 'Bajo peso'
             }else if (imc >= 18.5 && imc <= 24.9){
                 diagnostico = 'Peso normal'
-            }else if (imc >= 25 && imc <= 29.9){
+            }else if (imc >= 25.0 && imc <= 29.9){
                 diagnostico = 'Sobrepeso'
-            }else if(imc >= 30 && imc <= 34.9){
+            }else if(imc >= 30.0 && imc <= 34.9){
                 diagnostico = 'Obesidad grado 1'
-            }else if(imc >= 35 && imc <= 39.9){
+            }else if(imc >= 35.0 && imc <= 39.9){
                 diagnostico = 'Obesidad grado 2'
-            }else if(imc >= 40){
+            }else if(imc >= 40.0){
                 diagnostico = 'Obesidad mórbida'
             }else{
                 diagnostico = ' - '
             }
+            imc = parseFloat(imc)
+            console.log(imc)
             $("#id_imc").val(imc)
             $("#id_diagnostico_peso").val(diagnostico)
             $(".mensajes").html("")

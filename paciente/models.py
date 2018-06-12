@@ -22,7 +22,7 @@ class Paciente(models.Model):
     peso = models.FloatField(null=True, blank=True, default=0)
     talla = models.FloatField(null=True, blank=True, default=0)
     imc = models.FloatField(null=True, blank=True, default=0)
-    diagnostico_peso = models.CharField (null=True, blank=True, default="",max_length=15)
+    diagnostico_peso = models.CharField (null=True, blank=True, default="",max_length=30)
     cintura = models.FloatField(null=True, blank=True, default=0)
     presion_arterial = models.FloatField(null=True, blank=True, default=0)
     h_g_t = models.FloatField(null=True, blank=True, default=0)

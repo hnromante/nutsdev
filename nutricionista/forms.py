@@ -44,7 +44,6 @@ class FormFichaNutricional(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['peso'].widget.attrs.update()
-        self.fields['talla'].widget.attrs.update()
         self.fields['imc'].widget.attrs.update({'readonly':'readonly'})
         self.fields['diagnostico_peso'].widget.attrs.update({'readonly':'readonly'})
         self.fields['cintura'].widget.attrs.update()

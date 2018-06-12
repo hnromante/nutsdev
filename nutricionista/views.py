@@ -235,6 +235,7 @@ def mi_perfil(request):
         form = FormPerfil(request.POST, instance=request.user)
         if form.is_valid():
             user = form.save()
+            messages.success(request, "Información actualizada correctamente")
     else:
         form = FormPerfil(instance=request.user)
     return render(request, 'nutricionista/perfil.html', {'form':form})
