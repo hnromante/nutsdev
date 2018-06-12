@@ -6,15 +6,17 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 class Paciente(models.Model):
+    """
+    MODELO DE BASE DE DATOS (ORM) DE PACIENTE
+    Este es el modelo principal de la aplicación. Los campos están divididos por ficha (Según requerimientos del cliente)
+    INFORMACION GENERAL, INFORMACIÓN NUTRICIONAL, BIOQUÍMICA, TOROIDE, ANTECEDENTES ALIMENTARIOS, ETC.
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='paciente') #REF: user.paciente -> Llama al único paciente del usuario
     nutricionista = models.ForeignKey('nutricionista.Nutricionista', on_delete=models.CASCADE, null=True, blank=True, related_name='pacientes') #REF: user.pacientes -> Llama a todos los pacientes del nutricionista
     #Información personal - a llenar despues
     ocupacion = models.CharField(max_length=255, blank=True, default="")
     nacionalidad = models.CharField(max_length=100, blank=True, default="")
     observacion = models.TextField(max_length=500, blank=True, default="")
-    #.
-    #.
-    #.
     ultima_atencion = models.DateTimeField(null=True, blank=True)
     #informacion nutricional
     peso = models.FloatField(null=True, blank=True, default=0)
@@ -93,6 +95,10 @@ class Paciente(models.Model):
         return self.user.rut + " - " +self.user.email
 
 class CalculadoraPiramidal(models.Model):
+    """
+    MODELO CALCULADORA PIRAMIDAL (ORM). Este modelo guarda los datos enviados desde el front-end en la pestaña de calculadora piramidal y los almacena
+    en formato JSON.
+    """
     paciente = models.OneToOneField(Paciente, on_delete=models.CASCADE)
     peso_a_utilizar = models.FloatField(default=0, blank=True, null=True)
     kcal_estado_nutricional = models.IntegerField(default = 0)

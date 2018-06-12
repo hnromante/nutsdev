@@ -3,12 +3,19 @@ from cuentas.models import User
 # Create your models here.
 class SuperAdmin(models.Model):
     """
-    Este es el modelo que v a tener control sobre todos los parametros cambiantes de la aplicacion NUTZ
+    MODELO SUPERADMIN (ORM)
+    Relación uno a uno con el modelo de usuarios.
+    Este es el modelo que va tener control sobre todos los parametros cambiantes de la aplicacion NUTZ.
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 class GrupoAlimento(models.Model):
+    """
+    MODELO GRUPO DE ALIMENTOS (ORM)
+    El objetivo de este modelo es servir en formato JSON con la data de grupos alimentarios a diversas partes de la aplicación.
+    (Ver views.py de superadmin)
+    """
     nombre = models.CharField(max_length=50)
     kcal_prom = models.FloatField()
     cho_prom = models.FloatField()
@@ -20,6 +27,12 @@ class GrupoAlimento(models.Model):
         return self.nombre
 
 class Alimento(models.Model):
+    """
+    MODELO ALIMENTOS (ORM)
+    Relacion uno muchos con grupo de aliemntos.
+    El objetivo de este modelo es servir en formato JSON con la data de alimentos a diversas partes de la aplicación.
+    (Ver views.py de superadmin)
+    """
     nombre = models.CharField(max_length=50)
     kcal = models.FloatField()
     cho = models.FloatField()

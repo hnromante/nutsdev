@@ -37,7 +37,6 @@
                 <li class="{% block activeCalculadoraPiramidal %} {% endblock %}"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">6.- Calculadora piramidal</a></li>
                 <li class="{% block activeRecomendaciones %} {% endblock %}"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">7.- Recomendaciones</a></li>
             </ul>
-    {% else %}
     {% endif %}
     <li><div class="divider"></div></li>
     <li><a href="{% url 'perfil' %}"><i class="material-icons">person</i>Mi Perfil</a></li>

@@ -6,6 +6,11 @@ from django.forms.widgets import CheckboxSelectMultiple
 from superadmin.models import Alimento
 
 class FormUsuario(forms.ModelForm):
+    """
+    Formulario para modificar los datos del nutricionsita logueado.
+    Relacionado directamente con los parámetros de la base de datos.
+    Hace referencia al modelo usuario.
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nombres'].widget.attrs.update()
@@ -17,6 +22,10 @@ class FormUsuario(forms.ModelForm):
         fields = ['nombres', 'apellidos', 'nacimiento', 'genero']
 
 class FormFichaGeneral(forms.ModelForm):
+    """
+    Formulario para modificar la ficha de datos generales del paciente
+    Hace referencia al modelo paciente.
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['ocupacion'].widget.attrs.update()
@@ -28,6 +37,10 @@ class FormFichaGeneral(forms.ModelForm):
 
 
 class FormFichaNutricional(forms.ModelForm):
+    """
+    Formulario para modificar la ficha nutricional del paciente.
+    Hace referencia al modelo paciente
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['peso'].widget.attrs.update()
@@ -48,6 +61,10 @@ class FormFichaNutricional(forms.ModelForm):
         fields = ['peso', 'talla', 'imc', 'diagnostico_peso', 'cintura', 'presion_arterial', 'h_g_t', 'p_bicipital', 'p_tripicital', 'p_sub_escapular', 'p_sub_iliaco', 'c_braquial']
 
 class FormAntecedentesAlimentarios(forms.ModelForm):
+    """
+    Formulario para modificar la ficha de antecedentes alimentarios del paciente.
+    Hace referencia al modelo paciente.
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['perdida_peso'].widget.attrs.update()
@@ -66,6 +83,10 @@ class FormAntecedentesAlimentarios(forms.ModelForm):
 
 
 class FormFichaBioquimica(forms.ModelForm):
+    """
+    Formulario para modificar la ficha bioquímica del paciente.
+    Hace referencia al modelo paciente.
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['colesterol_mgdl'].widget.attrs.update()
@@ -111,6 +132,11 @@ class FormFichaBioquimica(forms.ModelForm):
 
 
 class FormPerfil(forms.ModelForm):
+    """
+    Formulario para modificar los datos del nutricionsita logueado.
+    Relacionado directamente con los parámetros de la base de datos.
+    Hace referencia al modelo usuario.
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['rut'].widget.attrs.update({'class': 'disabled'})
@@ -120,6 +146,10 @@ class FormPerfil(forms.ModelForm):
         fields = ['rut', 'nombres', 'apellidos', 'nacimiento', 'genero']
 
 class FormAddPaciente(forms.ModelForm):
+    """
+    Formulario para agregar pacientes desde el nutricionista.
+    Solo recibe los parámetros RUT e EMail que son requerimientos para ser usuario del sistema.
+    """
     rut = forms.CharField(max_length=50)
     email = forms.EmailField()
 
@@ -142,7 +172,9 @@ class FormAddPaciente(forms.ModelForm):
         # exclude = ['user', 'nutricionista']
 
 class FormMenu(forms.ModelForm):
-    
+    """
+    Formulario para agrgear MENUS desde el nutricionista (NO EN USO)
+    """
     def __init__(self, *args, **kwargs):
         
         super(FormMenu, self).__init__(*args, **kwargs)
@@ -154,7 +186,9 @@ class FormMenu(forms.ModelForm):
         fields = ('nombre', 'alimentos', )
 
 class FormPautaAlimentaria(forms.ModelForm):
-    
+    """
+    Formulario para agrgear pautas alimentarias desde el nutricionista (NO EN USO)
+    """
     class Meta:
         model = PautaAlimentaria
         fields = '__all__'

@@ -33,15 +33,30 @@ def calculadora(request):
 
 @login_required(login_url='/login-nutricionista/')
 def inicio_nutri(request):
+    """
+    Controlador del dashboard del nutricionista. Entrega información general útil para el paciente,
+    como el número de pacietes asociados a la nutricionista y estadísticas.
+    Retorna el template de dashboard.
+    :param request:
+    :return:
+    """
     if not request.user.es_nutri:
-        messages.add_message(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
+        messages.add_message(request, messages.INFO, 'Usted no tiene los permisos para visitar esa página')
         return HttpResponseRedirect('/login-nutricionista')
 
-    return render(request,'nutricionista/index.html')
+    numero_pacientes = len(Paciente.objects.filter(nutricionista=request.user.nutricionista))
+    return render(request,'nutricionista/index.html', {'numero_pacientes': numero_pacientes})
 
 
 @login_required(login_url='/login-nutricionista/')
 def mis_pacientes(request):
+    """
+    Controlador Muestra un listado de los pacientes asociados a la nutricionita.
+    Retorna el template de pacientes.html.
+    Además filtra cuando se presiona el botón de búsqueda por el rut correspondiente.
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
         rut = request.POST['busqueda']
         pacientes = Paciente.objects.filter(nutricionista=request.user.nutricionista, user__rut = rut)
@@ -59,7 +74,17 @@ def mis_pacientes(request):
 
 @login_required(login_url='/login-nutricionista/')
 def paciente_detalle(request, pk, ficha=''):
-    paciente = Paciente.objects.get(pk=pk)
+    """
+    Controlador Detalle del paciente, recibe como parámetros el PK o ID del paciente (lanza un 404 si no se encuentra).
+    Recibe además una ficha que va a mostrar un formulario específico. Las fichas válidas son: (usuario, general,
+    antecedentes, bioquimica, calculadora y recomendaciones)
+    Retorna el template de paciente detalle por defecto, pero renderiza las ficahs dependiendo del parametro enviado por URL.
+    :param request:
+    :param pk:
+    :param ficha:
+    :return:
+    """
+    paciente = Paciente.objects.get(pk=pk) #CAMBIAR POR GET OBJECT OR 404
     if not request.user.es_nutri:
         messages.warning(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
@@ -149,6 +174,13 @@ def paciente_detalle(request, pk, ficha=''):
 
 @login_required(login_url='/login-nutricionista/')
 def agregar_paciente(request):
+    """
+    Función que permite agregar pacientes. Asigna por defecto una password hasheada que se le envía al paciente a través de su email
+    para que la pueda cambiar.
+    Retorna el template de agregar paciente.
+    :param request:
+    :return:
+    """
     if not request.user.es_nutri:
         messages.success(request, 'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
@@ -171,6 +203,12 @@ def agregar_paciente(request):
 
 @login_required(login_url='/login-nutricionista/')
 def mi_perfil(request):
+    """
+    Controlador perfil del nutricionista donde puede editar sus dato personales.
+    Retorna el template de mi perfil.
+    :param request:
+    :return:
+    """
     if not request.user.es_nutri:
         messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
@@ -185,6 +223,12 @@ def mi_perfil(request):
 
 @login_required(login_url='/login-nutricionista/')
 def mis_menus(request):
+    """
+    Controlador de Mis menus. (NO EN USO)
+    Retorna el template de mis menus
+    :param request:
+    :return:
+    """
     if not request.user.es_nutri:
         messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
@@ -202,6 +246,11 @@ def mis_menus(request):
 
 @login_required(login_url='/login-nutricionista/')
 def mis_pautas(request):
+    """
+    Controlador de mis pautas alimentarias. (NO EN USO)
+    :param request:
+    :return:
+    """
     if not request.user.es_nutri:
         messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
@@ -216,14 +265,11 @@ def mis_pautas(request):
 
 
 class MenuDetalle(UpdateView):
+    """
+    Clase que retorna el detalle en Menú.
+    """
     model = Menu
     fields = '__all__'
     template_name = 'nutricionista/menu_detail.html'
     redirect_url = ''
         
-
-# def calculadora_piramidal(request, pk):
-#     paciente = 
-#     if request.method == 'POST':
-#         calculadora = CalculadoraPiramidal.objects.create(paciente=paciente)
-    
