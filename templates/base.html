@@ -35,12 +35,29 @@
     <!-- Materialize JS -->
       <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          console.log("READY")
+          var elems = document.querySelectorAll('.datepicker');
+          options = {
+            autoClose: true,
+            format: 'yyyy-mm-dd',
+            months: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+            done: 'Aceptar',
+            firstDay: 1,
+            weekdays: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'],
+            weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+            weekdaysAbbrev: ['D','L','M','M','J','V','S','D']
+          }
+          var instances = M.Datepicker.init(elems, options);
+        });
       $(document).ready(function(){
         $('select').formSelect();
         $('.sidenav').sidenav();
-        $('.datepicker').datepicker();
+        //$('.datepicker').datepicker();
         $('.slider').slider();
         $('.modal').modal();
+        
       });
     </script>
     {% block basejs %}

@@ -1,6 +1,27 @@
 {% extends "nutricionista/base_nutricionista.html" %}
-
+<style>
+  .dia_humano{
+    border-radius: 5px;
+    padding:40px;
+    color:white;
+  }
+  .card-title purple-text{
+    color: purple;
+  }
+</style>
 {% block main %}
+<div class="row">
+    <div class="col s12">
+        {% for message in messages  %}
+            {% if message.tags == 'success' %}
+                <p class="green-text">{{message}}</p>
+            {% else %}
+                <p>{{message}}</p>
+            {% endif %}
+        {% endfor %}
+     
+    </div>
+</div>
 <div class="row">
     <div class="col s12">
         <div class="container">
@@ -12,10 +33,10 @@
   <div class="row">
     <div class="col s12">
       <div class="card panel">
-        <p class="flow-text blue-text text-darken-2">Próximas reservas</p>
+        <p class="flow-text blue-text text-darken-2" style="padding:5px; margin:5px;">Próxima atención</p>
         <ul class="collection">
-            <li class="collection-item"><span class="blue">hoy</span> 16 de julio de 2018 - Hugo Nuñez</li>
-            <li class="collection-item"><span class="blue">hoy</span> 16 de julio de 2018 - Hugo Nuñez</li>
+            <li class="collection-item"><span class="blue" style="border-radius:5px; color:white; padding:4px;">hoy</span> 16 de julio de 2018 - Hugo Nuñez <a href="#">Ver reserva</a></li>
+            <li class="collection-item rigth"><a href=#>Ver todas las reservas</a></li>
         </ul>
       </div>
     </div>
@@ -24,9 +45,9 @@
 <div class="container">
     <div class="row">
         <div class="col l6">
-          <div class="card blue darken-3">
-            <div class="card-content white-text">
-              <span class="card-title">Informacion de la cuenta</span>
+          <div class="card ">
+            <div class="card-content blue-text">
+              <span class="card-title purple-text">Informacion de la cuenta</span>
                     <p>Rut: {{paciente.user.rut}}</p>
                     <p>Nombres: {{paciente.user.nombres}}</p>
             </div>
@@ -36,9 +57,9 @@
           </div>
         </div>
         <div class="col l6">
-          <div class="card blue darken-3">
-            <div class="card-content white-text">
-              <span class="card-title">Detalles Generales</span>
+          <div class="card blue-text">
+            <div class="card-content ">
+              <span class="card-title purple-text">Detalles Generales</span>
               <p>Ocupacion: {{paciente.ocupacion}}</p>
               <p>Nacionalidad: {{paciente.nacionalidad}}</p>
             </div>
@@ -50,9 +71,9 @@
     </div>
     <div class="row">
       <div class="col l6">
-        <div class="card blue darken-3">
-          <div class="card-content white-text">
-            <span class="card-title">Antecedentes Alimentarios</span>
+        <div class="card blue-text">
+          <div class="card-content">
+            <span class="card-title purple-text">Antecedentes Alimentarios</span>
             <p>Perdida de peso: {{paciente.perdida_peso}}</p>
             <p>Perdida de peso: {{paciente.ganancia_peso}}</p>
           </div>
@@ -62,11 +83,16 @@
         </div>
       </div>
       <div class="col l6">
-          <div class="card blue darken-3">
-            <div class="card-content white-text">
-              <span class="card-title">Ficha Nutricional</span>
+          <div class="card blue-text">
+            <div class="card-content">
+              <span class="card-title purple-text">Ficha Nutricional</span>
               <p>Peso: {{paciente.peso}}</p>
-              <p>Diagnostico: {{paciente.diagnostico_peso}}</p>
+              <p>Diagnostico: 
+              {% if paciente.diagnostico %}
+              {{paciente.diagnostico_peso}}
+              {% else %}
+              SIN IMC CALCULADO
+              {% endif %}</p>
             </div>
             <div class="card-action center">
               <a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ver Detalle</a>
@@ -76,9 +102,9 @@
     </div>
     <div class="row">
       <div class="col l6">
-        <div class="card blue darken-3">
-          <div class="card-content white-text">
-            <span class="card-title">Ficha Bioquimica</span>
+        <div class="card blue-text">
+          <div class="card-content ">
+            <span class="card-title purple-text">Ficha Bioquimica</span>
             <div class="row">
               <div class="col">
                 <p>Colesterol: {{paciente.colesterol_mgdl}}</p>
@@ -96,17 +122,13 @@
         </div>
       </div>
       <div class="col l6">
-          <div class="card blue darken-3">
-            <div class="card-content white-text">
-              <span class="card-title">Calculadora Piramidal</span>
+          <div class="card blue-text">
+            <div class="card-content ">
+              <span class="card-title purple-text">Calculadora Piramidal</span>
                 <div class="row">
                   <div class="col">
-                    <p>Dato</p>
-                    <p>Dato</p>
-                  </div>
-                  <div class="col">
-                    <p>Dato</p>
-                    <p>Dato</p>
+                    <p>Peso a utilizar: {{paciente.calculadora.peso_a_utilizar}}</p>
+                    <p>Kcal utilizar: {{paciente.calculadora.total_kcal}}</p>
                   </div>
                 </div>
               </div>
@@ -117,10 +139,11 @@
       </div>
       <div class="row">
         <div class="col l12">
-          <div class="card blue darken-3">
-            <div class="card-content white-text">
-              <span class="card-title">Recomendacion</span>
-              <p>Recomendacion</p>
+          <div class="card blue-text">
+            <div class="card-content ">
+              <span class="card-title purple-text">Recomendacion</span>
+              <p>{% lorem 1 %}</p>
+              <p>{{paciente.recomendacion}}</p>
             </div>
             <div class="card-action center">
               <a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Ver Detalle</a>
@@ -128,9 +151,31 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col s12">
+          <h4 class="purple-text">Acciones</h4>
+            <a class="waves-effect waves-light btn modal-trigger red white-text" href="#modal_confirmar_eliminar">Eliminar paciente</a>
+        </div>
+      </div>
     </div>
-
 </div>
 
+<!-- Modal Trigger -->
 
+
+<!-- Modal Structure -->
+<div id="modal_confirmar_eliminar" class="modal">
+    <div class="modal-content">
+      <h4>¿Eliminar al paciente {{paciente.user.get_nombre_completo}}?</h4>
+      <p>Perderá toda la información del sistema.</p>
+    </div>
+    <div class="modal-footer">
+        <form action="" id="form_eliminar_paciente" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="Confirmar" class="btn red white-text" name="eliminar_paciente">
+          <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+        </form>
+      
+    </div>
+  </div>
 {% endblock main %}

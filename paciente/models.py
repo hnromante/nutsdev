@@ -99,7 +99,7 @@ class CalculadoraPiramidal(models.Model):
     MODELO CALCULADORA PIRAMIDAL (ORM). Este modelo guarda los datos enviados desde el front-end en la pestaña de calculadora piramidal y los almacena
     en formato JSON.
     """
-    paciente = models.OneToOneField(Paciente, on_delete=models.CASCADE)
+    paciente = models.OneToOneField(Paciente, on_delete=models.CASCADE, related_name="calculadora")
     peso_a_utilizar = models.FloatField(default=0, blank=True, null=True)
     kcal_estado_nutricional = models.IntegerField(default = 0)
     total_kcal = models.FloatField(default=0, blank=True, null=True)

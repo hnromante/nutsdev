@@ -1,10 +1,25 @@
 {% extends "nutricionista/base_nutricionista.html" %}
 
 {% block main %}
-<div class="container">
-    <div class="row center">
-        <p><h2>Lista de Pacientes</h2></p>
+<div class="row">
+    <div class="col s12">
+        <div class="container">
+            <h3 class="header left purple-text">Listado de pacientes</h3>
+        </div>       
     </div>
+</div>
+<div class="row">
+    <div class="col s12">
+        {% for message in messages  %}
+            {% if message.tags == 'success' %}
+                <p class="green-text">{{message}}</p>
+            {% else %}
+                <p>{{message}}</p>
+            {% endif %}
+        {% endfor %} 
+    </div>
+</div>
+<div class="container">
     <div class="row center">
         <form action="" method="POST">
             {% csrf_token %}
@@ -34,7 +49,7 @@
                        <th data-field="apellidos">Apellidos</th>
                        <th data-field="rut">Rut</th>
                        <th data-field="ver_ficha">Ver Ficha</th>
-                       <th data-field="eliminar_paciente">Eliminar</th>
+                       {% comment %} <th data-field="eliminar_paciente">Eliminar</th> {% endcomment %}
                    </tr>
                </thead>
                <tbody>
@@ -45,7 +60,7 @@
                                 <td>{{paciente.user.apellidos}}</td>
                                 <td>{{paciente.user.rut}}</td>
                                 <td><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Ver detalle</a></td>
-                                <td><a href="#"><i class="small material-icons">delete_forever</i></a></td>
+                                {% comment %} <td><a href="#"><i class="small material-icons">delete_forever</i></a></td> {% endcomment %}
                             </tr>
                         {% endfor %}
                    {% else %}

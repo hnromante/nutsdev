@@ -28,6 +28,7 @@ from cuentas.models import User
 from django.http import JsonResponse
 import json
 from django.utils import timezone
+from django.urls import reverse
 def calculadora(request):
     return render(request,template_name='nutricionista/calculadora.html')
 
@@ -92,10 +93,12 @@ def paciente_detalle(request, pk, ficha=''):
     :param ficha:
     :return:
     """
-    paciente = Paciente.objects.get(pk=pk) #CAMBIAR POR GET OBJECT OR 404
+    
     if not request.user.es_nutri:
         messages.warning(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
+    paciente = Paciente.objects.get(pk=pk) #CAMBIAR POR GET OBJECT OR 404
+    
 
     if ficha == 'nutricional':
         if request.method == 'POST':
@@ -134,7 +137,8 @@ def paciente_detalle(request, pk, ficha=''):
             form_usuario = FormUsuario(request.POST, instance=paciente.user)
             if form_usuario.is_valid():
                 form_usuario.save()
-                messages.success(request, "Información actualizada")
+                messages.success(request, "Información de usuario actualizada")
+                return HttpResponseRedirect('/nutricionista/mis-pacientes/{}/'.format(paciente.pk))
         else:
             form_usuario = FormUsuario(instance=paciente.user) 
         return render(request, 'nutricionista/paciente_ficha_usuario.html', {'form_usuario': form_usuario, 'paciente':paciente})
@@ -176,7 +180,13 @@ def paciente_detalle(request, pk, ficha=''):
                 cal.save()
         return render(request, 'nutricionista/paciente_calculadora.html', {'paciente':paciente, 'calculadora':calculadora})
     else:
-        pass
+        if request.method == 'POST':
+            if request.POST['eliminar_paciente']:
+                rut = paciente.user.rut
+                paciente.delete()
+                messages.success(request, 'Paciente con rut: {} eliminado correctamente'.format(rut))
+                return HttpResponseRedirect('/nutricionista/mis-pacientes')
+
     
     return render(request, 'nutricionista/paciente_single.html', {'paciente':paciente})
 
@@ -201,9 +211,10 @@ def agregar_paciente(request):
                                                 password='password123', 
                                                 es_paciente=True,
                                                 es_nutri=False)
-            Paciente.objects.create(user=user, nutricionista=nutricionista,
+            paciente = Paciente.objects.create(user=user, nutricionista=nutricionista,
                                   )
             messages.success(request, 'Paciente creado correctamente.')
+            return HttpResponseRedirect('/nutricionista/mis-pacientes/{}/usuario'.format(paciente.pk))
     else:
         form = FormAddPaciente()
     return render(request, template_name='nutricionista/pacientes_agregar.html', context={'form':form})

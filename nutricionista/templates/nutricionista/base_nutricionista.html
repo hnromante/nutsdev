@@ -23,7 +23,7 @@
         <a href="#name"><span class="black-text name">{{request.user.get_nombre_completo}}</span></a>
         <a href="#email"><span class="black-text email">{{request.user.email}}</span></a>
     </div></li>
-
+    <li><a href="{% url 'pacientes' %}"><i class="material-icons">date_range</i>Reservas</a></li>  
     <li><a href="{% url 'pacientes-agregar' %}"><i class="material-icons">add</i>Agregar Paciente</a></li> 
     <li><a href="{% url 'pacientes' %}"><i class="material-icons">assignment_ind</i>Mis Pacientes</a></li>  
     {% if paciente %}
