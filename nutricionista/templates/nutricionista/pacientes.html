@@ -33,7 +33,8 @@
                        <th data-field="nombre">Nombre</th>
                        <th data-field="apellidos">Apellidos</th>
                        <th data-field="rut">Rut</th>
-                       <th data-field="ver_ficha">ver_ficha</th>
+                       <th data-field="ver_ficha">Ver Ficha</th>
+                       <th data-field="eliminar_paciente">Eliminar</th>
                    </tr>
                </thead>
                <tbody>
@@ -44,6 +45,7 @@
                                 <td>{{paciente.user.apellidos}}</td>
                                 <td>{{paciente.user.rut}}</td>
                                 <td><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Ver detalle</a></td>
+                                <td><a href="#"><i class="small material-icons">delete_forever</i></a></td>
                             </tr>
                         {% endfor %}
                    {% else %}
