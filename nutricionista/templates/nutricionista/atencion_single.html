@@ -1,0 +1,73 @@
+{% extends "nutricionista/base_nutricionista.html" %}
+
+{% block main %}
+<div class="row">
+    <div class="col s12">
+        <div class="container">
+            <h3 class="header left purple-text">Detalle de la atención</h3>
+            <ul>
+            {% for field in form %}
+                {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+            {% endfor %}
+            </ul>
+        </div>       
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            {% for message in messages  %}
+                {% if message.tags == 'success' %}
+                    <p class="green-text">{{message}}</p>
+                {% else %}
+                    <p>{{message}}</p>
+                {% endif %}
+            {% endfor %} 
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12">
+        <div class="card horizontal">
+          <div class="card-stacked">
+            <div class="card-content">
+                <p>Fecha: {{atencion.fecha}}</p>
+                <p>Hora: {{atencion.hora}}</p>
+                <p>Paciente: <a href="{% url 'paciente-detalle' pk=atencion.paciente.pk %}">{{atencion.paciente.user.get_nombre_completo}}</a></p>
+                <div class="divider"></div>   
+                <p>Observación: {{atencion.observacion}}</p>
+            </div>
+            <div class="card-action">
+              <a class="modal-trigger red-text" href="#modal_cancelar_reserva"> Cancelar Reserva</a>
+              <a class="modal-trigger" href="#modal_modificar_reserva"> Modificar Reserva</a>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+<!-- Modal CANCELAR -->
+<div id="modal_cancelar_reserva" class="modal" >
+    <div class="modal-content">
+        <h4>¿Esta seguro que desea cancelar la reserva de  {{atencion.paciente.user.get_nombre_completo}} ?</h4>
+        <form action="{% url 'atencion-single-eliminar' pk=atencion.pk %}" id="form_eliminar_paciente" method="POST">
+            {% csrf_token %}
+            <input type="submit" class="red-text btn-small white" name="eliminar_reserva" value="Confirmar">
+            <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+        </form>
+    </div>
+</div>
+
+<!-- Modal MODIFICAR -->
+<div id="modal_modificar_reserva" class="modal" >
+    <div class="modal-content">
+        <h4>Modificar la reserva del paciente {{atencion.paciente.user.get_nombre_completo}}</h4>
+        <form action="" id="form_eliminar_paciente" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" class="purple-text btn-small white" name="modificar_reserva" value="Agendar">
+            <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock main%}

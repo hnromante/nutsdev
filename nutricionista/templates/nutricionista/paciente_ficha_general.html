@@ -4,7 +4,18 @@
 <div class="row">
     <div class="col s12">
         <div class="container">
+            <div class="row sub-menu" style="padding-top:30px;">
+                <div class="col s12 center">
+                    <a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}" class="breadcrumb purple-text">Volver ficha usuario</a>
+                    <a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}" class="breadcrumb purple-text">Continuar ficha antecedentes</a>
+                </div>
+            </div>
             <h3 class="header left purple-text">Información general del paciente</h3>
+            <ul>
+                {% for field in form %}
+                    {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+                {% endfor %}
+            </ul>
         </div>       
     </div>
 </div>
@@ -21,7 +32,7 @@
             {% endfor %}
             <form name="form_paciente" action="" method="post">
                 {% csrf_token %}
-                {{form_paciente}}
+                {{form}}
                 <input type="submit" value="Actualizar" class="btn">  
             </form>
         </div>

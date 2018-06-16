@@ -23,11 +23,11 @@
         <a href="#name"><span class="black-text name">{{request.user.get_nombre_completo}}</span></a>
         <a href="#email"><span class="black-text email">{{request.user.email}}</span></a>
     </div></li>
-    {% comment %} <li><a href="{% url 'pacientes' %}"><i class="material-icons">date_range</i>Reservas</a></li>   {% endcomment %}
+    <li><a href="{% url 'atenciones' %}"><i class="material-icons">date_range</i>Atenciones</a></li> 
     <li><a href="{% url 'pacientes-agregar' %}"><i class="material-icons">add</i>Agregar Paciente</a></li> 
     <li><a href="{% url 'pacientes' %}"><i class="material-icons">assignment_ind</i>Mis Pacientes</a></li>  
     {% if paciente %}
-        <li class="active purple white-text"><a href="{% url 'paciente-detalle' pk=paciente.pk%}" class="white-text"><i class="material-icons white-text">person</i>Atendiendo a {{paciente.user.rut}}</a></li>
+        <li class="active purple white-text"><a href="{% url 'paciente-detalle' pk=paciente.pk%}" class="white-text"><i class="material-icons white-text">person</i>Atendiendo a {{paciente.user.get_nombre_completo}}</a></li>
             <ul>
                 <li class="{% block activeFichaUsuario %} {% endblock %}"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">1.- Ficha Usuario </a></li>
                 <li class="{% block activeFichageneral %} {% endblock %}"><a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">2.- Ficha General </a></li>

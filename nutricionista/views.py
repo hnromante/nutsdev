@@ -1,19 +1,27 @@
 from django.shortcuts import render
-from nutricionista.models import Nutricionista, Menu, PautaAlimentaria
+from nutricionista.models import Nutricionista
 from django.views.generic.list import ListView
-from paciente.models import Paciente, CalculadoraPiramidal
+from paciente.models import (
+    AntecedentesAlimentarios,
+    CalculadoraPiramidal,
+    FichaBioquimica,
+    FichaGeneral,
+    FichaNutricional,
+    Paciente
+)
 from django.apps import apps
-from .forms import (
+from nutricionista.forms import FormPerfil
+from reserva.forms import FormCrearAtencion
+from reserva.models import Atencion
+from paciente.forms import (
     FormAddPaciente,
-    FormPerfil,
-    FormMenu,
-    FormPautaAlimentaria,
     FormFichaNutricional,
     FormFichaBioquimica,
     FormFichaGeneral,
     FormAntecedentesAlimentarios,
     FormUsuario
 )
+
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.views.generic.detail import DetailView
@@ -29,8 +37,7 @@ from django.http import JsonResponse
 import json
 from django.utils import timezone
 from django.urls import reverse
-def calculadora(request):
-    return render(request,template_name='nutricionista/calculadora.html')
+
 
 @login_required(login_url='/login-nutricionista/')
 def inicio_nutri(request):
@@ -44,16 +51,18 @@ def inicio_nutri(request):
     if not request.user.es_nutri:
         messages.add_message(request, messages.INFO, 'Usted no tiene los permisos para visitar esa página')
         return HttpResponseRedirect('/login-nutricionista')
-    numero_pacientes = len(Paciente.objects.filter(nutricionista=request.user.nutricionista))
-    pacientes_normal = len(Paciente.objects.filter(nutricionista=request.user.nutricionista, diagnostico_peso='Peso normal'))
-    pacientes_bajo = len(Paciente.objects.filter(nutricionista=request.user.nutricionista, diagnostico_peso='Bajo peso'))
-    pacientes_sobrepeso = len(Paciente.objects.filter(nutricionista=request.user.nutricionista, diagnostico_peso='Sobrepeso'))
-    pacientes_obesidad1 = len(Paciente.objects.filter(nutricionista=request.user.nutricionista, diagnostico_peso='Obesidad grado 1'))
-    pacientes_obesidad2 = len(Paciente.objects.filter(nutricionista=request.user.nutricionista, diagnostico_peso='Obesidad grado 2'))
-    pacientes_obesidad_morbida = len(Paciente.objects.filter(nutricionista=request.user.nutricionista, diagnostico_peso='Obesidad mórbida'))
-    print(pacientes_obesidad1)
-    return render(request,'nutricionista/index.html', {'numero_pacientes':numero_pacientes, 'pacientes_normal':pacientes_normal, 'pacientes_bajo':pacientes_bajo,
-                                                        'pacientes_sobrepeso':pacientes_sobrepeso, 'pacientes_obesidad1':pacientes_obesidad1, 'pacientes_obesidad2':pacientes_obesidad2,
+    numero_pacientes = Paciente.objects.filter(nutricionista=request.user.nutricionista).count()
+    pacientes_normal = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Peso normal').count()
+    pacientes_bajo = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Bajo Peso').count()
+    pacientes_sobrepeso = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Sobrepeso').count()
+    pacientes_obesidad1 = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad grado 1').count()
+    pacientes_obesidad2 = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad grado 2').count()
+    pacientes_obesidad_morbida = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad mórbida').count()
+    atenciones = Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha')[:2]
+    return render(request,'nutricionista/index.html', { 'atenciones':atenciones,
+                                                        'numero_pacientes':numero_pacientes, 'pacientes_normal':pacientes_normal,
+                                                        'pacientes_bajo':pacientes_bajo, 'pacientes_sobrepeso':pacientes_sobrepeso, 
+                                                        'pacientes_obesidad1':pacientes_obesidad1, 'pacientes_obesidad2':pacientes_obesidad2,
                                                         'pacientes_obesidad_morbida':pacientes_obesidad_morbida})
 
 
@@ -69,7 +78,7 @@ def mis_pacientes(request):
     if request.method == 'POST':
         rut = request.POST['busqueda']
         pacientes = Paciente.objects.filter(nutricionista=request.user.nutricionista, user__rut = rut)
-        print(pacientes)
+
         return render(request, 'nutricionista/pacientes.html', {'pacientes':pacientes})
 
     if not request.user.es_nutri:
@@ -98,39 +107,42 @@ def paciente_detalle(request, pk, ficha=''):
         messages.warning(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
     paciente = Paciente.objects.get(pk=pk) #CAMBIAR POR GET OBJECT OR 404
-    
+    proxima_atencion = Atencion.objects.filter(paciente=paciente, nutricionista=request.user.nutricionista).order_by('-fecha').last()
 
     if ficha == 'nutricional':
+        ficha_nutricional = FichaNutricional.objects.get(paciente=paciente) if FichaNutricional.objects.filter(paciente=paciente).exists() else FichaNutricional.objects.create(paciente=paciente)
         if request.method == 'POST':
-            form = FormFichaNutricional(request.POST, instance=paciente)
+            form = FormFichaNutricional(request.POST, instance=ficha_nutricional)
             if form.is_valid():
                 form.save()
                 messages.success(request, "Información actualizada")
         else:
-            form = FormFichaNutricional(instance=paciente)
+            form = FormFichaNutricional(instance=ficha_nutricional)
         return render(request, 'nutricionista/paciente_ficha_nutricional.html', {'form': form, 'paciente':paciente})
     
     elif ficha == 'bioquimica':
+        ficha_bioquimica = FichaBioquimica.objects.get(paciente=paciente) if FichaBioquimica.objects.filter(paciente=paciente).exists() else FichaBioquimica.objects.create(paciente=paciente)
         if request.method == 'POST':
-            form = FormFichaBioquimica(request.POST, instance=paciente)
+            form = FormFichaBioquimica(request.POST, instance=ficha_bioquimica)
             if form.is_valid():
                 form.save()
                 messages.success(request, "Información actualizada")
         else:
-            form = FormFichaBioquimica(instance=paciente)
+            form = FormFichaBioquimica(instance=ficha_bioquimica)
         return render(request, 'nutricionista/paciente_ficha_bio.html', {'form': form, 'paciente':paciente})
     
     elif ficha == 'general':
-        if request.method == 'POST':
-            form_paciente = FormFichaGeneral(request.POST, instance=paciente)
+        ficha_general = FichaGeneral.objects.get(paciente=paciente) if FichaGeneral.objects.filter(paciente=paciente).exists() else FichaGeneral.objects.create(paciente=paciente)
 
-            if form_paciente.is_valid():
-                form_paciente.save()
+        if request.method == 'POST':
+            form = FormFichaGeneral(request.POST, instance=ficha_general)
+            if form.is_valid():
+                form.save()
                 messages.success(request, "Información actualizada")
 
         else:
-            form_paciente = FormFichaGeneral(instance=paciente)
-        return render(request, 'nutricionista/paciente_ficha_general.html', {'form_paciente': form_paciente, 'paciente':paciente})
+            form = FormFichaGeneral(instance=ficha_general)
+        return render(request, 'nutricionista/paciente_ficha_general.html', {'form': form, 'paciente':paciente})
 
     elif ficha == 'usuario':
         if request.method == 'POST':
@@ -147,48 +159,43 @@ def paciente_detalle(request, pk, ficha=''):
         return render(request, 'nutricionista/paciente_recomendaciones.html', {'paciente':paciente})
 
     elif ficha == 'antecedentes':
+        ficha_antecedentes = AntecedentesAlimentarios.objects.get(paciente=paciente) if AntecedentesAlimentarios.objects.filter(paciente=paciente).exists() else AntecedentesAlimentarios.objects.create(paciente=paciente)
         if request.method == 'POST':
-            form = FormAntecedentesAlimentarios(request.POST, instance=paciente)
+            form = FormAntecedentesAlimentarios(request.POST, instance=ficha_antecedentes)
             if form.is_valid():
                 form.save()
                 messages.success(request, "Información actualizada")
         else:
-            form = FormAntecedentesAlimentarios(instance=paciente)
+            form = FormAntecedentesAlimentarios(instance=ficha_antecedentes)
         return render(request, 'nutricionista/paciente_antecedentes.html', {'form': form, 'paciente':paciente})
 
     elif ficha == 'calculadora':
-        calculadora = CalculadoraPiramidal.objects.get(paciente=paciente) if CalculadoraPiramidal.objects.filter(paciente=paciente).exists() else None
-            
+        # calculadora = CalculadoraPiramidal.objects.get(paciente=paciente) if CalculadoraPiramidal.objects.filter(paciente=paciente).exists() else None
+        calculadora = CalculadoraPiramidal.objects.get(paciente=paciente) if CalculadoraPiramidal.objects.filter(paciente=paciente).exists() else CalculadoraPiramidal.objects.create(paciente=paciente)    
         if request.method == 'POST':
             datos_calculadora = json.loads(request.POST['datos_calculadora'])
-            if calculadora:
-                cal = CalculadoraPiramidal.objects.get(paciente=paciente)
-                cal.peso_a_utilizar = datos_calculadora['peso_a_utilizar']
-                cal.kcal_estado_nutricional = datos_calculadora['kcal_estado_nutricional']
-                cal.total_kcal = datos_calculadora['total_kcal']
-                cal.vct = datos_calculadora['vct']
-                cal.grupos_porciones = datos_calculadora['grupos_porciones']
-                cal.ultima_actualizacion = timezone.now()
-                cal.save()
-            else:
-                cal = CalculadoraPiramidal.objects.create(paciente=paciente)
-                cal.kcal_estado_nutricional = datos_calculadora['kcal_estado_nutricional']
-                cal.peso_a_utilizar = datos_calculadora['peso_a_utilizar']  
-                cal.total_kcal = datos_calculadora['total_kcal']
-                cal.vct = datos_calculadora['vct']
-                cal.grupos_porciones = datos_calculadora['grupos_porciones']
-                cal.save()
+            calculadora.peso_a_utilizar = datos_calculadora['peso_a_utilizar']
+            calculadora.kcal_estado_nutricional = datos_calculadora['kcal_estado_nutricional']
+            calculadora.total_kcal = datos_calculadora['total_kcal']
+            calculadora.vct = datos_calculadora['vct']
+            calculadora.grupos_porciones = datos_calculadora['grupos_porciones']
+            calculadora.ultima_actualizacion = timezone.now()
+            calculadora.save()
         return render(request, 'nutricionista/paciente_calculadora.html', {'paciente':paciente, 'calculadora':calculadora})
-    else:
-        if request.method == 'POST':
-            if request.POST['eliminar_paciente']:
-                rut = paciente.user.rut
-                paciente.delete()
-                messages.success(request, 'Paciente con rut: {} eliminado correctamente'.format(rut))
-                return HttpResponseRedirect('/nutricionista/mis-pacientes')
-
     
-    return render(request, 'nutricionista/paciente_single.html', {'paciente':paciente})
+    form = FormCrearAtencion()
+    if request.method == 'POST':
+        if request.POST['agendar']:
+            atencion = Atencion.objects.create(paciente=paciente, nutricionista=request.user.nutricionista)
+            form = FormCrearAtencion(request.POST, instance=atencion)
+            if form.is_valid():
+                print("VALIDOA")
+                form.save()
+                messages.success(request, "Próxima atención creada!")
+                return render(request, 'nutricionista/paciente_single.html', {'paciente':paciente, 'proxima_atencion':atencion, 'form':form})
+            else:
+                print("iNVALIDO")
+    return render(request, 'nutricionista/paciente_single.html', {'paciente':paciente, 'proxima_atencion':proxima_atencion, 'form':form})
 
 @login_required(login_url='/login-nutricionista/')
 def agregar_paciente(request):
@@ -206,19 +213,17 @@ def agregar_paciente(request):
         form = FormAddPaciente(request.POST)
         if form.is_valid():
             nutricionista = request.user.nutricionista
-            user = User.objects.create_user(rut=form.cleaned_data['rut'], 
-                                                email= form.cleaned_data['email'], 
-                                                password='password123', 
-                                                es_paciente=True,
-                                                es_nutri=False)
-            paciente = Paciente.objects.create(user=user, nutricionista=nutricionista,
-                                  )
+            user = User.objects.create_user(rut=form.cleaned_data['rut'], email= form.cleaned_data['email'], 
+                                                password='password123', es_paciente=True, es_nutri=False)
+            paciente = Paciente.objects.create(user=user, nutricionista=nutricionista)
             messages.success(request, 'Paciente creado correctamente.')
             return HttpResponseRedirect('/nutricionista/mis-pacientes/{}/usuario'.format(paciente.pk))
     else:
         form = FormAddPaciente()
     return render(request, template_name='nutricionista/pacientes_agregar.html', context={'form':form})
 
+
+    
 
 @login_required(login_url='/login-nutricionista/')
 def mi_perfil(request):
@@ -234,7 +239,7 @@ def mi_perfil(request):
     if request.method == "POST":
         form = FormPerfil(request.POST, instance=request.user)
         if form.is_valid():
-            user = form.save()
+            form.save()
             messages.success(request, "Información actualizada correctamente")
     else:
         form = FormPerfil(instance=request.user)
@@ -242,54 +247,53 @@ def mi_perfil(request):
 
 
 @login_required(login_url='/login-nutricionista/')
-def mis_menus(request):
+def atenciones(request):
     """
-    Controlador de Mis menus. (NO EN USO)
-    Retorna el template de mis menus
+    Controlador perfil del nutricionista donde puede editar sus dato personales.
+    Retorna el template de mi perfil.
     :param request:
     :return:
     """
     if not request.user.es_nutri:
         messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
-    if request.method == "POST":
-        form = FormMenu(request.POST)
-        if form.is_valid():
-            menu = form.save(commit=False)
-            menu.nutricionista = request.user.nutricionista
-            form.save()
-    else:
-        form = FormMenu()
-    menus = Menu.objects.filter(nutricionista=request.user.nutricionista)
-    return render(request, 'nutricionista/mis_menus.html',{'form':form,
-                                                            'menus':menus})
+
+    atenciones_list = Atencion.objects.all()
+    return render(request, 'nutricionista/atenciones.html', {'atenciones_list':atenciones_list})
+
+
 
 @login_required(login_url='/login-nutricionista/')
-def mis_pautas(request):
+def atencion_single(request, pk):
     """
-    Controlador de mis pautas alimentarias. (NO EN USO)
+    Controlador perfil del nutricionista donde puede editar sus dato personales.
+    Retorna el template de mi perfil.
     :param request:
     :return:
     """
     if not request.user.es_nutri:
-        messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
+        messages.error(request,'Usted no tiene los permisos para visitar esta página')
         return HttpResponseRedirect('/login-nutricionista')
-    if request.method == "POST":
-        form = FormPautaAlimentaria(request.POST)
-        if form.is_valid():
-            # form.save()
-            pass
-    else:
-        form = FormPautaAlimentaria()
-    return render(request, 'nutricionista/mis_pautas.html',{'form':form})
+    atencion = Atencion.objects.get(pk=pk)
+    print(atencion.paciente)
+    print(atencion.nutricionista)
+    form = FormCrearAtencion(instance=atencion)
+    if request.method == 'POST':
+        if request.POST['modificar_reserva']:
+            form = FormCrearAtencion(request.POST, instance=atencion)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Reserva modificada")
+    return render(request, 'nutricionista/atencion_single.html', {'atencion':atencion, 'form':form})
 
 
-class MenuDetalle(UpdateView):
-    """
-    Clase que retorna el detalle en Menú.
-    """
-    model = Menu
-    fields = '__all__'
-    template_name = 'nutricionista/menu_detail.html'
-    redirect_url = ''
-        
+@login_required(login_url='/login-nutricionista/')
+def atencion_eliminar(request, pk):
+    if not request.user.es_nutri:
+        messages.error(request,'Usted no tiene los permisos para visitar esta página')
+        return HttpResponseRedirect('/login-nutricionista')
+
+    atencion = Atencion.objects.get(pk=pk)
+    if request.POST['eliminar_reserva']:
+        atencion.delete()
+    return HttpResponseRedirect('/nutricionista/atenciones')

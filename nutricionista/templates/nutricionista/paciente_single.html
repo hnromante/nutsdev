@@ -1,4 +1,5 @@
 {% extends "nutricionista/base_nutricionista.html" %}
+{% load humanize %}
 <style>
   .dia_humano{
     border-radius: 5px;
@@ -26,156 +27,162 @@
     <div class="col s12">
         <div class="container">
             <h3 class="header left purple-text">Resumen del paciente</h3>
+            <ul>
+              {% for field in form %}
+                  {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+              {% endfor %}
+            </ul>
         </div>
     </div>
 </div>
-{% comment %} <div class="container">
+<div class="container">
+  <!--Próxima atención-->
   <div class="row">
     <div class="col s12">
       <div class="card panel">
         <p class="flow-text blue-text text-darken-2" style="padding:5px; margin:5px;">Próxima atención</p>
         <ul class="collection">
-            <li class="collection-item"><span class="blue" style="border-radius:5px; color:white; padding:4px;">hoy</span> 16 de julio de 2018 - Hugo Nuñez <a href="#">Ver reserva</a></li>
-            <li class="collection-item rigth"><a href=#>Ver todas las reservas</a></li>
+            {% if proxima_atencion %}
+            <li class="collection-item"><span class="blue" style="border-radius:5px; color:white; padding:4px;">{{proxima_atencion.fecha|naturalday}}</span> {{proxima_atencion.fecha}} a las {{proxima_atencion.hora}} - {{paciente.user.get_nombre_completo}} <a href="{% url 'atencion-single' pk=proxima_atencion.pk%}">Ver reserva</a></li>
+            {% else %}
+            <li class="collection-item">No hay una próxima atención programada .<a class="modal-trigger purple-text" href="#modal_generar_reserva"> Agenda una ahora.</a></li>
+            
+            {% endif %}
+            <li class="collection-item rigth"><a href="{% url 'atenciones' %}">Ver todas las reservas</a></li>
         </ul>
       </div>
     </div>
   </div>
-</div> {% endcomment %}
-<div class="container">
-    <div class="row">
-        <div class="col l6">
-          <div class="card ">
-            <div class="card-content blue-text">
-              <span class="card-title purple-text">Informacion de la cuenta</span>
-                    <p>Rut: {{paciente.user.rut}}</p>
-                    <p>Nombres: {{paciente.user.nombres}}</p>
-            </div>
-            <div class="card-action center">
-              <a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ver Detalle</a>
-            </div>
-          </div>
-        </div>
-        <div class="col l6">
-          <div class="card blue-text">
-            <div class="card-content ">
-              <span class="card-title purple-text">Detalles Generales</span>
-              <p>Ocupacion: {{paciente.ocupacion}}</p>
-              <p>Nacionalidad: {{paciente.nacionalidad}}</p>
-            </div>
-            <div class="card-action center">
-              <a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ver Detalle</a>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div class="row">
+  <!--Cuenta y detalles generales-->
+  <div class="row">
       <div class="col l6">
-        <div class="card blue-text">
-          <div class="card-content">
-            <span class="card-title purple-text">Antecedentes Alimentarios</span>
-            <p>Perdida de peso: {{paciente.perdida_peso}}</p>
-            <p>Perdida de peso: {{paciente.ganancia_peso}}</p>
+        <div class="card ">
+          <div class="card-content blue-text">
+            <span class="card-title purple-text">Informacion de la cuenta</span>
+                  <p>Rut: {{paciente.user.rut}}</p>
+                  <p>Nombres: {{paciente.user.nombres}}</p>
           </div>
           <div class="card-action center">
-            <a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Ver Detalle</a>
+            <a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ver Detalle</a>
           </div>
         </div>
       </div>
-      <div class="col l6">
-          <div class="card blue-text">
-            <div class="card-content">
-              <span class="card-title purple-text">Ficha Nutricional</span>
-              <p>Peso: {{paciente.peso}}</p>
-              <p>Diagnostico: 
-              {% if paciente.diagnostico_peso %}
-              {{paciente.diagnostico_peso}}
-              {% else %}
-              SIN IMC CALCULADO
-              {% endif %}</p>
-            </div>
-            <div class="card-action center">
-              <a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ver Detalle</a>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div class="row">
       <div class="col l6">
         <div class="card blue-text">
           <div class="card-content ">
-            <span class="card-title purple-text">Ficha Bioquimica</span>
-            <div class="row">
-              <div class="col">
-                <p>Colesterol: {{paciente.colesterol_mgdl}}</p>
-                <p>Glicemia: {{paciente.glicemia_mgdl}}</p>
-              </div>
-              <div class="col">
-                <p>Trigliceridos: {{paciente.tg}}</p>
-                <p>Hemoglobina: {{paciente.hemoglobina_gdll}}</p>
-              </div>
-            </div>
+            <span class="card-title purple-text">Detalles Generales</span>
+            <p>Ocupacion: {{paciente.fichageneral.ocupacion}}</p>
+            <p>Nacionalidad: {{paciente.fichageneral.nacionalidad}}</p>
           </div>
           <div class="card-action center">
-            <a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ver Detalle</a>
+            <a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}">Ver Detalle</a>
           </div>
         </div>
       </div>
-      <div class="col l6">
-          <div class="card blue-text">
-            <div class="card-content ">
-              <span class="card-title purple-text">Calculadora Piramidal</span>
-                <div class="row">
-                  <div class="col">
-                    <p>Peso a utilizar: {{paciente.calculadora.peso_a_utilizar}}</p>
-                    <p>Kcal utilizar: {{paciente.calculadora.total_kcal}}</p>
-                  </div>
-                </div>
-              </div>
-            <div class="card-action center">
-              <a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">Ver Detalle</a>
-            </div>
-          </div>
-      </div>
-      <div class="row">
-        <div class="col l12">
-          <div class="card blue-text">
-            <div class="card-content ">
-              <span class="card-title purple-text">Recomendacion</span>
-              <p> - </p>
-              <p>{{paciente.recomendacion}}</p>
-            </div>
-            <div class="card-action center">
-              <a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Ver Detalle</a>
-            </div>
-          </div>
+  </div>
+  <!--Antecedentes alimentarios y ficha nutricional-->
+  <div class="row">
+    <div class="col l6">
+      <div class="card blue-text">
+        <div class="card-content">
+          <span class="card-title purple-text">Antecedentes Alimentarios</span>
+          <p>Perdida de peso: {{paciente.antecedentesalimentarios.perdida_peso}}</p>
+          <p>Ganancia de peso: {{paciente.antecedentesalimentarios..ganancia_peso}}</p>
         </div>
-      </div>
-      <div class="row">
-        <div class="col s12">
-          <h4 class="purple-text">Acciones</h4>
-            <a class="waves-effect waves-light btn modal-trigger red white-text" href="#modal_confirmar_eliminar">Eliminar paciente</a>
+        <div class="card-action center">
+          <a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Ver Detalle</a>
         </div>
       </div>
     </div>
+    <div class="col l6">
+        <div class="card blue-text">
+          <div class="card-content">
+            <span class="card-title purple-text">Ficha Nutricional</span>
+            <p>Peso: {{paciente.fichanutricional.peso}}</p>
+            <p>Diagnostico: 
+            {% if paciente.fichanutricional.diagnostico_peso %}
+            {{paciente.fichanutricional.diagnostico_peso}}
+            {% else %}
+            SIN IMC CALCULADO
+            {% endif %}</p>
+          </div>
+          <div class="card-action center">
+            <a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}">Ver Detalle</a>
+          </div>
+        </div>
+      </div>
+  </div>
+  <!--Ficha bioquímica y calculadora-->
+  <div class="row">
+    <div class="col l6">
+      <div class="card blue-text">
+        <div class="card-content ">
+          <span class="card-title purple-text">Ficha Bioquimica</span>
+          <div class="row">
+            <div class="col">
+              <p>Colesterol: {{paciente.fichabioquimica.colesterol_mgdl}}</p>
+              <p>Glicemia: {{paciente.fichabioquimica.glicemia_mgdl}}</p>
+            </div>
+            <div class="col">
+              <p>Trigliceridos: {{paciente.fichabioquimica.tg}}</p>
+              <p>Hemoglobina: {{paciente.fichabioquimica.hemoglobina_gdll}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-action center">
+          <a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}">Ver Detalle</a>
+        </div>
+      </div>
+    </div>
+    <div class="col l6">
+        <div class="card blue-text">
+          <div class="card-content ">
+            <span class="card-title purple-text">Calculadora Piramidal</span>
+              <div class="row">
+                <div class="col">
+                  <p>Peso a utilizar: {{paciente.calculadora.peso_a_utilizar}}</p>
+                  <p>Kcal utilizar: {{paciente.calculadora.total_kcal}}</p>
+                </div>
+              </div>
+            </div>
+          <div class="card-action center">
+            <a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}">Ver Detalle</a>
+          </div>
+        </div>
+    </div>
+
+
+  </div>
+  <!--Recomendaciones-->
+  <div class="row">
+    <div class="col l12">
+      <div class="card blue-text">
+        <div class="card-content ">
+          <span class="card-title purple-text">Recomendacion</span>
+          <p> - </p>
+          <p>{{paciente.recomendacion}}</p>
+        </div>
+        <div class="card-action center">
+          <a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Ver Detalle</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Modal Trigger -->
 
 
 <!-- Modal Structure -->
-<div id="modal_confirmar_eliminar" class="modal">
+<div id="modal_generar_reserva" class="modal" style="height:900px">
     <div class="modal-content">
-      <h4>¿Eliminar al paciente {{paciente.user.get_nombre_completo}}?</h4>
-      <p>Perderá toda la información del sistema.</p>
-    </div>
-    <div class="modal-footer">
-        <form action="" id="form_eliminar_paciente" method="POST">
+      <h4>Agendar una reserva para {{paciente.user.get_nombre_completo}}</h4>
+      <form action="" id="form_eliminar_paciente" method="POST">
           {% csrf_token %}
-          <input type="submit" value="Confirmar" class="btn red white-text" name="eliminar_paciente">
+          {{form.as_p}}
+          <input type="submit" class="purple-text btn-small white" name="agendar" value="Agendar">
           <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-        </form>
-      
+      </form>
     </div>
-  </div>
+</div>
 {% endblock main %}

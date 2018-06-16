@@ -5,7 +5,7 @@
       <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <title>Title of the document</title>
+      <title>Nuts</title>
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}">
       {% block basecss %}
@@ -34,7 +34,8 @@
       <script src="{% static 'js/jquery.min.js' %}"></script>
     <!-- Materialize JS -->
       <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-    <script>
+    
+      <script>
         document.addEventListener('DOMContentLoaded', function() {
           console.log("READY")
           var elems = document.querySelectorAll('.datepicker');
@@ -51,10 +52,16 @@
           }
           var instances = M.Datepicker.init(elems, options);
         });
+
       $(document).ready(function(){
         $('select').formSelect();
         $('.sidenav').sidenav();
-        //$('.datepicker').datepicker();
+        //$('.datepicker').datepicker({
+          //  format: 'yyyy-mm-dd',
+        //});
+        $('.timepicker').timepicker({
+          twelveHour:false
+        });
         $('.slider').slider();
         $('.modal').modal();
         
