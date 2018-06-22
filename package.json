@@ -1,0 +1,28 @@
+{
+  "name": "nutsdev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hnromante/nutzv4.git"
+  },
+  "author": "hugonr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hnromante/nutzv4/issues"
+  },
+  "homepage": "https://github.com/hnromante/nutzv4#readme",
+  "dependencies": {
+    "@types/jquery": "^3.3.4",
+    "jquery": "^3.3.1",
+    "ts-loader": "^4.4.1",
+    "typescript": "^2.9.2",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.8"
+  }
+}

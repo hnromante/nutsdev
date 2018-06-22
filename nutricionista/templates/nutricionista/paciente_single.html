@@ -27,7 +27,7 @@
 <div class="row">
     <div class="col s12">
         <div class="container">
-            <h3 class="header left purple-text">Resumen del paciente</h3>
+            <h3 class="header left purple-text">{{paciente.user.get_nombre_completo}}</h3>
             <ul>
               {% for field in form %}
                   {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
@@ -36,12 +36,12 @@
         </div>
     </div>
 </div>
-<div class="container">
+
   <!--Próxima atención-->
   <div class="row">
     <div class="col s12">
       <div class="card panel">
-        <p class="flow-text blue-text text-darken-2" style="padding:5px; margin:5px;">Próxima atención</p>
+        <p class="flow-text purple-text text-darken-2" style="padding:5px; margin:5px;">Próxima atención</p>
         <ul class="collection">
             {% if proxima_atencion %}
             <li class="collection-item"><span class="blue" style="border-radius:5px; color:white; padding:4px;">{{proxima_atencion.fecha|naturalday}}</span> {{proxima_atencion.fecha}} a las {{proxima_atencion.hora}} - {{paciente.user.get_nombre_completo}} <a href="{% url 'atencion-single' pk=proxima_atencion.pk%}">Ver reserva</a></li>
@@ -56,19 +56,21 @@
   </div>
   <!--Cuenta y detalles generales-->
   <div class="row">
-      <div class="col l6">
+    <!--Información de la cuenta-->
+      <div class="col s12 l6">
         <div class="card hoverable">
           <div class="card-content blue-text">
-            <span class="card-title purple-text">Informacion de la cuenta</span>
+            <span class="card-title purple-text">Información de la cuenta</span>
                   <p>Rut: {{paciente.user.rut}}</p>
-                  <p>Nombres: {{paciente.user.nombres}}</p>
+                  <p>Nombres: {{paciente.user.get_nombre_completo}}</p>
           </div>
           <div class="card-action center">
             <a href="{% url 'paciente-detalle-ficha' paciente.pk 'usuario' %}">Ver Detalle</a>
           </div>
         </div>
       </div>
-      <div class="col l6">
+    <!--Detalles Generales-->
+      <div class="col s12 l6">
         <div class="card blue-text hoverable">
           <div class="card-content ">
             <span class="card-title purple-text">Detalles Generales</span>
@@ -83,19 +85,21 @@
   </div>
   <!--Antecedentes alimentarios y ficha nutricional-->
   <div class="row">
-    <div class="col l6">
+    <!--Antecedentes alimentarios-->
+    <div class="col s12 l6">
       <div class="card blue-text hoverable">
         <div class="card-content">
           <span class="card-title purple-text">Antecedentes Alimentarios</span>
           <p>Perdida de peso: {{paciente.antecedentesalimentarios.perdida_peso}}</p>
-          <p>Ganancia de peso: {{paciente.antecedentesalimentarios..ganancia_peso}}</p>
+          <p>Ganancia de peso: {{paciente.antecedentesalimentarios.ganancia_peso}}</p>
         </div>
         <div class="card-action center">
           <a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}">Ver Detalle</a>
         </div>
       </div>
     </div>
-    <div class="col l6">
+    <!--Ficha nutricional-->
+    <div class="col s12 l6">
         <div class="card blue-text hoverable">
           <div class="card-content">
             <span class="card-title purple-text">Ficha Nutricional</span>
@@ -104,7 +108,7 @@
             {% if paciente.fichanutricional.diagnostico_peso %}
             {{paciente.fichanutricional.diagnostico_peso}}
             {% else %}
-            SIN IMC CALCULADO
+            -
             {% endif %}</p>
           </div>
           <div class="card-action center">
@@ -115,7 +119,8 @@
   </div>
   <!--Ficha bioquímica y calculadora-->
   <div class="row">
-    <div class="col l6">
+    <!--Ficha Bioquímica-->
+    <div class="col s12 l6">
       <div class="card blue-text hoverable">
         <div class="card-content ">
           <span class="card-title purple-text">Ficha Bioquimica</span>
@@ -135,7 +140,8 @@
         </div>
       </div>
     </div>
-    <div class="col l6">
+    <!--Calculadora piramidal-->
+    <div class="col s12 l6">
         <div class="card blue-text hoverable">
           <div class="card-content ">
             <span class="card-title purple-text">Calculadora Piramidal</span>
@@ -151,12 +157,10 @@
           </div>
         </div>
     </div>
-
-
   </div>
   <!--Recomendaciones-->
   <div class="row">
-    <div class="col l12">
+    <div class="col s12">
       <div class="card blue-text hoverable">
         <div class="card-content ">
           <span class="card-title purple-text">Recomendacion</span>
@@ -169,7 +173,7 @@
       </div>
     </div>
   </div>
-</div>
+
 
 <!-- Modal Trigger -->
 

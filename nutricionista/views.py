@@ -189,7 +189,6 @@ def paciente_detalle(request, pk, ficha=''):
             atencion = Atencion.objects.create(paciente=paciente, nutricionista=request.user.nutricionista)
             form = FormCrearAtencion(request.POST, instance=atencion)
             if form.is_valid():
-                print("VALIDOA")
                 form.save()
                 messages.success(request, "Próxima atención creada!")
                 return render(request, 'nutricionista/paciente_single.html', {'paciente':paciente, 'proxima_atencion':atencion, 'form':form})

@@ -3,20 +3,20 @@
 {% block main %}
 <div class="row">
     <div class="col s12">
-        <div class="container">
-            <div class="row sub-menu" style="padding-top:30px;">
-                <div class="col s12 center">
-                    <a href="{% url 'paciente-detalle' paciente.pk %}" class="breadcrumb purple-text">Volver al resumen</a>
-                    <a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}" class="breadcrumb purple-text">Continuar ficha general</a>
-                </div>
+        <div class="row sub-menu" style="padding-top:30px;">
+            <div class="col s6 center">
+                <a href="{% url 'paciente-detalle' paciente.pk %}" class="breadcrumb purple-text"><span><i class="material-icons left">navigate_before</i></span> Resumen</a>
             </div>
-            <h3 class="header left purple-text">Cuenta de usuario</h3>
-            <ul>
-                {% for field in form %}
-                    {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
-                {% endfor %}
-            </ul>
-        </div>       
+            <div class="col s6 center">
+                <a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}" class="breadcrumb purple-text">Ficha general <span><i class="material-icons right">navigate_next</i></span> </a>
+            </div>
+        </div>
+        <h3 class="header left purple-text">Cuenta de usuario</h3>
+        <ul>
+            {% for field in form %}
+                {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+            {% endfor %}
+        </ul>     
     </div>
 </div>
 
