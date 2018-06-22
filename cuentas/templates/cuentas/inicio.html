@@ -1,20 +1,29 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block main %}
-<div class="container">
-  <div class="row">
-    <div class="col s12 center-align">
-      <h1>Bienvenido a Nutz</h1>
-      {% for message in messages  %}
-        <p>{{message}}</p>
-      {% endfor %}
-    </div>
-    <div class="col s6 center-align">
-        <a href="{% url 'soypaciente' %}" class="btn blue">Soy Paciente</a>
-    </div>
-    <div class="col s6 center-align">
-        <a href="{% url 'soynutricionista' %}" class="btn green">Soy Nutricionista</a>
-    </div>
-  </div>
+<div class="slider fullscreen">
+  <ul class="slides">
+    <li>
+      <img src="{% static 'img/slider1.jpg' %}"> <!-- random image -->
+      <div class="caption center-align">
+        <h3>This is our big Tagline!</h3>
+        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+      </div>
+    </li>
+    <li>
+      <img src="{% static 'img/slider2.jpg' %}"> <!-- random image -->
+      <div class="caption left-align">
+        <h3>Left Aligned Caption</h3>
+        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+      </div>
+    </li>
+    <li>
+      <img src="{% static 'img/slider3.jpg' %}"> <!-- random image -->
+      <div class="caption right-align">
+        <h3>Right Aligned Caption</h3>
+        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+      </div>
+    </li>
+  </ul>
 </div>
 {% endblock main %}

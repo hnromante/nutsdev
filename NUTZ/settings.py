@@ -39,11 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'cuentas',
+    'notify',
     'nutricionista',
     'paciente',
     'recomendacion',
     'reserva',
     'superadmin',
+    
 
 ]
 
@@ -71,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'notify.context_processors.add_variable_to_context',
             ],
         },
     },

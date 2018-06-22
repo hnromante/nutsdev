@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block basecss %}
+
 <style>
     header, main, footer {
         padding-left: 300px;
@@ -10,22 +11,37 @@
     }
     @media only screen and (max-width : 992px) {
         header, main, footer {
-            padding-left: 300px;
+            padding-left: 0px;
         }
+    }
+
+    .subtitulo-card {
+        background-color: #5fae7b;
     }
 </style>
 {% endblock basecss %}
 {% block header %}
+<nav class="hide-on-large-only">
+    <div class="nav-wrapper">
+        <a class="brand-logo" href="{% url 'nutricionista' %}"><img src="{% static 'img/nuts_logo.png' %}" width="90px" height="60px"></a>
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons purple-text">menu</i></a>
+        <ul class="right">
+            <li><a href="#">sass<span class="badge purple-text"><i class="material-icons">notifications_active</i></span></a></li>
+        </ul>
+    </div>
+</nav>
 
 <ul id="slide-out" class="sidenav sidenav-fixed">
-    <li><div class="user-view">
-        <a href="{% url 'nutricionista' %}"><img src="{% static 'img/nuts_logo.png' %}" width="200px" height="150px"></a>
-        <a href="#name"><span class="black-text name">{{request.user.get_nombre_completo}}</span></a>
-        <a href="#email"><span class="black-text email">{{request.user.email}}</span></a>
-    </div></li>
-    <li><a href="{% url 'atenciones' %}"><i class="material-icons">date_range</i>Atenciones</a></li> 
-    <li><a href="{% url 'pacientes-agregar' %}"><i class="material-icons">add</i>Agregar Paciente</a></li> 
-    <li><a href="{% url 'pacientes' %}"><i class="material-icons">assignment_ind</i>Mis Pacientes</a></li>  
+    <li>
+        <div class="user-view">
+            <a href="{% url 'nutricionista' %}"><img src="{% static 'img/nuts_logo.png' %}" width="200px" height="150px"></a>
+            <a href="#name"><span class="black-text name">{{request.user.get_nombre_completo}}</span></a>
+            <a href="#email"><span class="black-text email">{{request.user.email}}</span></a>
+        </div>
+    </li>
+    <li class="{% block activeAtenciones %} {% endblock %}"><a href="{% url 'atenciones' %}"><i class="material-icons">date_range</i>Atenciones</a></li> 
+    <li class="{% block activePacientesAgregar %} {% endblock %}"><a href="{% url 'pacientes-agregar' %}"><i class="material-icons">add</i>Agregar Paciente</a></li> 
+    <li class="{% block activePacientes %} {% endblock %}"><a href="{% url 'pacientes' %}"><i class="material-icons">assignment_ind</i>Mis Pacientes</a></li>  
     {% if paciente %}
         <li class="active purple white-text"><a href="{% url 'paciente-detalle' pk=paciente.pk%}" class="white-text"><i class="material-icons white-text">person</i>Atendiendo a {{paciente.user.get_nombre_completo}}</a></li>
             <ul>
@@ -39,8 +55,9 @@
             </ul>
     {% endif %}
     <li><div class="divider"></div></li>
-    <li><a href="{% url 'perfil' %}"><i class="material-icons">person</i>Mi Perfil</a></li>
+    <li class="{% block activePerfil %}  {% endblock %}"><a href="{% url 'perfil' %}"><i class="material-icons">person</i>Mi Perfil</a></li>
     <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
+    
     
 </ul>
 

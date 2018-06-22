@@ -1,5 +1,5 @@
 {
-  "name": "nutzv3",
+  "name": "nutsdev",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -17,6 +17,11 @@
   },
   "homepage": "https://github.com/MrChikibell/nutzv3#readme",
   "dependencies": {
-    "bootstrap": "^4.1.1"
+    "bootstrap": "^4.1.1",
+    "http-server": "^0.11.1",
+    "jquery": "^3.3.1",
+    "ts-loader": "^4.4.1",
+    "typescript": "^2.9.2",
+    "webpack": "^4.12.0"
   }
 }
