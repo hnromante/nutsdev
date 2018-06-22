@@ -1,29 +1,87 @@
+
 {% extends "base.html" %}
 {% load static %}
-{% block main %}
-<div class="slider fullscreen">
+
+<!-- estilo inicio -->
+{% block basecss %}
+<style>
+.boton-inicio{
+  width: 400px;
+  margin-bottom: 150px;
+  font-size: 32px;
+  height: 100px;
+}
+
+.carta{
+  height: 250px;
+  font-size: 24px;
+  margin-bottom: 100px;
+}
+
+.titulo-carta{
+  font-size: 32px;
+}
+</style>
+{% endblock basecss %}
+{% block header %}
+<div class="slider">
   <ul class="slides">
     <li>
-      <img src="{% static 'img/slider1.jpg' %}"> <!-- random image -->
+      <img src="{% static 'img/slider1.jpg' %}">
       <div class="caption center-align">
-        <h3>This is our big Tagline!</h3>
-        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        <h3 class="blue-text text-darken-3">Bienvenido a Nuts</h3>
       </div>
     </li>
     <li>
-      <img src="{% static 'img/slider2.jpg' %}"> <!-- random image -->
+      <img src="{% static 'img/slider2.jpg' %}">
       <div class="caption left-align">
-        <h3>Left Aligned Caption</h3>
-        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        <h3>Nuts</h3>
+        <h5>Organiza tus comidas</h5>
       </div>
     </li>
     <li>
-      <img src="{% static 'img/slider3.jpg' %}"> <!-- random image -->
+      <img src="{% static 'img/slider3.jpg' %}">
       <div class="caption right-align">
-        <h3>Right Aligned Caption</h3>
-        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+        <h3>Nuts</h3>
+        <h5>Acerca a tus pacientes</h5>
+      </div>
+    </li>
+    <li>
+      <img src="{% static 'img/slider4.jpg' %}">
+      <div class="caption center-align">
+        <h3 class="blue-text text-darken-3">Nuts</h3>
+        <h5 class="blue-text text-darken-3">Agiliza tus consultas</h5>
       </div>
     </li>
   </ul>
+</div>
+{% endblock header %}
+
+{% block main %}
+<div class="purple">
+        <div class="row">
+          <div class="col l6">
+            <div class="card center">
+              <div class="card purple darken-2">
+                <div class="card-content carta white-text">
+                  <span class="titulo-carta center">Ingresa a tu cuenta</span>
+                  <p>Proceso de atención nutricional</p>
+                </div>
+                  <a href="{% url 'soynutricionista' %}" class="btn boton-inicio purple darken-3 hoverable">Ingresar</a>
+              </div>
+            </div>
+          </div>
+          <div class="col l6">
+            <div class="card carta center">
+                <div class="card purple darken-2">
+                    <div class="card-content carta white-text">
+                      <span class="titulo-carta center">Solicita tu cuenta</span>
+                      <p>Unete al equipo de nutricionistas que utiliza Nuts</p>
+                    </div>
+                      <a href="{% url 'soynutricionista' %}" class="btn boton-inicio purple darken-3 hoverable">Ingresar</a>
+                  </div>
+            </div>
+          </div>
+        </div>
 </div>
 {% endblock main %}
