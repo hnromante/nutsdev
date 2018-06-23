@@ -4,16 +4,26 @@
     <style>
         .subtitulo {
             font-family: Arial, Helvetica, sans-serif;
-            font-weight: bold;
-            font-style: italic;
             padding: 10px;
             font-size: 23px;
-            color: #644390;
-            border-top: solid #644390 2px;
-            border-bottom: solid #644390 2px;
+            color: purple;
+            border-top: solid purple 1px;
+            border-bottom: solid purple 1px;
             text-align: center;
+            margin-right:10px;
         }
 
+        .boton{
+            background-color: white;
+            color: purple;
+        }
+        .carta-resumen {
+            height: 200px;
+            background-color:rgb(111,255,230, 0.3);
+        }
+        .carta-resumen span{
+            color: purple;
+        }
     </style>
 {% endblock costumcss %}
 {% block main %}
@@ -31,73 +41,103 @@
 <!-- RESUMEN NUTRICIONAL-->
 <div class="row">
         <h3 class="title subtitulo"><i class="material-icons" style="margin-right: 30px;">folder_shared</i>Resumen nutricional</h3>
+    <!-- Ficha nutricional-->
     <div class="col s12 m4">
-
-        <span class="card-title">Ficha Nutricional</span>
-        <p>peso: </p>
-        <p>talla: </p>
-        <p>imc: </p>
-
+        <div class="card-panel  z-depth-1 carta-resumen">
+            <div class="row valign-wrapper">
+                <div class="col s12">
+                    <span class="card-title">Ficha Nutricional</span>
+                    <p>peso: <span>{{paciente.fichanutricional.peso}}</span></p>
+                    <p>talla: <span>{{paciente.fichanutricional.talla}}</span> </p>
+                    <p>imc: <span>{{paciente.fichanutricional.imc}}</span></p> 
+                    <p>diagnóstico: <span>{{paciente.fichanutricional.diagnostico_peso}}</span></p>         
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Calculadora piramidal-->
+    <div class="col s12 m4">
+        <div class="card-panel z-depth-1 carta-resumen">
+            <div class="row valign-wrapper">
+                <div class="col s12">
+                    <span class="card-title">Calculadora piramidal</span>
+                    <p>% cho:  <span>{{paciente.calculadora.vct.porc_cho}}</span></p>
+                    <p>% proteínas:  <span>{{paciente.calculadora.vct.porc_pro}}</span></p>
+                    <p>% lípidos:  <span>{{paciente.calculadora.vct.porc_lip}}</span></p>
+                    <p >Total Kcal: <span>{{paciente.calculadora.total_kcal}}</span></p>    
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col s12 m4">
-
-        <span class="card-title ">Calculadora piramidal</span>
-        <p >% VCT</p>
-        <p >Total Kcal</p>
-
-    </div>
-    <div class="col s12 m4">
-
-        <span class="card-title">Grupos de alimentos y porción</span>
-        <p >Cereales (3)</p>
-        <p>Grasas (2)</p>
-        <p >Total Kcal</p>
-
+        <div class="card-panel z-depth-1 carta-resumen">
+            <div class="row valign-wrapper">
+                <div class="col s12">
+                    <span class="card-title">Grupos de alimentos y porción</span>
+                    <ul>
+                        {% for alimento in paciente.calculadora.grupos_porciones  %}
+                            <li>{{alimento.nombre}}  <span> ({{alimento.porción}})</span> </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">
     <div class="col s12 m7">
 
         <div class="row">
-                    <h3 class="title subtitulo"><i class="material-icons" style="margin-right: 30px;">access_time</i>Definir los horarios</h3>
-            <div class="col s12">
-                <input type="text" placeholder="Agregar comida" >
-                <input type="submit" value="Agregar" class="btn green">
+                    <h3 class="title subtitulo"><i class="material-icons" style="margin-right: 30px;">access_time</i>Definir las comidas</h3>
+            <div class="col s6" class="left purple-text">
+                <input type="text" placeholder="Agregar comida" class="boton">
             </div>
-
+            <div class="col s6 purple-text left">
+                <input type="text" class="timepicker btn white purple-text" value="horario" >
+            </div>
+            <div class="col s12">
+                <input type="submit" value="Agregar" class="btn white boton">
+            </div>
         </div>
         <div class="row">
-            <div class="col m12 ">
-                    <h3 class="title subtitulo"><i class="material-icons" style="margin-right: 30px;">compare_arrows</i>Elige los grupos de alimentos y pociones</h3>
-                <div class="col l6">
-                    <div class="input-field">
-                        <select>
-                            <option>Selecciona un grupo de alimento</option>
-                            <option>Cereales(3)</option>
-                            <option>Grasas(2)</option>
-                            <option>Azucares(1)</option>
-                        </select>
-                    </div>
-        
+            <h3 class="title subtitulo"><i class="material-icons" style="margin-right: 30px;">compare_arrows</i>Elige los grupos de alimentos y pociones</h3>
+            <div class="col s6">
+                <div class="input-field">
+                    <select>
+                        <option>Grupo de alimento</option>
+                        <option>Cereales(3)</option>
+                        <option>Grasas(2)</option>
+                        <option>Azucares(1)</option>
+                    </select>
                 </div>
+            </div>
 
-                <div class="col sl6">
-                    <div class="input-field">
-                        <select>
-                            <option>Seleccione una comida</option>
-                            <option>Almuerzo</option>
-                            <option>Cena</option>
-                            <option>Colación</option>
-                            <option>Desayuno</option>
-                        </select>
-                    </div>
-                    <div class="input-field" style="margin-top:40px;">
-                        <input type="submit" class="timepicker btn white purple-text" value="Agregar a la recomendación">
-                    </div>
+            <div class="col s6">
+                <div class="input-field">
+                    <select>
+                        <option>Alimento</option>
+                        <option>Arroz</option>
+                        <option>Papas</option>
+                    </select>
                 </div>
+            </div>
+            <div class="col s12 m6">
+                <div class="input-field">
+                    <select>
+                        <option>Comida</option>
+                        <option>Almuerzo</option>
+                        <option>Cena</option>
+                        <option>Colación</option>
+                        <option>Desayuno</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col s12 m6">
+                <div class="input-field" style="margin-top:20px;">
+                    <input type="submit" class="btn white boton" value="Agregar a la recomendación">
+                </div>
+            </div>
 
-                    
-            </div> 
         </div>
     </div>
     <div class="col s12 m5">
@@ -154,11 +194,11 @@
             </form>
         </div>
         <div class="col s12 m6">
-                <h5 class="title subtitulo">Acciones</h5>
-                <a class="modal-trigger btn white purple-text" href="#modal_modificar_reserva"> Agendar Atención</a>
-                <input type="submit" class="btn white green-text " value="Guardar">
-                <input type="submit" class="btn white red-text " value="Limpiar">
-            </div>
+            <h5 class="title subtitulo">Acciones</h5>
+            <a class="modal-trigger btn white purple-text" href="#modal_modificar_reserva"> Agendar Atención</a>
+            <input type="submit" class="btn white green-text " value="Guardar">
+            <input type="submit" class="btn white red-text " value="Limpiar">
+        </div>
     </div>
     </div>
     <!-- Modal MODIFICAR -->
