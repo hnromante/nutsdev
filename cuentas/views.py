@@ -8,7 +8,7 @@ from nutricionista.models import Nutricionista
 from .forms import (
     FormRegNutri,
 )
-
+from django.urls import reverse
 
 # Create your views here.
 def soypaciente(request):
@@ -27,7 +27,7 @@ def login_nutri(request):
         password = request.POST["password"]
         user = authenticate(email=email, password=password)
         if user is None:
-            messages.add_message(request, messages.INFO, 'Email o contraseña incorrectos')
+            messages.error(request,'Email o contraseña incorrectos')
         else:
             django_login(request, user)
             return HttpResponseRedirect("/nutricionista")
@@ -63,10 +63,9 @@ def login_paci(request):
 def logout (request):
     django_logout(request)
     messages.success(request, 'Sesión cerrada correctamente.')
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('login-nutricionista'))
 
 
-######Revisar con HUGO MAÑANA#########
 
 def registro_nutri(request):  
     form = FormRegNutri()

@@ -10,6 +10,5 @@ urlpatterns = [
     url(r'^login-nutricionista/$', views.login_nutri, name='login-nutricionista'),
     url(r'^login-paciente/$', views.login_paci, name='login-paciente'),
     url(r'^login-superadmin/$', views.login_superadmin, name='login-superadmin'),
-    
     url(r'^logout/$', views.logout, name='logout'),
 ]

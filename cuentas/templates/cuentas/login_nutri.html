@@ -37,6 +37,9 @@ body{
             <h5>Ingreso de Nutricionista</h5>   
               <form method="POST" class="formulario-login">
                   {% csrf_token %}
+                  {% for message in messages %}
+                    <p class="red-text">{{message}}</p>
+                  {% endfor %}
                 <div class='row'>
                   <div class='input-field col s12'>
                     <input class='validate' type='email' name='email' id='email' />
