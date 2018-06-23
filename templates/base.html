@@ -28,6 +28,9 @@
     .nav-wrapper{
         background-color: white;
     }
+    body{
+      background: url({% static 'img/fondo-06.png'%});
+    }
     </style>
       {% block basecss %}
 
@@ -79,8 +82,9 @@
         $('.timepicker').timepicker({
           twelveHour:false
         });
-        $('.slider').slider({height:600});
+        $('.slider').slider({height:500, indicators:false});
         $('.modal').modal();
+        $('.carousel.carousel-slider').carousel({fullWidth: true});
       });
     </script>
     {% block basejs %}

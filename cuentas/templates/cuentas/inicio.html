@@ -6,21 +6,35 @@
 {% block basecss %}
 <style>
 .boton-inicio{
-  width: 400px;
-  margin-bottom: 150px;
-  font-size: 32px;
-  height: 100px;
+  width: 300px;
+  margin-bottom: 70px;
+  font-size: 24px;
+  height: 80px;
+  padding-top: 25px;
+  font-weight: bolder;
+  border-radius: 40px;
 }
 
-.carta{
-  height: 250px;
+.carta-inicio{
+  height: 150px;
   font-size: 24px;
   margin-bottom: 100px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  border: solid darkblue;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: blueviolet;
+  
 }
 
 .titulo-carta{
   font-size: 32px;
+  text-align: center;
+  margin-top: 10px;
+  
 }
+
 </style>
 {% endblock basecss %}
 {% block header %}
@@ -58,30 +72,40 @@
 {% endblock header %}
 
 {% block main %}
-<div class="purple">
+
+<div class="carousel carousel-slider center" data-indicators="true">
+    <div class="carousel-fixed-item center">
+        
+       
+    </div>
+    <div class="carousel-item purple-text" href="#one!">
+      <h2>Ingresa a tu cuenta</h2>
+      <p class="purple-text">Proceso de atención nutricional</p>
+      <a href="{% url 'login-nutricionista' %}" class="btn boton-inicio purple darken-3 hoverable">Ingresar</a>
+    </div>
+    <div class="carousel-item purple-text" href="#two!">
+      <h2>Solicita tu cuenta</h2>
+      <p class="purple-text">Unete al equipo de nutricionistas de Nuts</p>
+      <a href="#" class="btn boton-inicio purple darken-3 hoverable disabled">Solicita tu cuenta</a>
+    </div>
+ </div>
+
+{% comment %} <div class="purple">
         <div class="row">
           <div class="col l6">
-            <div class="card center">
-              <div class="card purple darken-2">
-                <div class="card-content carta white-text">
-                  <span class="titulo-carta center">Ingresa a tu cuenta</span>
-                  <p>Proceso de atención nutricional</p>
-                </div>
-                  <a href="{% url 'soynutricionista' %}" class="btn boton-inicio purple darken-3 hoverable">Ingresar</a>
-              </div>
+            <div class="carta-inicio center">
+                <span class="titulo-carta">Ingresa a tu cuenta</span>
+                <p>Proceso de atención nutricional</p>
+                <a href="{% url 'login-nutricionista' %}" class="btn boton-inicio purple darken-3 hoverable">Ingresar</a>
             </div>
-          </div>
+          </div>         
           <div class="col l6">
-            <div class="card carta center">
-                <div class="card purple darken-2">
-                    <div class="card-content carta white-text">
-                      <span class="titulo-carta center">Solicita tu cuenta</span>
-                      <p>Unete al equipo de nutricionistas que utiliza Nuts</p>
-                    </div>
-                      <a href="{% url 'soynutricionista' %}" class="btn boton-inicio purple darken-3 hoverable">Ingresar</a>
-                  </div>
-            </div>
+              <div class="carta-inicio center">
+                  <span class="titulo-carta">Solicita tu cuenta</span>
+                  <p>Unete al equipo de nutricionistas de Nuts</p>
+                  <a href="#" class="btn boton-inicio purple darken-3 hoverable disabled">Solicitar</a>
+              </div>
           </div>
         </div>
-</div>
+    </div> {% endcomment %}
 {% endblock main %}
