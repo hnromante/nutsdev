@@ -17,10 +17,7 @@
             background-color: white;
             color: purple;
         }
-        .carta-resumen {
-            height: 200px;
-            background-color:rgb(111,255,230, 0.3);
-        }
+
         .carta-resumen span{
             color: purple;
         }
@@ -39,6 +36,7 @@
     </div>
 </div>
 <!-- RESUMEN NUTRICIONAL-->
+
 <div class="row">
         <h3 class="title subtitulo"><i class="material-icons" style="margin-right: 30px;">folder_shared</i>Resumen nutricional</h3>
     <!-- Ficha nutricional-->
@@ -76,7 +74,11 @@
                     <span class="card-title">Grupos de alimentos y porción</span>
                     <ul>
                         {% for alimento in paciente.calculadora.grupos_porciones  %}
-                            <li>{{alimento.nombre}}  <span> ({{alimento.porción}})</span> </li>
+                            <li>{{alimento.nombre}}  <span> ({% if alimento.porcion %}
+                            {{alimento.porcion}}
+                            {% else %}
+                            {{alimento.porción}}
+                            {% endif %})</span> </li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -84,57 +86,57 @@
         </div>
     </div>
 </div>
+<div id="recomendacion_nutricional">
 <div class="row">
     <div class="col s12 m7">
 
         <div class="row">
                     <h3 class="title subtitulo"><i class="material-icons" style="margin-right: 30px;">access_time</i>Definir las comidas</h3>
             <div class="col s6" class="left purple-text">
-                <input type="text" placeholder="Agregar comida" class="boton">
+                <input id="input_comida" type="text" placeholder="Agregar comida" class="boton">
             </div>
             <div class="col s6 purple-text left">
-                <input type="text" class="timepicker btn white purple-text" value="horario" >
+                <input id="input_horario" type="text" class="timepicker btn white purple-text" value="horario" >
             </div>
             <div class="col s12">
-                <input type="submit" value="Agregar" class="btn white boton">
+                <input id="btn_agregar_comida" type="submit" value="Agregar" class="btn white boton">
             </div>
+            <div class="col s12" id="msg_add_alimento"></div>
         </div>
         <div class="row">
             <h3 class="title subtitulo"><i class="material-icons" style="margin-right: 30px;">compare_arrows</i>Elige los grupos de alimentos y pociones</h3>
             <div class="col s6">
                 <div class="input-field">
-                    <select>
-                        <option>Grupo de alimento</option>
-                        <option>Cereales(3)</option>
-                        <option>Grasas(2)</option>
-                        <option>Azucares(1)</option>
+                    <select id="select_grupos_permitidos" class="browser-default">
+                        
                     </select>
                 </div>
             </div>
 
             <div class="col s6">
-                <div class="input-field">
-                    <select>
-                        <option>Alimento</option>
-                        <option>Arroz</option>
-                        <option>Papas</option>
+                <div class="input-field ">
+                    <select id="select_alimentos_permitidos" class="browser-default">
+                        <option disabled selected>Elija un alimento</option>
                     </select>
                 </div>
             </div>
             <div class="col s12 m6">
                 <div class="input-field">
-                    <select>
-                        <option>Comida</option>
-                        <option>Almuerzo</option>
-                        <option>Cena</option>
-                        <option>Colación</option>
-                        <option>Desayuno</option>
+                    <select class="browser-default" id="select_comidas">
+                        <option disabled selected>Elija una comida</option> 
+                    </select>
+                </div>
+            </div>
+            <div class="col s12 m6">
+                <div class="input-field">   
+                    <select class="browser-default" id="select_porciones"> 
+                        <option disabled selected >Elija una porción</option>
                     </select>
                 </div>
             </div>
             <div class="col s12 m6">
                 <div class="input-field" style="margin-top:20px;">
-                    <input type="submit" class="btn white boton" value="Agregar a la recomendación">
+                    <input id="btn_agregar_alimento_comida" type="submit" class="btn white boton" value="Agregar a la recomendación">
                 </div>
             </div>
 
@@ -152,24 +154,12 @@
                             <th data-field="price">% cuota diaria</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tabla_minuta">
                         <tr>
                             <td>Desayuno</td>
                             <td><ul><li>Yougurth (lcateos)</li><li>Cereal (Cereales)</li></ul> </td>
                             <td>560 kcal</td>
                             <td>30 %</td>
-                        </tr>
-                        <tr>
-                            <td>Almuerzo</td>
-                            <td><ul><li>Albonidgas (Carne)</li><li>Arroz (Cereal)</li></ul></td>
-                            <td>800 kcal</td>
-                            <td>60%</td>
-                        </tr>
-                        <tr>
-                            <td>Cena</td>
-                            <td><ul><li>Pan (Cereales)</li><li>Huevos (Proteinas)</li></ul> </td>
-                            <td>730 kcal</td>
-                            <td>97%</td>
                         </tr>
                     </tbody>
                 </table>
@@ -179,18 +169,17 @@
     </div>
     </div>
 </div>
-<div class="row">
-<div class="row">
 
+<!--Observacion y recomendacion-->
     <div class="row">
             
         <div class="col s12 m6">
                 <h5 class="title subtitulo">Agregar una observación</h5>
             <form action="">
-              <div class="input-field col s12">
+                <div class="input-field col s12">
                 <textarea id="textarea1" class="materialize-textarea"></textarea>
                 <label for="textarea1">Observación</label>
-              </div>
+                </div>
             </form>
         </div>
         <div class="col s12 m6">
@@ -200,22 +189,30 @@
             <input type="submit" class="btn white red-text " value="Limpiar">
         </div>
     </div>
+</div>
+
+<div class="row" id="iniciar_recomendacion">
+    <div class="col s12 center">
+        <button id="btn_iniciar_recomendacion" class="btn">Iniciar recomendación</button>
     </div>
+</div>
     <!-- Modal MODIFICAR -->
+<input type="hidden" id="pk_paciente" value="{% if paciente %} {{paciente.pk}} {% else %} 0{% endif %}">
 <div id="modal_modificar_reserva" class="modal" >
-        <div class="modal-content">
-            <h4>Modificar la reserva del paciente {{atencion.paciente.user.get_nombre_completo}}</h4>
-            <form action="" id="form_eliminar_paciente" method="POST">
-                {% csrf_token %}
-                {{form.as_p}}
-                <input type="submit" class="purple-text btn-small white" name="modificar_reserva" value="Agendar">
-                <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-            </form>
-        </div>
+    <div class="modal-content">
+        <h4>Modificar la reserva del paciente {{atencion.paciente.user.get_nombre_completo}}</h4>
+        <form action="" id="form_eliminar_paciente" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" class="purple-text btn-small white" name="modificar_reserva" value="Agendar">
+            <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+        </form>
+    </div>
 </div>
 {% endblock main %}
 {% block costumjs %}
 <script> let url_alimentos_json = `{% url "grupo-alimentos-json" %}`</script>
 <script type="text/javascript">
+
 </script>
 {% endblock costumjs %}

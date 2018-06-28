@@ -5,8 +5,8 @@
 
 <div class="row">
     <!-- Cantidad de pacientes-->
-    <div class="col s12 m3">
-        <div class="card carta purple lighten-2 white-text" >
+    <div class="col s12 m4">
+        <div class="card carta yellow darken-4 lighten-2 white-text" >
             <div class="card-content">
                 <span class="card-title">Pacientes hoy</span>
                 <h3>{{numero_pacientes}}</h3>
@@ -18,22 +18,22 @@
     </div>
 
     <!-- Cantidad de pacientes-->
-    <div class="col s12 m3">
+    <div class="col s12 m4">
         <div class="card carta" >
             <div class="card-content">
                 <span class="card-title">Pacientes mañana</span>
-                <h3>{{numero_pacientes}}</h3>
+                <h3>3</h3>
             </div>
             <div class="card-action center subtitulo-card" style="background-color: #5fae7b; ">
                 <a style="color:white;" href="{% url 'pacientes' %}">VER</a>
             </div>
         </div>
     </div>
-    <div class="col s12 m3">
+    <div class="col s12 m4">
         <div class="card carta" >
             <div class="card-content">
-                <span class="card-title">Pacientes inasistentes</span>
-                <h3>{{numero_pacientes}}</h3>
+                <span class="card-title">Inasistencias</span>
+                <h3>1</h3>
             </div>
             <div class="card-action center subtitulo-card" style="background-color: #5fae7b; ">
                 <a style="color:white;" href="{% url 'pacientes' %}">VER</a>
@@ -41,17 +41,17 @@
         </div>
     </div>
     <!-- Cantidad de pacientes-->
-    <div class="col s12 m3">
+    {% comment %} <div class="col s12 m3">
         <div class="card carta" >
             <div class="card-content">
-                <span class="card-title">Estadísticas mensuales</span>
-                <h3>{{numero_pacientes}}</h3>
+                <span class="card-title"></span>
+                <h3></h3>
             </div>
             <div class="card-action center subtitulo-card" style="background-color: #5fae7b; ">
                 <a style="color:white;" href="{% url 'pacientes' %}">VER</a>
             </div>
         </div>
-    </div>
+    </div> {% endcomment %}
 
 </div>
 {% comment %} <div class="row">
@@ -79,7 +79,7 @@
     <div class="card-panel grey lighten-5 z-depth-1">
         <div class="row valign-wrapper">
         <div class="col s2">
-            <img src="{% static 'img/nuts_logo.png' %}" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+            <img src="{% static 'img/relojº.png' %}" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
         </div>
         <div class="col s10">
             <p>Próxima atención en: X minutos</p>

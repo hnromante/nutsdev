@@ -75,7 +75,7 @@
             <p><b class="blue-text">Porciones de alimentos: </b></p>
             <ul>
                 {% for alimento in calculadora.grupos_porciones  %}
-                    <li>{{alimento.nombre}} - {{alimento.porción}} </li>
+                    <li>{{alimento.nombre}} - {{alimento.porcion}} </li>
                 {% endfor %}
             </ul>
         </div>
@@ -323,9 +323,9 @@
     let get_grupos_porciones= () => {
         let grupos_porciones = []
         $(".calculadora-body").children('tr').each((i, e) => { 
-            const porcion = $(e).find("input").val()
+            const porcion = Number($(e).find("input").val())
             if (porcion > 0){
-                obj = {'pk': $(e).data('pk'), 'nombre': $(e).data('nombre'), 'porción': porcion}
+                obj = {'pk': $(e).data('pk'), 'nombre': $(e).data('nombre'), 'porcion': porcion}
                 grupos_porciones.push(obj)
             }
         })
@@ -362,7 +362,7 @@
             lista_grupos_porciones = ``
             for (var key in grupos_porciones) {
                 if (grupos_porciones.hasOwnProperty(key)) {
-                    lista_grupos_porciones += `<li><b>${grupos_porciones[key].nombre}</b>, porción: ${grupos_porciones[key].porción} </li>`
+                    lista_grupos_porciones += `<li><b>${grupos_porciones[key].nombre}</b>, porcion: ${grupos_porciones[key].porcion} </li>`
                 }
             }
             $('#modal__grupos_prociones').children(`span`).html(`

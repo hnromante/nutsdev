@@ -9,6 +9,8 @@ from paciente.models import (
     FichaNutricional,
     Paciente
 )
+from superadmin.models import GrupoAlimento
+from recomendacion.models import Recomendacion
 from django.apps import apps
 from nutricionista.forms import FormPerfil
 from reserva.forms import FormCrearAtencion
@@ -296,3 +298,53 @@ def atencion_eliminar(request, pk):
     if request.POST['eliminar_reserva']:
         atencion.delete()
     return HttpResponseRedirect('/nutricionista/atenciones')
+
+
+"""
+API
+"""    
+"""
+Caltura los alimentos asociados a un grupo de alimentos
+"""
+def capturarAlimentosDeGrupo(pk_grupo):
+    grupo = GrupoAlimento.objects.get(pk=pk_grupo)
+    alimentos = grupo.alimento_set.all()
+    lista_alimentos = list()
+    for alimento in alimentos:
+        data = dict()
+        data['pk'] = alimento.pk
+        data['nombre'] = alimento.nombre
+        data['kcal'] = alimento.kcal
+        lista_alimentos.append(data)
+    return lista_alimentos
+
+def recomendacion_paciente(request, pk):
+    paciente = Paciente.objects.get(pk=pk)
+    if not Recomendacion.objects.filter(paciente=paciente).exists():
+        return JsonResponse({'pk_paciente': pk, 'tiene_recomendacion': False}, safe=False)
+    else:
+        data = dict()
+        recomendacion = Recomendacion.objects.get(paciente=paciente)
+        calculadora = CalculadoraPiramidal.objects.get(paciente=paciente)
+        grupos_permitidos = calculadora.grupos_porciones
+        if grupos_permitidos:
+            for grupos_permitido in grupos_permitidos:
+                grupos_permitido['alimentos'] =  capturarAlimentosDeGrupo(grupos_permitido['pk'])
+            data['grupos_permitidos'] = calculadora.grupos_porciones
+        else:
+            data['grupos_permitidos'] = None
+        data['tiene_recomendacion'] = True
+        data['pk'] = recomendacion.pk
+        data['paciente'] = recomendacion.paciente.pk
+        data['observacion'] = recomendacion.observacion
+        data['comidas'] = recomendacion.comidas
+        data['total_kcal'] = calculadora.total_kcal
+        print(calculadora.total_kcal)
+        print(recomendacion.comidas)
+        return JsonResponse(data, safe=False)
+
+
+def recomendacion_paciente_crear(request, pk):
+    paciente = Paciente.objects.get(pk=pk)
+    Recomendacion.objects.create(paciente=paciente)
+    return JsonResponse({'pk_paciente': pk, 'tiene_recomendacion': False}, safe=False)

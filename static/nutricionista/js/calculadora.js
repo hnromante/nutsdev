@@ -1,6 +1,6 @@
 /**
 *!Funcion para capturar la data de grupo de alimento
-ESTESCRIPT ESTA SIENDO LLAMADO DESDE CALCULADORA APCIENTE EN LA APLICACIONE DE NUTRICIONISTA
+ESTE SCRIPT ESTA SIENDO LLAMADO DESDE CALCULADORA APCIENTE EN LA APLICACIONE DE NUTRICIONISTA
 */
 $.getJSON(url_alimentos_json, function(data){
     let lista_grupo_alimentos = []
