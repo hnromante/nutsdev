@@ -78,9 +78,10 @@ class Recomendacion {
         this.grupos_permitidos_aux.filter(e => e==grupo)[0].porción = this.grupos_permitidos_aux.filter(e => e==grupo)[0].porción - porcion
     }
 
-    alimentoEnMinuta(a: Alimento){
-
+    addAlimento(a: Alimento){
+    
     }
+
 }
 
 

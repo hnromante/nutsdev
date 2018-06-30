@@ -259,8 +259,16 @@ def atenciones(request):
         messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
 
-    atenciones_list = Atencion.objects.all()
-    return render(request, 'nutricionista/atenciones.html', {'atenciones_list':atenciones_list})
+    atenciones_all = Atencion.objects.all().order_by('fecha')
+    atenciones_expiradas = list()
+    atenciones_list = list()
+    for atencion in atenciones_all:
+        if atencion.expirada():
+            atenciones_expiradas.append(atencion)
+        else:
+            atenciones_list.append(atencion)
+    
+    return render(request, 'nutricionista/atenciones.html', {'atenciones_list':atenciones_list, 'atenciones_expiradas':atenciones_expiradas})
 
 
 

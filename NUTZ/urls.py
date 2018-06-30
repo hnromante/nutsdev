@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^paciente/', include('paciente.urls')),
     url(r'^superadmin/', include('superadmin.urls')),
     url(r'^$', views_cuentas.inicio, name='inicio' ),
+    path('admin/doc/', include('django.contrib.admindocs.urls')) 
 
 ]

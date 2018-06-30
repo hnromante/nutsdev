@@ -1,6 +1,6 @@
 
 import { capturarGrupoAlimentos, Recomendacion, crearGrupoAlimento, GrupoAlimento, Alimento, crearComida, Comida, agregarAlimentoAComida} from "./recomendaciones";
-
+let select_porciones = document.getElementById('select_porciones')
 let initRecomendacion = (pkPaciente: number) => {
     const url_data_paciente = `/nutricionista/recomendaciones/${pkPaciente}/`;
     $.getJSON(url_data_paciente, (data) => {
@@ -14,11 +14,7 @@ let initRecomendacion = (pkPaciente: number) => {
                 recomendacion.grupos_permitidos = data['grupos_permitidos']
                 recomendacion.grupos_permitidos_aux = data['grupos_permitidos']
                 recomendacion.total_kcal = data['total_kcal']
-                
-                console.log('data[\'total_kcal\']', data['total_kcal'])
-                console.log('recomendacion.total_kcal', recomendacion.total_kcal)
                 renderPorciones($('#select_porciones'), recomendacion.grupos_permitidos_aux[0])
-                console.log(recomendacion.grupos_permitidos_aux)
                 renderComboGrupos($('#select_grupos_permitidos'), recomendacion)
                 renderComboAlimentos($('#select_grupos_permitidos'), $('#select_alimentos_permitidos'), recomendacion)
                 agregarComidaListener($('#btn_agregar_comida'), recomendacion)
@@ -135,7 +131,6 @@ function agregarComidaListener (elemento: JQuery, recomendacion: Recomendacion){
         renderComboComidas($('#select_comidas'), recomendacion.comidas)
         $('#msg_add_alimento').html('')
         $('#msg_add_alimento').append(`<p class="green-text">Comida ${comida.nombre} agregada</p>`)
-        console.log('recomendacion.comidas  ',recomendacion.comidas)
         renderMinutaDiaria($('#tabla_minuta'), recomendacion)
     })
 }
@@ -150,19 +145,14 @@ function agregarAlimentoListener(elemento: JQuery, recomendacion: Recomendacion 
         let alimento = recomendacion.getAlimentoById(pk_alimento, grupo)
         if(validateAgregarAlimento(pk_grupo, pk_alimento, porcion)){
             if (comida){
+                //Si existe 
                 if(comida.alimentos_porcion){
                     //IF ALIMENTO IN ARRAY, AÑADE UNA PORCION EN LUGAR DE OTRO ELEMENTO EN LA LISTA
-                    if (recomendacion.alimentoEnMinuta(alimento)){
-                        comida.alimentos_porcion.push([alimento,porcion])
-                    }else{
-
-                    }
-                    
-
+                    comida.alimentos_porcion.push([alimento,porcion])
                 }else{
                     comida.alimentos_porcion = [[alimento,porcion]]
-
                 }
+
                 recomendacion.restarPorcion(grupo, porcion)
                 renderComboGrupos($('#select_grupos_permitidos'), recomendacion)
                 renderPorciones($('#select_porciones'), grupo)
@@ -176,13 +166,14 @@ function agregarAlimentoListener(elemento: JQuery, recomendacion: Recomendacion 
     })
 }
 
-function renderMinutaDiaria(tabla:JQuery, recomendacion: Recomendacion){
+function renderMinutaDiaria(tabla: JQuery, recomendacion: Recomendacion){
     tabla.empty()
+
     recomendacion.comidas.forEach(c => {
         let alimentos = c.alimentos_porcion
         let html_alimentos = '';
         let suma_kcal = 0;
-        let porc = 0;
+        let porc = '';
         const kcal_total = recomendacion.total_kcal
         
         // let cuota_diaria = 0;
@@ -195,7 +186,7 @@ function renderMinutaDiaria(tabla:JQuery, recomendacion: Recomendacion){
 
         }
         if (suma_kcal != 0){
-            porc = (kcal_total/suma_kcal)*100
+            porc = ((suma_kcal*100)/kcal_total).toFixed(2) + '%'
         }
         tabla.append($("<tr>")
             .append($('<td>', {text:c.nombre}))
