@@ -3,14 +3,12 @@
 {% block main %}
 <div class="row">
     <div class="col s12">
-        <div class="container">
-            <h3 class="header left purple-text">Detalle de la atención</h3>
-            <ul>
-            {% for field in form %}
-                {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
-            {% endfor %}
-            </ul>
-        </div>       
+        <h3 class="header left purple-text">Detalle de la atención</h3>
+        <ul>
+        {% for field in form %}
+            {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+        {% endfor %}
+        </ul>
     </div>
 </div>
 
@@ -37,6 +35,12 @@
                 <p>Paciente: <a href="{% url 'paciente-detalle' pk=atencion.paciente.pk %}">{{atencion.paciente.user.get_nombre_completo}}</a></p>
                 <div class="divider"></div>   
                 <p>Observación: {{atencion.observacion}}</p>
+                <p>Asistencia: {% if atencion.asistencia %}
+                Si
+                {% else %}
+                No
+                {% endif %}</p>
+                <p>Estado :  {{atencion.get_estado_display}}</p>
             </div>
             <div class="card-action">
               <a class="modal-trigger red-text" href="#modal_cancelar_reserva"> Cancelar Reserva</a>
@@ -59,12 +63,28 @@
 </div>
 
 <!-- Modal MODIFICAR -->
-<div id="modal_modificar_reserva" class="modal" >
-    <div class="modal-content">
+<div id="modal_modificar_reserva" class="modal" style="heigth:900px;">
+    <div class="modal-content"  >
         <h4>Modificar la reserva del paciente {{atencion.paciente.user.get_nombre_completo}}</h4>
         <form action="" id="form_eliminar_paciente" method="POST">
             {% csrf_token %}
-            {{form.as_p}}
+            <div class="input-field">
+                {{form.fecha}}
+            </div>
+            <div class="input-field">
+                {{form.hora}}
+            </div>
+            <div class="input-field">
+                {{form.observacion}}
+            </div>
+            <div class="input-field">
+                <p>
+                <label>
+                {{form.asistencia}}
+                <span>Asistencia</span>
+                </label>
+                </p>
+            </div>
             <input type="submit" class="purple-text btn-small white" name="modificar_reserva" value="Agendar">
             <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
         </form>

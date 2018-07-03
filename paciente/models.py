@@ -16,7 +16,6 @@ class Paciente(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, related_name='paciente') #REF: user.paciente -> Llama al único paciente del usuario
     nutricionista = models.ForeignKey('nutricionista.Nutricionista', on_delete=models.CASCADE, null=True, blank=True, related_name='pacientes') #REF: user.pacientes -> Llama a todos los pacientes del nutricionista
-
     def __str__(self):
         return self.user.rut + " - " +self.user.email
 
@@ -57,6 +56,7 @@ class FichaGeneral(models.Model):
     nacionalidad = models.CharField(max_length=20, blank=True, default="")
     observacion = models.TextField(max_length=500, blank=True, default="")
     ultima_atencion = models.DateField(null=True, blank=True)
+    imagen = models.ImageField(null=True, blank=True, upload_to='pacientes/')
 
     def __str__(self):
         return 'Ficha general de {}'.format(self.paciente.user.get_nombre_completo)

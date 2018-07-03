@@ -1,6 +1,7 @@
 {% extends "nutricionista/base_nutricionista.html" %}
 {% block activePacientes %} active {% endblock %}
 {% load humanize %}
+{% load static %}
 <style>
   .dia_humano{
     border-radius: 5px;
@@ -27,7 +28,19 @@
 <div class="row">
     <div class="col s12">
         <div class="container">
-            <h3 class="header left purple-text">{{paciente.user.get_nombre_completo}}</h3>
+            
+            <div class="row">
+              <div class="col s6">
+                  <h3 class="header left purple-text">{{paciente.user.get_nombre_completo}}</h3>
+              </div>
+              <div class="col s6 center">
+                  {% if paciente.fichageneral.imagen %}
+                  <img src="{{paciente.fichageneral.imagen.url}}" alt="" class="responsive-img circle" width="150px">
+                  {% else %}
+                  <img src="{% static 'img/default.jpg' %}" alt="" class="responsive-img circle" width="150px">  
+                  {% endif %}
+              </div>
+            </div>
             <ul>
               {% for field in form %}
                   {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}

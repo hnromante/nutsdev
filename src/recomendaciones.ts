@@ -30,9 +30,9 @@ class Recomendacion {
     /**
      * 
      * @param pk Constructor de recomendacion
-     * @param paciente Opcional
-     * @param observacion 
-     * @param comidas 
+     * @param paciente obligatorio
+     * @param observacion Opcional
+     * @param comidas Opcional
      */
     constructor(pk?: number, paciente?:number, observacion?: string, comidas?: Comida[]) {
         this.pk = pk;
@@ -78,10 +78,29 @@ class Recomendacion {
         this.grupos_permitidos_aux.filter(e => e==grupo)[0].porción = this.grupos_permitidos_aux.filter(e => e==grupo)[0].porción - porcion
     }
 
-    addAlimento(a: Alimento){
-    
+    alimentoEnComida(c: Comida, a: Alimento){
+        let alimentos: Array<Alimento> = []
+        let porciones: Array<number> = []
+        c.alimentos_porcion.forEach(e => {
+            alimentos.push(e[0])
+            porciones.push(e[1])
+        });
+        return alimentos.filter(e => e.pk == a.pk).length > 0 ? true : false
     }
 
+    addAlimento(c: Comida, a: Alimento, porcion: number){
+        if(c.alimentos_porcion){
+            console.log(c.alimentos_porcion[0])
+            if (this.alimentoEnComida(c,a)){
+                let alimento = c.alimentos_porcion.filter(e => e[0].pk == a.pk)[0]
+                alimento[1] = alimento[1] + porcion
+            }else{
+                c.alimentos_porcion.push([a,porcion])   
+            }
+        }else{
+            c.alimentos_porcion = [[a, porcion]]
+        }
+    }
 }
 
 

@@ -73,7 +73,8 @@
             firstDay: 1,
             weekdays: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'],
             weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-            weekdaysAbbrev: ['D','L','M','M','J','V','S','D']
+            weekdaysAbbrev: ['D','L','M','M','J','V','S','D'],
+            onSelect: () => this.close()
           }
           var instances = M.Datepicker.init(elems, options);
         });

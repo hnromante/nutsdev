@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
 from cuentas import views as views_cuentas
+from django.conf import settings
+from django.views.static import serve 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     #url(r'^$', views_calculadora.home , name='home'),
@@ -28,3 +31,10 @@ urlpatterns = [
     path('admin/doc/', include('django.contrib.admindocs.urls')) 
 
 ]
+
+if settings.DEBUG:
+    urlpatterns +=  [
+        url(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    ]

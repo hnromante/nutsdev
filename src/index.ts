@@ -145,13 +145,14 @@ function agregarAlimentoListener(elemento: JQuery, recomendacion: Recomendacion 
         let alimento = recomendacion.getAlimentoById(pk_alimento, grupo)
         if(validateAgregarAlimento(pk_grupo, pk_alimento, porcion)){
             if (comida){
+                // comida.alimentos_porcion.push([alimento,porcion]);
+                recomendacion.addAlimento(comida, alimento, porcion);
                 //Si existe 
-                if(comida.alimentos_porcion){
-                    //IF ALIMENTO IN ARRAY, AÑADE UNA PORCION EN LUGAR DE OTRO ELEMENTO EN LA LISTA
-                    comida.alimentos_porcion.push([alimento,porcion])
-                }else{
-                    comida.alimentos_porcion = [[alimento,porcion]]
-                }
+                // if(comida.alimentos_porcion){
+
+                // }else{
+                //     comida.alimentos_porcion = [[alimento,porcion]]
+                // }
 
                 recomendacion.restarPorcion(grupo, porcion)
                 renderComboGrupos($('#select_grupos_permitidos'), recomendacion)
@@ -189,7 +190,7 @@ function renderMinutaDiaria(tabla: JQuery, recomendacion: Recomendacion){
             porc = ((suma_kcal*100)/kcal_total).toFixed(2) + '%'
         }
         tabla.append($("<tr>")
-            .append($('<td>', {text:c.nombre}))
+            .append($('<td>', {text:`${c.nombre} - ${c.horario_1}`}))
             .append($('<td>', {text:html_alimentos}))
             .append($('<td>', {text:suma_kcal}))
             .append($('<td>', {text: porc}))

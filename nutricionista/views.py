@@ -39,7 +39,7 @@ from django.http import JsonResponse
 import json
 from django.utils import timezone
 from django.urls import reverse
-
+from datetime import date
 
 @login_required(login_url='/login-nutricionista/')
 def inicio_nutri(request):
@@ -54,6 +54,10 @@ def inicio_nutri(request):
         messages.add_message(request, messages.INFO, 'Usted no tiene los permisos para visitar esa página')
         return HttpResponseRedirect('/login-nutricionista')
     numero_pacientes = Paciente.objects.filter(nutricionista=request.user.nutricionista).count()
+    hoy = date.today()
+    atenciones_hoy = Atencion.objects.filter(nutricionista=request.user.nutricionista, fecha__day=hoy.day).count()
+    atenciones_tomorrow = Atencion.objects.filter(nutricionista=request.user.nutricionista, fecha__day=hoy.day+1).count()
+    proxima_atencion = Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha').last()
     pacientes_normal = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Peso normal').count()
     pacientes_bajo = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Bajo Peso').count()
     pacientes_sobrepeso = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Sobrepeso').count()
@@ -61,7 +65,11 @@ def inicio_nutri(request):
     pacientes_obesidad2 = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad grado 2').count()
     pacientes_obesidad_morbida = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad mórbida').count()
     atenciones = Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha')[:2]
+
     return render(request,'nutricionista/index.html', { 'atenciones':atenciones,
+                                                        'atenciones_hoy':atenciones_hoy,
+                                                        'proxima_atencion': proxima_atencion,
+                                                        'atenciones_tomorrow': atenciones_tomorrow,
                                                         'numero_pacientes':numero_pacientes, 'pacientes_normal':pacientes_normal,
                                                         'pacientes_bajo':pacientes_bajo, 'pacientes_sobrepeso':pacientes_sobrepeso, 
                                                         'pacientes_obesidad1':pacientes_obesidad1, 'pacientes_obesidad2':pacientes_obesidad2,
@@ -267,7 +275,8 @@ def atenciones(request):
             atenciones_expiradas.append(atencion)
         else:
             atenciones_list.append(atencion)
-    
+    print(atenciones_list)
+    print(atenciones_expiradas)
     return render(request, 'nutricionista/atenciones.html', {'atenciones_list':atenciones_list, 'atenciones_expiradas':atenciones_expiradas})
 
 

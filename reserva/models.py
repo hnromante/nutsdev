@@ -34,7 +34,7 @@ class Atencion(models.Model):
     observacion = models.CharField(max_length=200)
     fecha = models.DateField(null=True, blank= True)
     hora = models.TimeField(null=True, blank= True)
-    asistencia = models.NullBooleanField(null=True, blank= True, default=False)
+    asistencia = models.BooleanField(default=False)
 
     def expirada(self):
         combined_date = datetime.datetime.combine(self.fecha, self.hora)

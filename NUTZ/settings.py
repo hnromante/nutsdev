@@ -144,3 +144,7 @@ STATICFILES_DIRS = (
 )
 #MODELO DE USUARIO COSTUMIZADO
 AUTH_USER_MODEL = 'cuentas.User'
+
+#MEDIA
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

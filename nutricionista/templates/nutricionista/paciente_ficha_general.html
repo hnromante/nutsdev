@@ -11,7 +11,19 @@
                 <a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}" class="breadcrumb purple-text"><i class="material-icons right">navigate_next</i>Antecedentes</a>
             </div>
         </div>
-        <h3 class="header left purple-text">Información general del paciente</h3>
+        <div class="row">
+            <div class="col s8">
+                <h3 class="header left purple-text">Información general del paciente</h3>
+            </div>
+            <div class="col s4">
+                {% if  %}
+                <img src="{{paciente.fichageneral.imagen.url}}" alt="" class="responsive-img circle" width="200px">
+                {% else %}
+                <img src="{% static 'img/default.jpg' %}" alt="" class="responsive-img circle" width="150px">  
+                {% endif %}
+                
+            </div>
+            </div>
         <ul>
             {% for field in form %}
                 {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
@@ -32,7 +44,7 @@
             {% endfor %}
             <form name="form_paciente" action="" method="post">
                 {% csrf_token %}
-                {{form}}
+                {{form.as_p}}
                 <input type="submit" value="Actualizar" class="btn">  
             </form>
         </div>

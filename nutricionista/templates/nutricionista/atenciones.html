@@ -97,14 +97,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% if atenciones_list %}
+                    {% if atenciones_expiradas %}
                         {% for atencion in atenciones_expiradas  %}
                         <tr>
                             <td>{{atencion.fecha| date:"d M Y"}}</td>
                             <td>{{atencion.hora}}</td>
                             <td>{{atencion.paciente.user.get_nombre_completo}}</td>
                             <td>{{atencion.get_estado_display}}</td>
-                            <td>{{atencion.asistencia}}</td>
+                            <td>{% if atencion.asistencia %}
+                                    <span class="green-text">Si</span>
+                            {% else %}
+                            <span class="red-text">No</span>
+                            {% endif %}</td>
                             <td><a href="{% url 'atencion-single' pk=atencion.pk%}">Ver detalle</a></td>
                         </tr>
                         {% endfor %}
