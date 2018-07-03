@@ -75,7 +75,7 @@ class Recomendacion {
     }
 
     restarPorcion(grupo: GrupoAlimento, porcion: number){
-        this.grupos_permitidos_aux.filter(e => e==grupo)[0].porción = this.grupos_permitidos_aux.filter(e => e==grupo)[0].porción - porcion
+        this.grupos_permitidos_aux.filter(e => e==grupo)[0].porcion = this.grupos_permitidos_aux.filter(e => e==grupo)[0].porcion - porcion
     }
 
     alimentoEnComida(c: Comida, a: Alimento){

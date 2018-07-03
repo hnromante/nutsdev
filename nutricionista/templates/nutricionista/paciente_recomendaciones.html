@@ -175,18 +175,19 @@
             
         <div class="col s12 m6">
                 <h5 class="title subtitulo">Agregar una observación</h5>
-            <form action="">
+            <form action=""
+                {% csrf_token %}
                 <div class="input-field col s12">
-                <textarea id="textarea1" class="materialize-textarea"></textarea>
+                <textarea id="input_observacion" class="materialize-textarea"></textarea>
                 <label for="textarea1">Observación</label>
                 </div>
             </form>
         </div>
         <div class="col s12 m6">
             <h5 class="title subtitulo">Acciones</h5>
-            <a class="modal-trigger btn white purple-text" href="#modal_modificar_reserva"> Agendar Atención</a>
-            <input type="submit" class="btn white green-text " value="Guardar">
-            <input type="submit" class="btn white red-text " value="Limpiar">
+            <!-- <a class="modal-trigger btn white purple-text" href="#modal_modificar_reserva"> Agendar Atención</a> -->
+            <input type="submit" class="btn white green-text" id="btn_observacion" value="Guardar">
+            <!-- <input type="submit" class="btn white red-text " value="Limpiar"> -->
         </div>
     </div>
 </div>

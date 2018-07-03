@@ -360,6 +360,27 @@ def recomendacion_paciente(request, pk):
         print(recomendacion.comidas)
         return JsonResponse(data, safe=False)
 
+def recomendacion_paciente_save(request, pk):
+    if request.method == 'POST':
+        data_recomendacion = json.loads(request.POST['recomendacion'])
+        print(data_recomendacion)
+
+    return HttpResponse("HOLA")
+"""
+    elif ficha == 'calculadora':
+        # calculadora = CalculadoraPiramidal.objects.get(paciente=paciente) if CalculadoraPiramidal.objects.filter(paciente=paciente).exists() else None
+        calculadora = CalculadoraPiramidal.objects.get(paciente=paciente) if CalculadoraPiramidal.objects.filter(paciente=paciente).exists() else CalculadoraPiramidal.objects.create(paciente=paciente)    
+        if request.method == 'POST':
+            datos_calculadora = json.loads(request.POST['datos_calculadora'])
+            calculadora.peso_a_utilizar = datos_calculadora['peso_a_utilizar']
+            calculadora.kcal_estado_nutricional = datos_calculadora['kcal_estado_nutricional']
+            calculadora.total_kcal = datos_calculadora['total_kcal']
+            calculadora.vct = datos_calculadora['vct']
+            calculadora.grupos_porciones = datos_calculadora['grupos_porciones']
+            calculadora.ultima_actualizacion = timezone.now()
+            calculadora.save()
+        return render(request, 'nutricionista/paciente_calculadora.html', {'paciente':paciente, 'calculadora':calculadora})
+"""
 
 def recomendacion_paciente_crear(request, pk):
     paciente = Paciente.objects.get(pk=pk)

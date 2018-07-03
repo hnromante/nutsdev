@@ -6,6 +6,8 @@ let initRecomendacion = (pkPaciente: number) => {
     $.getJSON(url_data_paciente, (data) => {
         if(data['tiene_recomendacion']){
             $('#iniciar_recomendacion').addClass('hide')
+            $('#btn_iniciar_recomendacion').addClass('hide')
+            
             let recomendacion = new Recomendacion(data['pk'], data['paciente']);
             if (data['grupos_permitidos'] == null){
                 alert('Debe primero llenar la calculadora piramidal de forma correcta.')
@@ -20,6 +22,7 @@ let initRecomendacion = (pkPaciente: number) => {
                 agregarComidaListener($('#btn_agregar_comida'), recomendacion)
                 agregarAlimentoListener($('#btn_agregar_alimento_comida'), recomendacion)
                 renderMinutaDiaria($('#tabla_minuta'), recomendacion)
+                botonGuardarListener(recomendacion)
             }
             
         }else{
@@ -53,7 +56,7 @@ function renderComboGrupos(select: JQuery, recomendacion: Recomendacion){
         }else{
             select.append($('<option>', { 
                 value: e.pk,
-                text : `${e.nombre} - (${e.porción})` 
+                text : `${e.nombre} - (${e.porcion})` 
             }))  
         }
     });
@@ -145,15 +148,7 @@ function agregarAlimentoListener(elemento: JQuery, recomendacion: Recomendacion 
         let alimento = recomendacion.getAlimentoById(pk_alimento, grupo)
         if(validateAgregarAlimento(pk_grupo, pk_alimento, porcion)){
             if (comida){
-                // comida.alimentos_porcion.push([alimento,porcion]);
                 recomendacion.addAlimento(comida, alimento, porcion);
-                //Si existe 
-                // if(comida.alimentos_porcion){
-
-                // }else{
-                //     comida.alimentos_porcion = [[alimento,porcion]]
-                // }
-
                 recomendacion.restarPorcion(grupo, porcion)
                 renderComboGrupos($('#select_grupos_permitidos'), recomendacion)
                 renderPorciones($('#select_porciones'), grupo)
@@ -219,7 +214,42 @@ if (Number($('#pk_paciente').val()) != 0) {
     $('#recomendacion_nutricional').html(`No hay datos para llenar la recomendacion`)
 }
 
+function botonGuardarListener(recomendacion: Recomendacion){
+    $('#btn_observacion').on('click', function(){
+        if($('#input_observacion').val().toString().trim() == ''){
+            alert('Agregue una observación')
+        }else{
+            recomendacion.observacion = $('#input_observacion').val().toString()
+        
+            var data = new FormData();
+        data.append('recomendacion', JSON.stringify(recomendacion))
+        let csrf = $( "input[name='csrfmiddlewaretoken']" ).val().toString()
+        console.log(csrf)
+        data.append('csrfmiddlewaretoken', csrf)
+        $.ajax({
+            url: `/nutricionista/recomendaciones/${recomendacion.pk}/save/`,
+            method: 'POST',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {
 
+            },
+            success: function (data) {
+                console.log('SUCC',data)
+                // location.reload();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log('ERROR AJAX' + thrownError)
+
+    
+            }
+        })
+        }
+       
+    })
+}
 
 /**
  * Inicializa la aplicación de recomendación para el paciente.
