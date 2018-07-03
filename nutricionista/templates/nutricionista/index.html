@@ -92,7 +92,10 @@
             </span>
         </div>
         <div class="col">
+            {% if proxima_atencion %}
             <a href="{% url 'atencion-single' proxima_atencion.pk %}">Ver detalle</a>
+            {% else %}
+            {% endif %}
         </div>
         </div>
     </div>
