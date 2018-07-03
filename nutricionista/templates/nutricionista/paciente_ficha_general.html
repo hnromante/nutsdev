@@ -16,7 +16,7 @@
                 <h3 class="header left purple-text">Información general del paciente</h3>
             </div>
             <div class="col s4">
-                {% if  %}
+                {% if paciente.fichageneral.imagen %}
                 <img src="{{paciente.fichageneral.imagen.url}}" alt="" class="responsive-img circle" width="200px">
                 {% else %}
                 <img src="{% static 'img/default.jpg' %}" alt="" class="responsive-img circle" width="150px">  
