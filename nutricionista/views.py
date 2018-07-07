@@ -23,7 +23,7 @@ from paciente.forms import (
     FormAntecedentesAlimentarios,
     FormUsuario
 )
-
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.views.generic.detail import DetailView
@@ -88,17 +88,19 @@ def mis_pacientes(request):
     :param request:
     :return:
     """
+    if not request.user.es_nutri:
+        messages.warning(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
+        return HttpResponseRedirect('/login-nutricionista')
+    
     if request.method == 'POST':
         rut = request.POST['busqueda']
         pacientes = Paciente.objects.filter(nutricionista=request.user.nutricionista, user__rut = rut)
 
         return render(request, 'nutricionista/pacientes.html', {'pacientes':pacientes})
-
-    if not request.user.es_nutri:
-        messages.warning(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
-        return HttpResponseRedirect('/login-nutricionista')
-    context = dict()
-    pacientes = Paciente.objects.filter(nutricionista=request.user.nutricionista)
+    pacientes_list = Paciente.objects.filter(nutricionista=request.user.nutricionista)
+    pagination = Paginator(pacientes_list, 4)
+    page = request.GET.get('page')
+    pacientes = pagination.get_page(page)
 
     return render(request, 'nutricionista/pacientes.html', {'pacientes':pacientes})
 
@@ -273,17 +275,12 @@ def atenciones(request):
     if not request.user.es_nutri:
         messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
-
-    # atenciones_all = Atencion.objects.all().order_by('fecha')
-    # atenciones_expiradas = list()
-    # atenciones_list = list()
-    # for atencion in atenciones_all:
-    #     if atencion.expirada():
-    #         atenciones_expiradas.append(atencion)
-    #     else:
-    #         atenciones_list.append(atencion)
-    atenciones_expiradas = Atencion.objects.filter(nutricionista=request.user.nutricionista ,fecha__gte=datetime.datetime.now()).order_by('fecha')
-    return render(request, 'nutricionista/atenciones.html', {'atenciones_expiradas':atenciones_expiradas})
+    atenciones_list = Atencion.objects.filter(nutricionista=request.user.nutricionista ,fecha__gte=datetime.datetime.now()).order_by('fecha')
+    pagination = Paginator(atenciones_list, 4)
+    page = request.GET.get('page')
+    atenciones = pagination.get_page(page)
+    
+    return render(request, 'nutricionista/atenciones.html', {'atenciones':atenciones})
 
 @login_required(login_url='/login-nutricionista/')
 def atenciones_historial(request):
@@ -297,7 +294,10 @@ def atenciones_historial(request):
         messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
 
-    atenciones_expiradas = Atencion.objects.filter(nutricionista=request.user.nutricionista ,fecha__lt=datetime.datetime.now()).order_by('fecha')
+    atenciones_expiradas_list = Atencion.objects.filter(nutricionista=request.user.nutricionista ,fecha__lt=datetime.datetime.now()).order_by('fecha')
+    pagination = Paginator(atenciones_expiradas_list, 4)
+    page = request.GET.get('page')
+    atenciones_expiradas = pagination.get_page(page)
     return render(request, 'nutricionista/atenciones_historial.html', {'atenciones_expiradas':atenciones_expiradas})
 
 
