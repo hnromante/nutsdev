@@ -3,9 +3,7 @@
 {% block main %}
 <div class="row">
     <div class="col s12">
-        <div class="container">
-            <h3 class="header left purple-text">Listado de pacientes</h3>
-        </div>       
+        <h3 class="subtitulo">Listado de pacientes</h3>
     </div>
 </div>
 <div class="row">
@@ -29,10 +27,10 @@
                     <label for="busqueda">Rut</label>
                     <div class="row">
                         <div class="col l6">
-                            <button class="btn waves-effect waves-light" type="submit" name="action">Buscar</button>
+                            <button class="btn blue" type="submit" name="action">Buscar</button>
                         </div>
                         <div class="col l6">
-                            <a href="{%url 'pacientes' %}">Ver todos</a>
+                            <a href="{%url 'pacientes' %}" class="btn boton">Ver todos</a>
                         </div>
                     </div>
                 </div>     
@@ -40,39 +38,37 @@
         </form>
 
     </div>
-    <div class="row">
-       <div class="col s12">
-           <table class="highlight">
-               <thead>
-                   <tr>
-                       <th data-field="nombre">Nombre</th>
-                       <th data-field="apellidos">Apellidos</th>
-                       <th data-field="rut">Rut</th>
-                       <th data-field="ver_ficha">Ver Ficha</th>
-                       {% comment %} <th data-field="eliminar_paciente">Eliminar</th> {% endcomment %}
-                   </tr>
-               </thead>
-               <tbody>
-                   {% if pacientes %}
-                        {% for paciente in pacientes  %}
+</div>
+<div class="row">
+    <div class="col s12">
+        <table class="highlight">
+            <thead>
+                <tr>
+                    <th data-field="nombre">Nombre</th>
+                    <th data-field="apellidos">Apellidos</th>
+                    <th data-field="rut">Rut</th>
+                    <th data-field="ver_ficha">Ver Ficha</th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for paciente in pacientes  %}
                         <tr>
-                                <td>{{paciente.user.nombres}}</td>
-                                <td>{{paciente.user.apellidos}}</td>
-                                <td>{{paciente.user.rut}}</td>
-                                <td><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Ver detalle</a></td>
-                                {% comment %} <td><a href="#"><i class="small material-icons">delete_forever</i></a></td> {% endcomment %}
-                            </tr>
-                        {% endfor %}
-                   {% else %}
-                        <tr>
-                            <td>No hay pacientes con ese Rut</td>
+                            <td>{{paciente.user.nombres}}</td>
+                            <td>{{paciente.user.apellidos}}</td>
+                            <td>{{paciente.user.rut}}</td>
+                            <td><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Ver detalle</a></td>
                         </tr>
-                   {% endif %}
-                   
-                   
-               </tbody>
-           </table>
-       </div>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4" class="red-text"> No se encontraron pacientes</td>
+                        </tr>
+                    {% endfor %}
+                    
+                
+                
+            </tbody>
+        </table>
     </div>
 </div>
+
 {% endblock main %}

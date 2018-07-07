@@ -3,9 +3,7 @@
 {% block main %}
 <div class="row">
     <div class="col s12">
-        <div class="container">
-            <h3 class="header left purple-text">Listado de atenciones</h3>
-        </div>       
+        <h3 class="subtitulo">Listado de atenciones</h3>
     </div>
 </div>
 <div class="row">
@@ -35,8 +33,7 @@
                    </tr>
                </thead>
                <tbody>
-                {% if atenciones_list %}
-                    {% for atencion in atenciones_list  %}
+                    {% for atencion in atenciones_expiradas  %}
                     <tr>
                         <td>{{atencion.tiempo_a_la_reserva}}</td>
                         <td>{{atencion.fecha| date:"d M Y"}}</td>
@@ -52,12 +49,11 @@
                         </td>
                         <td><a href="{% url 'atencion-single' pk=atencion.pk%}">Ver detalle</a></td>
                     </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="7">No se encontraron próximas atenciones.</td>
+                        </tr>
                     {% endfor %}
-                {% else %}
-                    <tr>
-                        <td>No se encontraron próximas atenciones.</td>
-                    </tr>
-                {% endif %}
                </tbody>
            </table>
        </div>

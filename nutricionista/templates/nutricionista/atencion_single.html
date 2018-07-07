@@ -1,9 +1,10 @@
 {% extends "nutricionista/base_nutricionista.html" %}
 {% block activeAtenciones %} active {% endblock %}
+{% load static%}
 {% block main %}
 <div class="row">
     <div class="col s12">
-        <h3 class="header left purple-text">Detalle de la atención</h3>
+        <h3 class="subtitulo">Detalle de la atención</h3>
         <ul>
         {% for field in form %}
             {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
@@ -24,8 +25,49 @@
             {% endfor %} 
         </div>
     </div>
+
+    <div class="row">
+        <div class="col s12">
+            <form action="" id="form_eliminar_paciente" method="POST">
+                {% csrf_token %}
+                <div class="input-field">
+                    <div class="row">
+                        <div class="col s12 center">
+                            {% if atencion.paciente.fichageneral.imagen %}
+                            <img src="{{atencion.paciente.fichageneral.imagen.url}}" alt="" width="200px" class="responsive-img ">
+                            {% else %}
+                            <img src="{% static 'img/nuts_logo.png' %}" alt="" width="200px" class="responsive-img ">
+                            {% endif %}
+                            <p><a href="{% url 'paciente-detalle' pk=atencion.paciente.pk %}">{{atencion.paciente.user.get_nombre_completo}}</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-field">
+                    {{form.fecha}}
+                    <label for="id_fecha">Fecha de atención</label>
+                </div>
+                <div class="input-field">
+                    {{form.hora}}
+                    <label for="id_hora">Hora de la atención</label>
+                </div>
+                <div class="input-field">
+                    {{form.observacion}}
+                    <label for="id_observación">Observación</label>
+                </div>
+                <div class="input-field">
+                    <p>
+                    <label>{{form.asistencia}}<span>Asistencia</span></label>
+                    </p>
+                </div>
+                <div class="input-field">
+                    <input type="submit" class="purple-text btn-small white" name="modificar_reserva" value="Guardar">
+                    <a class="modal-trigger red-text" style="margin-left:10px;" href="#modal_cancelar_reserva"> Cancelar Reserva</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-<div class="row">
+<!-- <div class="row">
     <div class="col s12">
         <div class="card horizontal">
           <div class="card-stacked">
@@ -49,7 +91,7 @@
           </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- Modal CANCELAR -->
 <div id="modal_cancelar_reserva" class="modal" >
     <div class="modal-content">
@@ -63,8 +105,8 @@
 </div>
 
 <!-- Modal MODIFICAR -->
-<div id="modal_modificar_reserva" class="modal" style="heigth:900px;">
-    <div class="modal-content"  >
+<!-- <div id="modal_modificar_reserva" class="modal" style="heigth:900px;">
+    <div class="modal-content">
         <h4>Modificar la reserva del paciente {{atencion.paciente.user.get_nombre_completo}}</h4>
         <form action="" id="form_eliminar_paciente" method="POST">
             {% csrf_token %}
@@ -79,15 +121,13 @@
             </div>
             <div class="input-field">
                 <p>
-                <label>
-                {{form.asistencia}}
-                <span>Asistencia</span>
-                </label>
+                <label>{{form.asistencia}}<span>Asistencia</span></label>
                 </p>
             </div>
             <input type="submit" class="purple-text btn-small white" name="modificar_reserva" value="Agendar">
             <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
         </form>
     </div>
-</div>
+</div> -->
+
 {% endblock main%}

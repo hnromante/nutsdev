@@ -12,7 +12,7 @@
                 <h3>{{atenciones_hoy}}</h3>
             </div>
             <div class="card-action center subtitulo-card" style="background-color: #5fae7b; ">
-                <a style="color:white;" href="{% url 'pacientes' %}">VER</a>
+                <a style="color:white;" href="{% url 'atenciones' %}">Ver</a>
             </div>
         </div>
     </div>
@@ -25,7 +25,7 @@
                 <h3>{{atenciones_tomorrow}}</h3>
             </div>
             <div class="card-action center subtitulo-card" style="background-color: #5fae7b; ">
-                <a style="color:white;" href="{% url 'pacientes' %}">VER</a>
+                <a style="color:white;" href="{% url 'atenciones' %}">Ver</a>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
                 <h3>{{numero_pacientes}}</h3>
             </div>
             <div class="card-action center subtitulo-card" style="background-color: #5fae7b; ">
-                <a style="color:white;" href="{% url 'pacientes' %}">VER</a>
+                <a style="color:white;" href="{% url 'pacientes' %}">Ver</a>
             </div>
         </div>
     </div>
@@ -76,28 +76,35 @@
     </div>
 </div> {% endcomment %}
 <div class="col s12 m8 offset-m2 l6 offset-l3">
-    <div class="card-panel grey lighten-5 z-depth-1">
-        <div class="row valign-wrapper">
-        <div class="col">
-            {% if proxima_atencion.paciente.fichageneral.imagen %}
-            <img src="{{proxima_atencion.paciente.fichageneral.imagen.url}}" alt="" width="100px" class="circle responsive-img"> <!-- notice the "circle" class -->
-            {% else %}
-            <img src="{% static 'img/nuts_logo.jpg' %}" alt="" class="responsive-img circle" width="150px">  
-            {% endif %}
-        </div>
-        <div class="col">
-            <p>Próxima atención en: {{proxima_atencion.tiempo_a_la_reserva}}</p>
-            <span class="black-text">
-                {{proxima_atencion.paciente.user.get_nombre_completo}}
-            </span>
-        </div>
-        <div class="col">
-            {% if proxima_atencion %}
-            <a href="{% url 'atencion-single' proxima_atencion.pk %}">Ver detalle</a>
-            {% else %}
-            {% endif %}
-        </div>
-        </div>
+    <div class="card-panel purple lighten-4 z-depth-2 carta-nutri center">
+        {% if proxima_atencion %}
+            <div class="row valign-wrapper">
+            <div class="col">
+                {% if proxima_atencion.paciente.fichageneral.imagen %}
+                <img src="{{proxima_atencion.paciente.fichageneral.imagen.url}}" alt="" width="100px" class="responsive-img"> <!-- notice the  class -->
+                {% else %}
+                <img src="{% static 'img/nuts_logo.jpg' %}" alt="" class="responsive-img" width="200px">  
+                {% endif %}
+            </div>
+            <div class="col">
+                <p>Próxima atención en: {{proxima_atencion.tiempo_a_la_reserva}}</p>
+                <span class="black-text">
+                    {{proxima_atencion.paciente.user.get_nombre_completo}}
+                </span>
+            </div>
+            <div class="col">
+                {% if proxima_atencion %}
+                <a href="{% url 'atencion-single' proxima_atencion.pk %}">Ver detalle</a>
+                {% else %}
+                {% endif %}
+            </div>
+            </div>
+        {% else %}
+        No tienes próximas atenciones agendadas. 
+        <br>
+        <br>
+        <a href="#" class="btn boton">Agenda aquí</a>
+        {% endif %}
     </div>
 </div>
 {% comment %} <div class="row">
