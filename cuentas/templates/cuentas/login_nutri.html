@@ -24,14 +24,15 @@ body{
   <div class="container">
     <div class="row" style="margin-top:5%;">
       <div class="col s12 center">
-          <h2>Inicio de sesión</h2>
+          <h2 class="purple-text darken-3">Inicio de sesión</h2>
+          <h5 class="purple-text darken-3">Nutricionista</h5>
       </div>
     </div>
     <div class="row">
         <div class="col s12 l6 center">
           <img src="{% static 'img/nuts_logo.png' %}" width="250" height="200" class="logo">
           <h5>Bienvenido a Nuts, tu asistente nutricional. Si no tienes cuenta, puedes solicitarla <a href="#">acá</a></h5>
-        </div>
+      </div>
       <div class="col s12 l6">
             <form method="POST" class="formulario-login">
                 {% csrf_token %}

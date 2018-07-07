@@ -13,9 +13,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s8">
-                <h3 class="header left purple-text">Información general del paciente</h3>
-            </div>
+                
             <div class="col s4">
                 {% if paciente.fichageneral.imagen %}
                 <img src="{{paciente.fichageneral.imagen.url}}" alt="" class="responsive-img circle" width="200px">
@@ -32,10 +30,10 @@
         </ul>
     </div>       
 </div>
+<h3 class="subtitulo">Información general del paciente</h3>
 <div class="container">
     <div class="row">
         <div class="col s12">
-            <p class="flow-text">Información general</p>
             {% for message in messages  %}
                 {% if message.tags == 'success' %}
                     <p class="green-text">{{message}}</p>
@@ -46,7 +44,9 @@
             <form name="form_paciente" action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{form.as_p}}
-                <input type="submit" value="Actualizar" class="btn">  
+                <div class="center">
+                        <input type="submit" value="Actualizar" class="btn boton"> 
+                </div>
             </form>
         </div>
     </div>

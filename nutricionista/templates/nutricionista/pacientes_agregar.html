@@ -1,6 +1,8 @@
 {% extends "nutricionista/base_nutricionista.html" %}
+
 {% block activePacientesAgregar %} active {% endblock %}
 {% block main %}
+<h1 class="subtitulo">Agregar Paciente</h1>
 <div class="container">
     <div class="row">
         <div class="messages col s12 center-align ">
@@ -10,14 +12,19 @@
                 {% endfor %}
             {% endif %}
         </div>
-        <div class="col s12">
-                <h1 class="grey-text">Agregar Paciente</h1>
+        <div class="col s12 form-ingreso-paciente">
             <form action="" method="POST">
                 {% csrf_token %}
                 {{form.as_table}}
-                <input type="submit" value="Agregar Paciente" class="btn">
+                <div class="center">
+                    <input type="submit" value="Agregar Paciente" class="btn boton">
+                </div>
             </form>
         </div>
+
     </div>
+    <blockquote>
+           Una vez que agregues el paciente, podrás llenar sus datos en la ficha de paciente.
+    </blockquote>
 </div>
 {% endblock main %}
