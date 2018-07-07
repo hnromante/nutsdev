@@ -7,6 +7,7 @@ class Recomendacion(models.Model):
     observacion = models.CharField(blank=True, null=True, max_length=255)
     comidas = JSONField(blank=True, null=True)
     grupos_permitidos = JSONField(blank=True, null=True)
+    grupos_permitidos_aux = JSONField(blank=True, null=True)
     total_kcal = models.FloatField(blank=True, null=True, default=0)
 
     def __str__(self):

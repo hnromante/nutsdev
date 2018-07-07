@@ -1,28 +1,5 @@
 {% extends "nutricionista/base_nutricionista.html" %}
 {% block activeRecomendaciones %} active active-submenu {% endblock %}
-{% block costumcss %}
-    <style>
-        .subtitulo {
-            font-family: Arial, Helvetica, sans-serif;
-            padding: 10px;
-            font-size: 23px;
-            color: purple;
-            border-top: solid purple 1px;
-            border-bottom: solid purple 1px;
-            text-align: center;
-            margin-right:10px;
-        }
-
-        .boton{
-            background-color: white;
-            color: purple;
-        }
-
-        .carta-resumen span{
-            color: purple;
-        }
-    </style>
-{% endblock costumcss %}
 {% block main %}
 <div class="row">
     <div class="col s12">
@@ -41,7 +18,7 @@
         <h3 class="title subtitulo"><i class="material-icons" style="margin-right: 30px;">folder_shared</i>Resumen nutricional</h3>
     <!-- Ficha nutricional-->
     <div class="col s12 m4">
-        <div class="card-panel  z-depth-1 carta-resumen">
+        <div class="card-panel  z-depth-1 carta-nutri">
             <div class="row valign-wrapper">
                 <div class="col s12">
                     <span class="card-title">Ficha Nutricional</span>
@@ -55,7 +32,7 @@
     </div>
     <!--Calculadora piramidal-->
     <div class="col s12 m4">
-        <div class="card-panel z-depth-1 carta-resumen">
+        <div class="card-panel z-depth-1 carta-nutri">
             <div class="row valign-wrapper">
                 <div class="col s12">
                     <span class="card-title">Calculadora piramidal</span>
@@ -68,7 +45,7 @@
         </div>
     </div>
     <div class="col s12 m4">
-        <div class="card-panel z-depth-1 carta-resumen">
+        <div class="card-panel z-depth-1 carta-nutri">
             <div class="row valign-wrapper">
                 <div class="col s12">
                     <span class="card-title">Grupos de alimentos y porción</span>
@@ -77,7 +54,7 @@
                             <li>{{alimento.nombre}}  <span> ({% if alimento.porcion %}
                             {{alimento.porcion}}
                             {% else %}
-                            {{alimento.porción}}
+                            {{alimento.porcion}}
                             {% endif %})</span> </li>
                         {% endfor %}
                     </ul>

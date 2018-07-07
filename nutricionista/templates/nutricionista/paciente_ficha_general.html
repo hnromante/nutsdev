@@ -20,7 +20,7 @@
                 {% if paciente.fichageneral.imagen %}
                 <img src="{{paciente.fichageneral.imagen.url}}" alt="" class="responsive-img circle" width="200px">
                 {% else %}
-                <img src="{% static 'img/default.jpg' %}" alt="" class="responsive-img circle" width="150px">  
+                <img src="{% static 'img/nuts_logo.jpg' %}" alt="" class="responsive-img circle" width="150px">  
                 {% endif %}
                 
             </div>
@@ -43,7 +43,7 @@
                     <p>{{message}}</p>
                 {% endif %}
             {% endfor %}
-            <form name="form_paciente" action="" method="post">
+            <form name="form_paciente" action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{form.as_p}}
                 <input type="submit" value="Actualizar" class="btn">  

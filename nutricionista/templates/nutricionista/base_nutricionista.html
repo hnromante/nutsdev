@@ -14,7 +14,28 @@
             padding-left: 0px;
         }
     }
+    .subtitulo {
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 10px;
+        font-size: 23px;
+        color: purple;
+        border-top: solid purple 1px;
+        border-bottom: solid purple 1px;
+        text-align: center;
+        margin-right:10px;
+    }
 
+    .boton{
+        background-color: white;
+        color: purple;
+    }
+
+    .carta-nutri span{
+        color: purple;
+    }
+    .carta-nutri {
+        color: purple;
+    }
     .subtitulo-card {
         background-color: #5fae7b;
     }
@@ -39,7 +60,8 @@
             <a href="#email"><span class="black-text email">{{request.user.email}}</span></a>
         </div>
     </li>
-    <li class="{% block activeAtenciones %} {% endblock %}"><a href="{% url 'atenciones' %}"><i class="material-icons">date_range</i>Atenciones</a></li> 
+    <li class="{% block activeAtenciones %} {% endblock %}"><a href="{% url 'atenciones' %}"><i class="material-icons purple-text">date_range</i>Atenciones</a></li> 
+    <li class="{% block activeAtencionesHistorial %} {% endblock %}"><a href="{% url 'atenciones-historial' %}"><i class="material-icons">date_range</i>Historial de atenciones</a></li> 
     <li class="{% block activePacientesAgregar %} {% endblock %}"><a href="{% url 'pacientes-agregar' %}"><i class="material-icons">add</i>Agregar Paciente</a></li> 
     <li class="{% block activePacientes %} {% endblock %}"><a href="{% url 'pacientes' %}"><i class="material-icons">assignment_ind</i>Mis Pacientes</a></li>  
     {% if paciente %}

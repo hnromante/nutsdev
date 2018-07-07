@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^atenciones/$', views.atenciones, name='atenciones'),
     url(r'^atenciones/(?P<pk>\d+)/$', views.atencion_single, name='atencion-single'),
     url(r'^atenciones/(?P<pk>\d+)/eliminar/$', views.atencion_eliminar, name='atencion-single-eliminar'),
+    url(r'^atenciones-historial/$', views.atenciones_historial, name='atenciones-historial'),
     url(r'^recomendaciones/(?P<pk>\d+)/$', views.recomendacion_paciente, name='recomendacion-paciente'),
     url(r'^recomendaciones/(?P<pk>\d+)/save/$', views.recomendacion_paciente_save, name='recomendacion-paciente'),
     url(r'^recomendaciones/(?P<pk>\d+)/crear/$', views.recomendacion_paciente_crear, name='recomendacion-paciente-crear')

@@ -11,7 +11,7 @@
                 <a href="{% url 'paciente-detalle-ficha' paciente.pk 'general' %}" class="breadcrumb purple-text">Ficha general <span><i class="material-icons right">navigate_next</i></span> </a>
             </div>
         </div>
-        <h3 class="header left purple-text">Cuenta de usuario</h3>
+        <h3 class="subtitulo">Cuenta de usuario</h3>
         <ul>
             {% for field in form %}
                 {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
@@ -33,7 +33,7 @@
             <form name="form_usuario" action="" method="post">
                 {% csrf_token %}
                 {{form_usuario}}
-                <input type="submit" value="Actualizar" class="btn">  
+                <input type="submit" value="Actualizar" class="btn boton">  
             </form>
         </div>
     </div>

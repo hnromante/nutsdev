@@ -20,26 +20,6 @@
     </div>
 </div>
 <div class="container">
-    <div class="row center">
-        <!-- <form action="" method="POST">
-            {% csrf_token %}
-            <div class="row l12">
-                <div class="input-field col s12">
-                    <input id="busqueda" name="busqueda" type="text" class="validate">
-                    <label for="busqueda">Rut</label>
-                    <div class="row">
-                        <div class="col l6">
-                            <button class="btn waves-effect waves-light" type="submit" name="action">Buscar</button>
-                        </div>
-                        <div class="col l6">
-                            <a href="{%url 'pacientes' %}">Ver todos</a>
-                        </div>
-                    </div>
-                </div>     
-            </div>
-        </form>
-
-    </div> -->
     <div class="row">
        <div class="col s12">
            <table class="highlight">
@@ -81,45 +61,6 @@
                </tbody>
            </table>
        </div>
-    </div>
-    <div class="row">
-        <h3 class="left purple-text">Historial de atenciones</h3>
-        <div class="col s12">
-            <table class="highlight">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Nombre</th>
-                        <th>Estado</th>
-                        <th>Asistencia</th>
-                        <th>Ver detalle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if atenciones_expiradas %}
-                        {% for atencion in atenciones_expiradas  %}
-                        <tr>
-                            <td>{{atencion.fecha| date:"d M Y"}}</td>
-                            <td>{{atencion.hora}}</td>
-                            <td>{{atencion.paciente.user.get_nombre_completo}}</td>
-                            <td>{{atencion.get_estado_display}}</td>
-                            <td>{% if atencion.asistencia %}
-                                    <span class="green-text">Si</span>
-                            {% else %}
-                            <span class="red-text">No</span>
-                            {% endif %}</td>
-                            <td><a href="{% url 'atencion-single' pk=atencion.pk%}">Ver detalle</a></td>
-                        </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td>No se encontraron próximas atenciones.</td>
-                        </tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
     </div>
 </div>
 {% endblock main %}

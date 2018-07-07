@@ -1,0 +1,62 @@
+{% extends "nutricionista/base_nutricionista.html" %}
+{% block activeAtencionesHistorial %} active {% endblock %}
+{% block main %}
+<div class="row">
+    <div class="col s12">
+        <div class="container">
+            <h3 class="header left purple-text">Historial de atenciones</h3>
+        </div>       
+    </div>
+</div>
+<div class="row">
+    <div class="col s12">
+        {% for message in messages  %}
+            {% if message.tags == 'success' %}
+                <p class="green-text">{{message}}</p>
+            {% else %}
+                <p>{{message}}</p>
+            {% endif %}
+        {% endfor %} 
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <table class="highlight">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                        <th>Asistencia</th>
+                        <th>Ver detalle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if atenciones_expiradas %}
+                        {% for atencion in atenciones_expiradas  %}
+                        <tr>
+                            <td>{{atencion.fecha| date:"d M Y"}}</td>
+                            <td>{{atencion.hora}}</td>
+                            <td>{{atencion.paciente.user.get_nombre_completo}}</td>
+                            <td>{{atencion.get_estado_display}}</td>
+                            <td>{% if atencion.asistencia %}
+                                    <span class="green-text">Si</span>
+                            {% else %}
+                            <span class="red-text">No</span>
+                            {% endif %}</td>
+                            <td><a href="{% url 'atencion-single' pk=atencion.pk%}">Ver detalle</a></td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td>No se encontraron próximas atenciones.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock main %}

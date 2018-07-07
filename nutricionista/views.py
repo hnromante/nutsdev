@@ -40,7 +40,7 @@ import json
 from django.utils import timezone
 from django.urls import reverse
 from datetime import date
-
+import datetime
 @login_required(login_url='/login-nutricionista/')
 def inicio_nutri(request):
     """
@@ -58,22 +58,25 @@ def inicio_nutri(request):
     atenciones_hoy = Atencion.objects.filter(nutricionista=request.user.nutricionista, fecha__day=hoy.day).count()
     atenciones_tomorrow = Atencion.objects.filter(nutricionista=request.user.nutricionista, fecha__day=hoy.day+1).count()
     proxima_atencion = Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha').last()
-    pacientes_normal = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Peso normal').count()
-    pacientes_bajo = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Bajo Peso').count()
-    pacientes_sobrepeso = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Sobrepeso').count()
-    pacientes_obesidad1 = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad grado 1').count()
-    pacientes_obesidad2 = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad grado 2').count()
-    pacientes_obesidad_morbida = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad mórbida').count()
+    # pacientes_normal = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Peso normal').count()
+    # pacientes_bajo = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Bajo Peso').count()
+    # pacientes_sobrepeso = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Sobrepeso').count()
+    # pacientes_obesidad1 = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad grado 1').count()
+    # pacientes_obesidad2 = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad grado 2').count()
+    # pacientes_obesidad_morbida = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad mórbida').count()
     atenciones = Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha')[:2]
-
+    if proxima_atencion.expirada():
+        proxima_atencion = None
     return render(request,'nutricionista/index.html', { 'atenciones':atenciones,
                                                         'atenciones_hoy':atenciones_hoy,
                                                         'proxima_atencion': proxima_atencion,
                                                         'atenciones_tomorrow': atenciones_tomorrow,
-                                                        'numero_pacientes':numero_pacientes, 'pacientes_normal':pacientes_normal,
-                                                        'pacientes_bajo':pacientes_bajo, 'pacientes_sobrepeso':pacientes_sobrepeso, 
-                                                        'pacientes_obesidad1':pacientes_obesidad1, 'pacientes_obesidad2':pacientes_obesidad2,
-                                                        'pacientes_obesidad_morbida':pacientes_obesidad_morbida})
+                                                        'numero_pacientes':numero_pacientes, 
+                                                        # 'pacientes_normal':pacientes_normal,
+                                                        # 'pacientes_bajo':pacientes_bajo, 'pacientes_sobrepeso':pacientes_sobrepeso, 
+                                                        # 'pacientes_obesidad1':pacientes_obesidad1, 'pacientes_obesidad2':pacientes_obesidad2,
+                                                        # 'pacientes_obesidad_morbida':pacientes_obesidad_morbida
+                                                        })
 
 
 @login_required(login_url='/login-nutricionista/')
@@ -145,8 +148,12 @@ def paciente_detalle(request, pk, ficha=''):
         ficha_general = FichaGeneral.objects.get(paciente=paciente) if FichaGeneral.objects.filter(paciente=paciente).exists() else FichaGeneral.objects.create(paciente=paciente)
 
         if request.method == 'POST':
-            form = FormFichaGeneral(request.POST, instance=ficha_general)
+            form = FormFichaGeneral(request.POST, request.FILES,  instance=ficha_general)
             if form.is_valid():
+                ficha_general.imagen = form.cleaned_data['imagen']
+                print(request.FILES)
+                print(ficha_general)
+                ficha_general.save()
                 form.save()
                 messages.success(request, "Información actualizada")
 
@@ -279,6 +286,20 @@ def atenciones(request):
     print(atenciones_expiradas)
     return render(request, 'nutricionista/atenciones.html', {'atenciones_list':atenciones_list, 'atenciones_expiradas':atenciones_expiradas})
 
+@login_required(login_url='/login-nutricionista/')
+def atenciones_historial(request):
+    """
+    Controlador perfil del nutricionista donde puede editar sus dato personales.
+    Retorna el template de mi perfil.
+    :param request:
+    :return:
+    """
+    if not request.user.es_nutri:
+        messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
+        return HttpResponseRedirect('/login-nutricionista')
+
+    atenciones_expiradas = Atencion.objects.filter(fecha__lte=datetime.datetime.now()).order_by('fecha')
+    return render(request, 'nutricionista/atenciones_historial.html', {'atenciones_expiradas':atenciones_expiradas})
 
 
 @login_required(login_url='/login-nutricionista/')
@@ -363,9 +384,18 @@ def recomendacion_paciente(request, pk):
 def recomendacion_paciente_save(request, pk):
     if request.method == 'POST':
         data_recomendacion = json.loads(request.POST['recomendacion'])
-        print(data_recomendacion)
+        recomendacion = Recomendacion.objects.get(pk=data_recomendacion['pk'])
+        recomendacion.grupos_permitidos = data_recomendacion['grupos_permitidos']
+        recomendacion.grupos_permitidos_aux = data_recomendacion['grupos_permitidos_aux']
+        recomendacion.total_kcal = data_recomendacion['total_kcal']
+        recomendacion.comidas = data_recomendacion['comidas']
+        recomendacion.observacion = data_recomendacion['observacion']
+        recomendacion.save()
+        return HttpResponse("success")
+    return HttpResponse("error")
 
-    return HttpResponse("HOLA")
+
+    
 """
     elif ficha == 'calculadora':
         # calculadora = CalculadoraPiramidal.objects.get(paciente=paciente) if CalculadoraPiramidal.objects.filter(paciente=paciente).exists() else None

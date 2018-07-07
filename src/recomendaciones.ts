@@ -2,7 +2,6 @@ interface GrupoAlimento{
     pk: number,
     nombre: string, 
     porcion?: number,
-    porción?: number,
     alimentos?: Array<Alimento>
 }
 
@@ -109,13 +108,13 @@ class Recomendacion {
  * (Aunque ya viene en este formato, sacamos los campos inncesarios para este modelo.)
  * @param grupo Interfaz de objeto GrupoAlimento
  */
-let crearGrupoAlimento = (c: GrupoAlimento): {pk: number, nombre: string, porcion?: number, porción?: number} => {
-    let nuevoGrupo = {pk: c.pk, nombre: c.nombre, porcion: 0, porción: 0}
+let crearGrupoAlimento = (c: GrupoAlimento): {pk: number, nombre: string, porcion?: number} => {
+    let nuevoGrupo = {pk: c.pk, nombre: c.nombre, porcion: 0}
     if (c.porcion) {
         nuevoGrupo.porcion = c.porcion
     }
-    if (c.porción) {
-        nuevoGrupo.porción = c.porción
+    if (c.porcion) {
+        nuevoGrupo.porcion = c.porcion
     }
     return nuevoGrupo;
 }

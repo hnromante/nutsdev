@@ -98,8 +98,8 @@ function renderPorciones(select: JQuery, grupo: GrupoAlimento){
     select.empty()
     let porcion: number;
     let porciones: Array<number> = []
-    if (grupo.porción){
-        porcion = grupo.porción
+    if (grupo.porcion){
+        porcion = grupo.porcion
     }else{
         porcion = grupo.porcion
     }
@@ -221,10 +221,9 @@ function botonGuardarListener(recomendacion: Recomendacion){
         }else{
             recomendacion.observacion = $('#input_observacion').val().toString()
         
-            var data = new FormData();
+        var data = new FormData();
         data.append('recomendacion', JSON.stringify(recomendacion))
         let csrf = $( "input[name='csrfmiddlewaretoken']" ).val().toString()
-        console.log(csrf)
         data.append('csrfmiddlewaretoken', csrf)
         $.ajax({
             url: `/nutricionista/recomendaciones/${recomendacion.pk}/save/`,
@@ -238,7 +237,11 @@ function botonGuardarListener(recomendacion: Recomendacion){
             },
             success: function (data) {
                 console.log('SUCC',data)
-                // location.reload();
+                if (data == 'success'){
+                    alert('Recomendacion guardada correctamente')
+                }else{
+                    alert('Error')
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log('ERROR AJAX' + thrownError)
