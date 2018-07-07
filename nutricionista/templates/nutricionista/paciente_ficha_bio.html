@@ -8,10 +8,10 @@
                     <a href="{% url 'paciente-detalle-ficha' paciente.pk 'nutricional' %}" class="breadcrumb purple-text"><i class="material-icons left">navigate_before</i>Ficha Nutricional</a>
                 </div>
                 <div class="col s6 center">
-                    <a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}" class="breadcrumb purple-text"><i class="material-icons right">navigate_next</i>Calculadoras</a>
+                    <a href="{% url 'paciente-detalle-ficha' paciente.pk 'calculadora' %}" class="breadcrumb purple-text"><i class="material-icons right">navigate_next</i>Calculadora</a>
                 </div>
             </div>
-            <h3 class="header left purple-text">Ficha Bioquímica</h3>
+
             <ul>
                 {% for field in form %}
                     {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
@@ -20,10 +20,13 @@
        
     </div>
 </div>
+<h3 class="subtitulo">Ficha Bioquímica</h3>
+<blockquote>
+    En esta ficha usted debe ingresar los antecedentes bioquimicos del paciente
+</blockquote>
 <div class="container">
     <div class="row">
         <div class="col">
-            <p class="flow-text">Información Bioquímica</p>
             {% for message in messages  %}
                 {% if message.tags == 'success' %}
                     <p class="green-text">{{message}}</p>
@@ -153,7 +156,7 @@
                     </div>
                 </div>
                     <div class="row center">
-                            <button class="btn waves-effect waves-light" type="submit" name="action">Actualizar</button>
+                            <button class="btn waves-effect waves-light boton" type="submit" name="action">Actualizar</button>
                     </div>  
             </form>
         </div>

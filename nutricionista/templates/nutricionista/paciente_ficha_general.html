@@ -12,17 +12,6 @@
                 <a href="{% url 'paciente-detalle-ficha' paciente.pk 'antecedentes' %}" class="breadcrumb purple-text"><i class="material-icons right">navigate_next</i>Antecedentes</a>
             </div>
         </div>
-        <div class="row">
-                
-            <div class="col s4">
-                {% if paciente.fichageneral.imagen %}
-                <img src="{{paciente.fichageneral.imagen.url}}" alt="" class="responsive-img circle" width="200px">
-                {% else %}
-                <img src="{% static 'img/nuts_logo.jpg' %}" alt="" class="responsive-img " width="200px">  
-                {% endif %}
-                
-            </div>
-            </div>
         <ul>
             {% for field in form %}
                 {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
@@ -30,7 +19,23 @@
         </ul>
     </div>       
 </div>
+
 <h3 class="subtitulo">Información general del paciente</h3>
+<blockquote>
+    En esta ficha usted puede ingresar los datos generales del paciente
+</blockquote>
+<div class="row">
+                
+        <div class="col s12 center">
+            {% if paciente.fichageneral.imagen %}
+            <img src="{{paciente.fichageneral.imagen.url}}" alt="" class="responsive-img" width="200px">
+            {% else %}
+            <img src="{% static 'img/nuts_logo.jpg' %}" alt="" class="responsive-img " width="200px">  
+            {% endif %}
+            <p>{{paciente.user.get_nombre_completo}}</p>
+            
+        </div>
+    </div>
 <div class="container">
     <div class="row">
         <div class="col s12">
