@@ -57,11 +57,10 @@ def inicio_nutri(request):
     hoy = date.today()
     atenciones_hoy = Atencion.objects.filter(nutricionista=request.user.nutricionista, fecha__day=hoy.day).count()
     atenciones_tomorrow = Atencion.objects.filter(nutricionista=request.user.nutricionista, fecha__day=hoy.day+1).count()
-    
+    proxima_atencion = None
     if Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha').exists():
         proxima_atencion = Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha').last()
-    else:
-        proxima_atencion = None
+        
     pacientes_normal = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Peso normal').count()
     pacientes_bajo = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Bajo peso').count()
     pacientes_sobrepeso = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Sobrepeso').count()
@@ -69,8 +68,9 @@ def inicio_nutri(request):
     pacientes_obesidad2 = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad grado 2').count()
     pacientes_obesidad_morbida = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad mórbida').count()
     atenciones = Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha')[:2]
-    if proxima_atencion.expirada():
-        proxima_atencion = None
+    if proxima_atencion:
+        if proxima_atencion.expirada():
+            proxima_atencion = None
     return render(request,'nutricionista/index.html', { 'atenciones':atenciones,
                                                         'atenciones_hoy':atenciones_hoy,
                                                         'proxima_atencion': proxima_atencion,
