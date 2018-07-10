@@ -57,8 +57,11 @@ def inicio_nutri(request):
     hoy = date.today()
     atenciones_hoy = Atencion.objects.filter(nutricionista=request.user.nutricionista, fecha__day=hoy.day).count()
     atenciones_tomorrow = Atencion.objects.filter(nutricionista=request.user.nutricionista, fecha__day=hoy.day+1).count()
-    proxima_atencion = Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha').last()
     
+    if Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha').exists():
+        proxima_atencion = Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha').last()
+    else:
+        proxima_atencion = None
     pacientes_normal = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Peso normal').count()
     pacientes_bajo = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Bajo peso').count()
     pacientes_sobrepeso = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Sobrepeso').count()
