@@ -63,7 +63,7 @@ def login_paci(request):
 def logout (request):
     django_logout(request)
     messages.success(request, 'Sesión cerrada correctamente.')
-    return HttpResponseRedirect(reverse('login-nutricionista'))
+    return HttpResponseRedirect('/')
 
 
 

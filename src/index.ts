@@ -238,7 +238,8 @@ function botonGuardarListener(recomendacion: Recomendacion){
             success: function (data) {
                 console.log('SUCC',data)
                 if (data == 'success'){
-                    alert('Recomendacion guardada correctamente')
+                    alert('Recomendacion guardada correctamente');
+                    window.location.replace(`/nutricionista/mis-pacientes/${recomendacion.paciente}`);
                 }else{
                     alert('Error')
                 }
@@ -253,8 +254,3 @@ function botonGuardarListener(recomendacion: Recomendacion){
        
     })
 }
-
-/**
- * Inicializa la aplicación de recomendación para el paciente.
- * @param pkPaciente 
- */

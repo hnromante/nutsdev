@@ -1,5 +1,6 @@
 from django import forms
 from cuentas.models import User
+from nutricionista.models import Nutricionista
 
 class FormPerfil(forms.ModelForm):
     """
@@ -18,3 +19,9 @@ class FormPerfil(forms.ModelForm):
     class Meta:
         model = User
         fields = ['rut', 'nombres', 'apellidos', 'nacimiento', 'genero']
+
+class FormNutricionista(forms.ModelForm):
+   
+    class Meta:
+        model = Nutricionista
+        exclude = ['user']

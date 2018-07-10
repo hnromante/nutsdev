@@ -177,8 +177,7 @@
       <div class="card blue-text hoverable">
         <div class="card-content ">
           <span class="card-title purple-text">Recomendacion</span>
-          <p> - </p>
-          <p>{{paciente.recomendacion}}</p>
+          <p>{{paciente.recomendacion.observacion}}</p>
         </div>
         <div class="card-action center">
           <a href="{% url 'paciente-detalle-ficha' paciente.pk 'recomendaciones' %}">Ver Detalle</a>

@@ -1,0 +1,50 @@
+{% extends "paciente/base_paciente.html" %}
+{% load static %}
+{% block main %}
+<h3 class="subtitulo-paci">Mi nutricionista</h3>
+<div class="container">
+    <div class="row">
+        <div class="col s12 m8 offset-m2 center">
+            <div class="card">
+                <div class="card-image waves-effect waves-block waves-light">
+                    {% if nutricionista.imagen %}
+                    <img class="activator" src="{{nutricionista.imagen.url}}" width="300">
+                    {% else %}
+                    <img class="activator" src="{% static 'img/nuts_logo.png' %}" width="300">
+                    {% endif %}
+                </div>
+                <div class="card-content">
+                    <span class="card-title activator grey-text text-darken-4">{{nutricionista.user.get_nombre_completo}}</span>
+                    
+                </div>
+                <div class="card-reveal">
+                    <span class="card-title grey-text text-darken-4">{{nutricionista.user.get_nombre_completo}}<i class="material-icons right">close</i></span>
+                    <p>{{nutricionista.info_nutri}}</p>
+                    <ul class="collapsible" data-collapsible="accordion">
+                        <li>
+                            <div class="collapsible-header"><i class="material-icons blue-text">contact_mail</i>Contacto</div>
+                            <div class="collapsible-body">
+                                <div class="row">
+                                    <div class="col s6">
+                                        <p>Enviar correo electrónico</p>
+                                        <p><p><a href="mailto:{{nutricionista.user.email}}" ><i class="material-icons center blue-text">email</i></a></p></p>
+                                    </div>
+                                    <div class="col s6">
+                                        <p>Redes sociales</p>
+                                        <p><a href="https://www.linkedin.com/in/constanza-reyes-000a36140/"><img src="{% static 'img/linkedin.png' %}" width="41px"></a></p>
+                                        <p><a href="https://www.linkedin.com/in/constanza-reyes-000a36140/"><img src="{% static 'img/googleplus.png' %}" width="32px"></a></p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </li>
+
+                    </ul>
+                                
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

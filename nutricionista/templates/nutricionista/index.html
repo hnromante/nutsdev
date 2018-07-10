@@ -3,7 +3,7 @@
 {% load humanize %}
 {% block main %}
 
-<div class="row">
+{% comment %} <div class="row">
     <div class="col s12">
             <meter style="width:75%;height:25px;" id="bars" title="Awesomeness" max="10" low="1" high="8" optimum="5" value="7">Value can be here too</meter>
     </div>
@@ -20,11 +20,11 @@
         <br>
         MORDBO -  {{pacientes_obesidad_morbida}}
     </div>
-</div>
+</div> {% endcomment %}
 <div class="row">
     <!-- Cantidad de pacientes-->
     <div class="col s12 m4">
-        <div class="card carta yellow darken-4 lighten-2 white-text" >
+        <div class="card yellow darken-4 lighten-2 white-text" >
             <div class="card-content">
                 <span class="card-title">Atenciones hoy</span>
                 <h3>{{atenciones_hoy}}</h3>
@@ -94,7 +94,7 @@
     </div>
 </div> {% endcomment %}
 <div class="col s12 m8 offset-m2 l6 offset-l3">
-    <div class="card-panel purple lighten-4 z-depth-2 carta-nutri center">
+    <div class="card-panel center">
         {% if proxima_atencion %}
             <div class="row valign-wrapper">
             <div class="col">

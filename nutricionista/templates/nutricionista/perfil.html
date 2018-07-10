@@ -1,6 +1,13 @@
 {% extends "nutricionista/base_nutricionista.html" %}
+{% load static %}
 {% block activePerfil %} active {% endblock %}
 {% block main %}
+<div class="row">
+    <div class="col s12">
+        <h3 class="subtitulo">Mi Perfíl</h3>
+        <blockquote>Actualiza tus datos personales.</blockquote>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="messages col s12 center-align ">
@@ -10,12 +17,32 @@
                 {% endfor %}
             {% endif %}
         </div>
+        <div class="col s12 center">
+            {% if request.user.nutricionista.imagen %}
+            <img src="{{request.user.nutricionista.imagen.url}}" alt="" class="responsive-img " width="200px">
+            {% else %}
+            <img src="{% static 'img/nuts_logo.jpg' %}" alt="" class="responsive-img " width="200px">  
+            {% endif %}
+        </div>
         <div class="col s12">
-                <h1 class="grey-text">Mi Perfil</h1>
             <form action="" method="POST">
                 {% csrf_token %}
-                {{form.as_table}}
-                <input type="submit" value="Actualizar Perfil" class="btn">
+                {{form_perfil.as_p}}
+                <input type="submit" value="Actualizar Perfil" name="perfil" class="btn boton">
+            </form>
+        </div>
+        <div class="col s12">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input-field col s12 ">
+                    {{form_nutri.info_nutri}}
+                    <label for="id_info_nutri"></label>
+            </div>
+                {{form_nutri.imagen}}
+                <label for="id_info_nutri"></label>
+                <div class="input-field">
+                    <input type="submit" value="Guardar" name="foto" class="btn boton">
+                </div>
             </form>
         </div>
     </div>

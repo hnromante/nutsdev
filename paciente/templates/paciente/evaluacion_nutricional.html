@@ -1,0 +1,24 @@
+{% extends "paciente/base_paciente.html" %}
+{% load static %}
+{% block main %}
+<h3 class="subtitulo-paci">Información nutricional</h3>
+<div class="container">
+    <div class="row">
+        <div class="col s12 center">
+            <div>
+                <img src="{% static 'img/nuts_logo.png' %}" class="responsive-img" width="200px">
+            </div>
+        </div>
+        <div class="col s12">
+            <ul class="collection with-header">
+                <li class="collection-header"><h5>Resumen nutricional</h5></li>
+                <li class="collection-item"><span class="badge">{{ficha_nutricional.peso}}</span>Peso</li>
+                <li class="collection-item"><span class="badge">{{ficha_nutricional.talla}}</span>Talla</li>
+                <li class="collection-item"><span class="badge">{{ficha_nutricional.imc}}</span>IMC</li>
+                <li class="collection-item blue darken-3"><span class="badge white-text">{{ficha_nutricional.diagnostico_peso}}</span><span class="white-text">Diagnóstico Peso</span></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+{% endblock main %}

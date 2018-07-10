@@ -20,15 +20,14 @@
     </div>       
 </div>
 <h3 class="subtitulo">Información general del paciente</h3>
+<blockquote>En esta ficha se encuentran los datos generales del paciente.</blockquote>
 <div class="row">
-
     <div class="col s12 center">
         {% if paciente.fichageneral.imagen %}
-        <img src="{{paciente.fichageneral.imagen.url}}" alt="" class="responsive-img circle" width="200px">
+        <img src="{{paciente.fichageneral.imagen.url}}" alt="" class="responsive-img" width="200px">
         {% else %}
         <img src="{% static 'img/nuts_logo.jpg' %}" alt="" class="responsive-img " width="200px">
         {% endif %}
-
     </div>
 </div>
 <div class="container">

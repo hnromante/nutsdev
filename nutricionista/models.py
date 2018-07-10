@@ -12,6 +12,7 @@ class Nutricionista(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True, related_name='nutricionista')
     info_nutri = models.CharField(max_length=254)
+    imagen = models.ImageField(null=True, blank=True, upload_to='nutricionista/')
     def __str__(self):
         return self.user.rut + " - " +self.user.email
 

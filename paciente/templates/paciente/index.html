@@ -1,60 +1,109 @@
 {% extends "paciente/base_paciente.html" %}
 {% load static %}
 {% block main %}
+<h3 class="subtitulo-paci">Su recomendación nutricional</h3>
+
+<!--grupos de alimentos permitidos-->
+{% comment %} 
 <div class="row">
-    <div class="col s12 center">
-        <div class="card">
-          <div>
-            <img src="{% static 'img/nuts_logo.png' %}" class="responsive-img" width="200px">
-          </div>
-          <div class="card-content">
-            <span class="card-title">Su recomendación nutricional</span>
-            <table class="bordered striped">
-                <thead>
-                    <tr>
-                        <th data-field="id">Comida</th>
-                        <th data-field="name">Horario</th>
-                        <th data-field="price">Alimentos</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla_minuta">
-                    <tr>
-                        <td>Desayuno</td>
-                        <td>7:30</td>
-                        <td>
-                            <ul>
-                                <li>Yougurth (1) porciones </li>
-                                <li>Cereal (2) porciones</li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Almuerzo</td>
-                        <td>13:30</td>
-                        <td>
-                            <ul>
-                                <li>Yougurth (1) porciones </li>
-                                <li>Cereal (2) porciones</li>
-                            </ul>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-          </div>
+    <div class="col s12">
+        <div class="collapsible-header">
+            <i class="material-icons">error_outline</i>
+            Grupos de alimentos permitidos
+        <span class="new badge" data-badge-caption="permitidos " id="num_grupos_permitidos"></span></div>
+        <ul class="tabs" id="lista_grupos_permitidos">
+
+        </ul>
+        <div id="alimentos">
+
         </div>
     </div>
+</div>  {% endcomment %}
+
+<div class="row">
+    <div class="col s12">
+        <div class="collapsible-header">
+            <i class="material-icons blue-text text-darken-3">error_outline</i>
+            Grupos de alimentos permitidos
+            <span class="new badge blue darken-2" data-badge-caption="permitidos" id="num_grupos_permitidos"></span>
+        </div>
+        <div class="row">
+            <div class="col s12 m6">
+                <ul class="collapsible popout" id="listado_grupos">
+        
+                </ul>
+            </div>
+            <div class="col s12 m6">
+                <ul class="collapsible popout" id="listado_grupos2">
+        
+                </ul>   
+            </div>
+        </div>
+
+        
+    </div>
+</div>  
+
+    {% comment %} <div class="row">
+        <div class="col s12">
+            <div class="collapsible-header">
+                <i class="material-icons">error_outline</i>
+                Grupos de alimentos permitidos
+                <span class="new badge" data-badge-caption="permitidos " id="num_grupos_permitidos"></span>
+            </div>
+            
+            <a class='dropdown-button btn boton' href='#' data-activates='alimento1'>Aliemnto</a>
+
+            <!-- Dropdown Structure -->
+            <ul id='alimento1' class='dropdown-content'>
+            <li><a href="#!">one</a></li>
+            <li><a href="#!">two</a></li>
+
+
+            </ul>
+                
+
+        </div>
+    </div> {% endcomment %}
+    <!--Recomendación-->
+
+<div class="row">
+    <div class="col s12 center">
+        <div class="collapsible-header">
+            <i class="material-icons blue-text text-darken-3">local_dining</i>
+            Minuta recomendada
+        </div>
+        <ul class="collapsible" id="minuta">
+            
+        </ul>
+                    
+
+    </div>
 </div>
+
+<!--observacion-->
+<div class="row">
+    <div class="col s12">
+        <div class="collapsible-header">
+            <i class="material-icons blue-text text-darken-3">mode_edit</i>
+            Minuta recomendada
+        </div>
+       <p class="flow-text"> {{observacion}}</p>
+    </div>
+</div>
+
 {% endblock main %}
 
 {% block costumjs %}
+
 <script>
+
+    
     const pk_paciente = `{{request.user.paciente.pk}}`
-    console.log('pk_paciente', pk_paciente)
     
    $.getJSON(`/paciente/minuta/${pk_paciente}`, function(data){
-        console.log(data)
+       let lista_comidas = $('#minuta')
         data.forEach((e) => {
-            console.log(e)
             html_alimentos = ''
             if (e.alimentos_porcion) {
                 e.alimentos_porcion.forEach(tupla => {
@@ -62,13 +111,50 @@
                 });
     
             }
-            $('#tabla_minuta').append(`
-            <tr>
-                <td>${e.nombre}</td>
-                <td>${e.horario_1}</td>
-                <td>${html_alimentos}</td>
-            </tr>`)
-            })
-   })
+            lista_comidas.append(`
+                <li>
+                    <div class="collapsible-header">${e.nombre} - (${e.horario_1})</div>
+                    <div class="collapsible-body"><span>${html_alimentos}</span></div>
+                </li>
+            `)
+
+        })
+    })
+
+   $.getJSON(`/paciente/grupos-permitidos/${pk_paciente}`, function(data){
+    let listado_grupos = $('#listado_grupos')
+    let listado_grupos2 = $('#listado_grupos2')
+    //let lista2 = $('#alimentos')
+    let contador = $('#num_grupos_permitidos')
+    contador.html(data.length)
+    data.forEach((e,i) => {
+        html_alimentos = ''
+        if (e.alimentos) {
+            e.alimentos.forEach(e => {
+                html_alimentos+= `${e.nombre} - (${e.kcal} kcal)`
+            });
+
+        }
+        if (i %2 == 0){
+            listado_grupos.append(`
+            <li>
+                <div class="collapsible-header">${e.nombre}</div>
+                <div class="collapsible-body"><span>${html_alimentos}</span></div>
+            </li>
+        `)
+        }else{
+            listado_grupos2.append(`
+            <li>
+                <div class="collapsible-header">${e.nombre}</div>
+                <div class="collapsible-body"><span>${html_alimentos}</span></div>
+            </li>
+        `)
+        }
+
+
+    })
+    
+})
+
 </script>
 {% endblock costumjs %}

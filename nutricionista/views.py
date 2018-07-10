@@ -12,7 +12,7 @@ from paciente.models import (
 from superadmin.models import GrupoAlimento
 from recomendacion.models import Recomendacion
 from django.apps import apps
-from nutricionista.forms import FormPerfil
+from nutricionista.forms import FormPerfil, FormNutricionista
 from reserva.forms import FormCrearAtencion
 from reserva.models import Atencion
 from paciente.forms import (
@@ -254,13 +254,23 @@ def mi_perfil(request):
         messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
     if request.method == "POST":
-        form = FormPerfil(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
+        form_perfil = FormPerfil(request.POST, instance=request.user)
+        form_nutri = FormNutricionista(request.POST, request.FILES, instance=request.user.nutricionista)
+
+        if form_perfil.is_valid():
+            form_perfil.save()
             messages.success(request, "Información actualizada correctamente")
+            return render(request, 'nutricionista/perfil.html', {'form_perfil':form_perfil, 'form_nutri':form_nutri})
+        if form_nutri.is_valid():
+            form_nutri.imagen = form_nutri.cleaned_data['imagen']
+            form_nutri.save()
+            form_nutri.save()
+            messages.success(request, "Información actualizada correctamente")
+            return render(request, 'nutricionista/perfil.html', {'form_perfil':form_perfil, 'form_nutri':form_nutri})
     else:
-        form = FormPerfil(instance=request.user)
-    return render(request, 'nutricionista/perfil.html', {'form':form})
+        form_perfil = FormPerfil(instance=request.user)
+        form_nutri = FormNutricionista(instance=request.user.nutricionista)
+    return render(request, 'nutricionista/perfil.html', {'form_perfil':form_perfil, 'form_nutri':form_nutri})
 
 
 @login_required(login_url='/login-nutricionista/')
@@ -275,7 +285,7 @@ def atenciones(request):
         messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
     atenciones_list = Atencion.objects.filter(nutricionista=request.user.nutricionista ,fecha__gte=datetime.datetime.now()).order_by('fecha')
-    pagination = Paginator(atenciones_list, 4)
+    pagination = Paginator(atenciones_list, 3)
     page = request.GET.get('page')
     atenciones = pagination.get_page(page)
     
@@ -294,7 +304,7 @@ def atenciones_historial(request):
         return HttpResponseRedirect('/login-nutricionista')
 
     atenciones_expiradas_list = Atencion.objects.filter(nutricionista=request.user.nutricionista ,fecha__lt=datetime.datetime.now()).order_by('fecha')
-    pagination = Paginator(atenciones_expiradas_list, 4)
+    pagination = Paginator(atenciones_expiradas_list, 3)
     page = request.GET.get('page')
     atenciones_expiradas = pagination.get_page(page)
     return render(request, 'nutricionista/atenciones_historial.html', {'atenciones_expiradas':atenciones_expiradas})
