@@ -12,6 +12,9 @@
             </div>
         </div>
         <h3 class="subtitulo">Cuenta de usuario</h3>
+        <blockquote>
+            En esta ficha usted puede gestionar los datos de la cuenta de usuario asociada al paciente
+        </blockquote>
         <ul>
             {% for field in form %}
                 {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
@@ -33,7 +36,10 @@
             <form name="form_usuario" action="" method="post">
                 {% csrf_token %}
                 {{form_usuario}}
-                <input type="submit" value="Actualizar" class="btn boton">  
+                <div class="center">
+                    <input type="submit" value="Actualizar" class="btn boton"> 
+                </div>
+                 
             </form>
         </div>
     </div>

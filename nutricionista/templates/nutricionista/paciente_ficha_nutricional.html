@@ -11,7 +11,7 @@
                 <a href="{% url 'paciente-detalle-ficha' paciente.pk 'bioquimica' %}" class="breadcrumb purple-text"><i class="material-icons right">navigate_next</i>Ficha bioquímica</a>
             </div>
         </div>
-        <h3 class="header left purple-text">Ficha Información nutricional</h3>
+        
         <ul>
             {% for field in form %}
                 {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
@@ -20,10 +20,13 @@
     
     </div>
 </div>
+<h3 class="subtitulo">Ficha Información nutricional</h3>
+<blockquote>
+    En esta ficha usted debe ingresar la informacion nutricional del paciente
+</blockquote>
 <div class="container">
     <div class="row">
         <div class="col">
-            <p class="flow-text">Información Nutricional</p>
                 <div class="row mensajes">
                 {% for message in messages  %}
                     {% if message.tags == 'success' %}
@@ -76,14 +79,14 @@
                                     <td class="disabled">{{form.diagnostico_peso}}</td>
                                 </tr>
                                 <tr>
-                                        <td colspan="2"><a href="#" onClick='calcular_imc()' class="waves-effect waves-light btn right">Calcular</a></td>
+                                        <td colspan="2"><a href="#" onClick='calcular_imc()' class="waves-effect waves-light btn boton right">Calcular</a></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="row center">
-                    <input type="submit" class="btn disabled" disabled id="actualizar" value="Actualizar">
+                    <input type="submit" class="btn boton disabled" disabled id="actualizar" value="Actualizar">
                 </div>
     </form>
   
