@@ -27,7 +27,6 @@
                         <th>Fecha</th>
                         <th>Hora</th>
                         <th>Nombre</th>
-                        <th>Estado</th>
                         <th>Asistencia</th>
                         <th>Ver detalle</th>
                     </tr>
@@ -38,13 +37,12 @@
                         <td>{{atencion.fecha| date:"d M Y"}}</td>
                         <td>{{atencion.hora}}</td>
                         <td>{{atencion.paciente.user.get_nombre_completo}}</td>
-                        <td>{{atencion.get_estado_display}}</td>
                         <td>{% if atencion.asistencia %}
-                                <span class="green-text">Si</span>
+                                <span class="green-text"><i class="material-icons">check</i></span>
                         {% else %}
-                        <span class="red-text">No</span>
+                        <span class="red-text"><i class="material-icons">close</i></span>
                         {% endif %}</td>
-                        <td><a href="{% url 'atencion-single' pk=atencion.pk%}">Ver detalle</a></td>
+                        <td><a href="{% url 'atencion-single' pk=atencion.pk%}" ><i class="medium material-icons purple-text">chevron_right</i></a></td>
                     </tr>
                     {% empty %}
                         <tr>

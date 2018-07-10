@@ -18,11 +18,12 @@
             {% endif %}
         </div>
         <div class="col s12 center">
-            {% if request.user.nutricionista.imagen %}
+            {% comment %} {% if request.user.nutricionista.imagen %}
             <img src="{{request.user.nutricionista.imagen.url}}" alt="" class="responsive-img " width="200px">
             {% else %}
-            <img src="{% static 'img/nuts_logo.jpg' %}" alt="" class="responsive-img " width="200px">  
-            {% endif %}
+            <img src="{% static 'img/nuts_logo.png' %}" alt="" class="responsive-img " width="200px">  
+            {% endif %} {% endcomment %}
+            <img src="{% static 'img/nutri.jpg' %}" alt="" class="responsive-img " width="200px">  
         </div>
         <div class="col s12">
             <form action="" method="POST">

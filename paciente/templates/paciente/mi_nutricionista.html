@@ -7,11 +7,12 @@
         <div class="col s12 m8 offset-m2 center">
             <div class="card">
                 <div class="card-image waves-effect waves-block waves-light">
-                    {% if nutricionista.imagen %}
+                    {% comment %} {% if nutricionista.imagen %}
                     <img class="activator" src="{{nutricionista.imagen.url}}" width="300">
                     {% else %}
                     <img class="activator" src="{% static 'img/nuts_logo.png' %}" width="300">
-                    {% endif %}
+                    {% endif %} {% endcomment %}
+                    <img src="{% static 'img/nutri.jpg' %}" alt="" class="responsive-img " width="200px">  
                 </div>
                 <div class="card-content">
                     <span class="card-title activator grey-text text-darken-4">{{nutricionista.user.get_nombre_completo}}</span>

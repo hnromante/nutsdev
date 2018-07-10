@@ -95,18 +95,22 @@ def mis_pacientes(request):
     if not request.user.es_nutri:
         messages.warning(request, messages.INFO, 'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
-    
+    pacientes_lista = Paciente.objects.filter(nutricionista=request.user.nutricionista)
     if request.method == 'POST':
         rut = request.POST['busqueda']
-        pacientes = Paciente.objects.filter(nutricionista=request.user.nutricionista, user__rut = rut)
+        # pacientes = Paciente.objects.filter(nutricionista=request.user.nutricionista, user__rut = rut)
+        pacientes_list = Paciente.objects.filter(nutricionista=request.user.nutricionista, user__rut = rut)
+        pagination = Paginator(pacientes_list, 4)
+        page = request.GET.get('page')
+        pacientes = pagination.get_page(page)
+        return render(request, 'nutricionista/pacientes.html', {'pacientes':pacientes, 'total_pacientes': pacientes_lista.count()})
 
-        return render(request, 'nutricionista/pacientes.html', {'pacientes':pacientes})
     pacientes_list = Paciente.objects.filter(nutricionista=request.user.nutricionista)
     pagination = Paginator(pacientes_list, 4)
     page = request.GET.get('page')
     pacientes = pagination.get_page(page)
 
-    return render(request, 'nutricionista/pacientes.html', {'pacientes':pacientes})
+    return render(request, 'nutricionista/pacientes.html', {'pacientes':pacientes, 'total_pacientes': pacientes_lista.count()})
 
 
 @login_required(login_url='/login-nutricionista/')
@@ -306,7 +310,7 @@ def atenciones_historial(request):
         messages.error(request,'Usted no tiene los permisos para visitar esa pagina')
         return HttpResponseRedirect('/login-nutricionista')
 
-    atenciones_expiradas_list = Atencion.objects.filter(nutricionista=request.user.nutricionista ,fecha__lt=datetime.datetime.now()).order_by('fecha')
+    atenciones_expiradas_list = Atencion.objects.filter(nutricionista=request.user.nutricionista ,fecha__lte=datetime.datetime.now()).order_by('fecha')
     pagination = Paginator(atenciones_expiradas_list, 3)
     page = request.GET.get('page')
     atenciones_expiradas = pagination.get_page(page)

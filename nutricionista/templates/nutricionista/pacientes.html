@@ -1,4 +1,5 @@
 {% extends "nutricionista/base_nutricionista.html" %}
+{% load static %}
 {% block activePacientes %} active {% endblock %}
 {% block main %}
 <div class="row">
@@ -28,10 +29,10 @@
                     <label for="busqueda">Rut</label>
                     <div class="row">
                         <div class="col l6">
-                            <button class="btn blue" type="submit" name="action">Buscar</button>
+                            <button class="btn boton" type="submit" name="action">Buscar</button>
                         </div>
                         <div class="col l6">
-                            <a href="{%url 'pacientes' %}" class="btn boton">Ver todos</a>
+                            <a href="{% url 'pacientes' %}" class="btn boton">Ver todos ({{total_pacientes}})</a>
                         </div>
                     </div>
                 </div>     
@@ -39,57 +40,48 @@
         </form>
 
     </div>
-</div>
-<div class="row">
-    <div class="col s12">
-        <table class="highlight">
-            <thead>
-                <tr>
-                    <th data-field="nombre">Nombre</th>
-                    <th data-field="apellidos">Apellidos</th>
-                    <th data-field="rut">Rut</th>
-                    <th data-field="ver_ficha">Ver Ficha</th>
-                </tr>
-            </thead>
-            <tbody>
-                    {% for paciente in pacientes  %}
-                        <tr>
-                            <td>{{paciente.user.nombres}}</td>
-                            <td>{{paciente.user.apellidos}}</td>
-                            <td>{{paciente.user.rut}}</td>
-                            <td><a href="{% url 'paciente-detalle' pk=paciente.pk %}">Ver detalle</a></td>
-                        </tr>
-                    {% empty %}
-                        <tr>
-                            <td colspan="4" class="red-text"> No se encontraron pacientes</td>
-                        </tr>
-                    {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-<!-- <div class="row">
-    <div class="col s12 center">
-        <div class="pagination">
-            <span class="step-links">
-                {% if pacientes.has_previous %}
-                    <a href="?page=1">&laquo; </a>
-                    <a href="?page={{pacientes.previous_page_number }}">anterior</a>
-                {% endif %}
-        
-                <span class="current">
-                    Página {{ pacientes.number }} de {{ pacientes.paginator.num_pages }}.
-                </span>
-        
-                {% if pacientes.has_next %}
-                    <a href="?page={{pacientes.next_page_number}}">siguiente</a>
-                    <a href="?page={{pacientes.paginator.num_pages}}"> &raquo;</a>
-                {% endif %}
-            </span>
+
+    <div class="row">
+        <div class="col s12">
+            <table class="highlight">
+                <thead>
+                    <tr>
+                        <th data-field="foto">Foto</th>
+                        <th data-field="nombre">Nombre</th>
+                        <th data-field="apellidos">Apellidos</th>
+                        <th data-field="rut">Rut</th>
+                        <th data-field="ver_ficha">Ver Ficha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for paciente in pacientes  %}
+                            <tr>
+                                <td>
+
+                                    {% if paciente.fichageneral.imagen.url %}
+                                    <img src="{{paciente.fichageneral.imagen.url}}" alt="" class="responsive-img circle" width="90px">
+                                    {% else %}
+                                    <img src="{% static 'img/nuts_logo.png' %}" alt="" class="responsive-img " width="100px">  
+                                    {% endif %}
+
+                                </td>
+                                <td>{{paciente.user.nombres}}</td>
+                                <td>{{paciente.user.apellidos}}</td>
+                                <td>{{paciente.user.rut}}</td>
+                                <td><a href="{% url 'paciente-detalle' pk=paciente.pk %}"><i class="medium material-icons purple-text">chevron_right</i></a></td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="4" class="red-text"> No se encontraron pacientes</td>
+                            </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-</div> -->
+</div>
 
+<!--PAGINATOR-->
 <div class="row center">
         {% if pacientes.paginator.num_pages > 1 %} 
         <ul class="pagination">
@@ -110,5 +102,10 @@
           {% endif %}
         </ul>
         {% endif %}
+
+
+     
 </div>
+
+
 {% endblock main %}
