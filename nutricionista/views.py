@@ -58,12 +58,13 @@ def inicio_nutri(request):
     atenciones_hoy = Atencion.objects.filter(nutricionista=request.user.nutricionista, fecha__day=hoy.day).count()
     atenciones_tomorrow = Atencion.objects.filter(nutricionista=request.user.nutricionista, fecha__day=hoy.day+1).count()
     proxima_atencion = Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha').last()
-    # pacientes_normal = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Peso normal').count()
-    # pacientes_bajo = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Bajo Peso').count()
-    # pacientes_sobrepeso = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Sobrepeso').count()
-    # pacientes_obesidad1 = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad grado 1').count()
-    # pacientes_obesidad2 = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad grado 2').count()
-    # pacientes_obesidad_morbida = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad mórbida').count()
+    
+    pacientes_normal = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Peso normal').count()
+    pacientes_bajo = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Bajo peso').count()
+    pacientes_sobrepeso = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Sobrepeso').count()
+    pacientes_obesidad1 = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad grado 1').count()
+    pacientes_obesidad2 = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad grado 2').count()
+    pacientes_obesidad_morbida = Paciente.objects.filter(nutricionista=request.user.nutricionista, fichanutricional__diagnostico_peso='Obesidad mórbida').count()
     atenciones = Atencion.objects.filter(nutricionista=request.user.nutricionista).order_by('fecha')[:2]
     if proxima_atencion.expirada():
         proxima_atencion = None
@@ -72,10 +73,10 @@ def inicio_nutri(request):
                                                         'proxima_atencion': proxima_atencion,
                                                         'atenciones_tomorrow': atenciones_tomorrow,
                                                         'numero_pacientes':numero_pacientes, 
-                                                        # 'pacientes_normal':pacientes_normal,
-                                                        # 'pacientes_bajo':pacientes_bajo, 'pacientes_sobrepeso':pacientes_sobrepeso, 
-                                                        # 'pacientes_obesidad1':pacientes_obesidad1, 'pacientes_obesidad2':pacientes_obesidad2,
-                                                        # 'pacientes_obesidad_morbida':pacientes_obesidad_morbida
+                                                        'pacientes_normal':pacientes_normal,
+                                                        'pacientes_bajo':pacientes_bajo, 'pacientes_sobrepeso':pacientes_sobrepeso, 
+                                                        'pacientes_obesidad1':pacientes_obesidad1, 'pacientes_obesidad2':pacientes_obesidad2,
+                                                        'pacientes_obesidad_morbida':pacientes_obesidad_morbida
                                                         })
 
 
@@ -153,8 +154,6 @@ def paciente_detalle(request, pk, ficha=''):
             form = FormFichaGeneral(request.POST, request.FILES,  instance=ficha_general)
             if form.is_valid():
                 ficha_general.imagen = form.cleaned_data['imagen']
-                print(request.FILES)
-                print(ficha_general)
                 ficha_general.save()
                 form.save()
                 messages.success(request, "Información actualizada")

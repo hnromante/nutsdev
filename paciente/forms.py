@@ -83,13 +83,7 @@ class FormFichaGeneral(forms.ModelForm):
     Formulario para modificar la ficha de datos generales del paciente
     Hace referencia al modelo paciente.
     """
-    def __init__(self, *args, **kwargs):
-        """
-        Constructor que inicializa los campos del ModelForm
-        """
-        super().__init__(*args, **kwargs)
-        self.fields['ultima_atencion'].widget.attrs.update({'class':'datepicker'})
-
+   
     class Meta:
         model = FichaGeneral
         exclude = ['paciente']

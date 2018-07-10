@@ -4,6 +4,24 @@
 {% block main %}
 
 <div class="row">
+    <div class="col s12">
+            <meter style="width:75%;height:25px;" id="bars" title="Awesomeness" max="10" low="1" high="8" optimum="5" value="7">Value can be here too</meter>
+    </div>
+    <div class="col s12">
+        NORAML -{{pacientes_normal}}
+        <br>
+        BAJO  -{{pacientes_bajo}}
+        <br>
+        SOBRE - {{pacientes_sobrepeso}}
+        <br>
+        1  -{{pacientes_obesidad1}}
+        <br>
+        2  -{{pacientes_obesidad2}}
+        <br>
+        MORDBO -  {{pacientes_obesidad_morbida}}
+    </div>
+</div>
+<div class="row">
     <!-- Cantidad de pacientes-->
     <div class="col s12 m4">
         <div class="card carta yellow darken-4 lighten-2 white-text" >

@@ -55,7 +55,6 @@ class FichaGeneral(models.Model):
     ocupacion = models.CharField(max_length=20, blank=True, default="")
     nacionalidad = models.CharField(max_length=20, blank=True, default="")
     observacion = models.TextField(max_length=500, blank=True, default="")
-    ultima_atencion = models.DateField(null=True, blank=True)
     imagen = models.ImageField(null=True, blank=True, upload_to='pacientes/')
 
     def __str__(self):

@@ -12,11 +12,7 @@ OPCIONES_MOTIVO= (
     ('CO', 'Control'),
     ('UA', 'Última atención'),
 )
-OPCIONES_ESTADO = (
-    ('PE', 'Pendiente'),
-    ('CA', 'Cancelada'),
-    ('CO', 'Completada')
-)
+
 
 class Atencion(models.Model):
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
@@ -26,11 +22,7 @@ class Atencion(models.Model):
         choices=OPCIONES_MOTIVO,
         default='PA',
     )
-    estado = models.CharField(
-        max_length=2,
-        choices=OPCIONES_ESTADO,
-        default='PE',
-    )
+
     observacion = models.CharField(max_length=200)
     fecha = models.DateField(null=True, blank= True)
     hora = models.TimeField(null=True, blank= True)
@@ -43,7 +35,7 @@ class Atencion(models.Model):
         segundos = (datetime.datetime.combine(self.fecha, self.hora) - datetime.datetime.now()).total_seconds() 
         return segundos
     def tiempo_a_la_reserva(self):
-        print("NOW")
+
         print(datetime.datetime.now())
         print("FECHA RES")
         print(datetime.datetime.combine(self.fecha, self.hora))
